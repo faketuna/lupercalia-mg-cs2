@@ -22,9 +22,7 @@ namespace LupercaliaMGCore {
 
 
         private HookResult OnRoundEnd(EventRoundEnd @event, GameEventInfo info) {
-            Server.PrintToChatAll("Round has ended");
             if(m_CVIsScrambleEnabled.Value) {
-                Server.PrintToChatAll("Scrambling!");
                 List<CCSPlayerController> players = Utilities.GetPlayers();
                 int playerCount = players.Count;
                 int playerCountHalf = playerCount/2;
@@ -34,12 +32,14 @@ namespace LupercaliaMGCore {
                 var unixTimestamp = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
                 Random random = new Random(unixTimestamp);
 
-                Server.PrintToChatAll($"Total players: {playerCount}");
-                Server.PrintToChatAll($"Half players: {playerCountHalf}");
                 for(int i = playerCountHalf; i > 0; i--) {
+                    if(pickedPlayer.Contains(players[i].Index)) {
+                        i++;
+                        continue;
+                    }
+
                     int index = random.Next(playerCount);
                     pickedPlayer.Add(players[index].Index);
-                    Server.PrintToChatAll($"Player {players[index].PlayerName} is switched to CounterTerrorist!");
                     players[index].SwitchTeam(CsTeam.CounterTerrorist);
                 }
 
@@ -47,7 +47,6 @@ namespace LupercaliaMGCore {
                     if(pickedPlayer.Contains(players[i].Index)) 
                         continue;
                     
-                    Server.PrintToChatAll($"Player {players[i].PlayerName} is switched to Terrorist!");
                     players[i].SwitchTeam(CsTeam.Terrorist);
                 }
             }
