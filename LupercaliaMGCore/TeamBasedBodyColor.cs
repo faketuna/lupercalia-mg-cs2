@@ -13,11 +13,11 @@ namespace LupercaliaMGCore {
         }
 
         public void initialize() {
-            m_CSSPlugin.RegisterEventHandler<EventPlayerSpawned>(OnPlayerSpawned);
+            m_CSSPlugin.RegisterEventHandler<EventPlayerSpawn>(OnPlayerSpawn);
         }
 
 
-        private HookResult OnPlayerSpawned(EventPlayerSpawned @event, GameEventInfo info) {
+        private HookResult OnPlayerSpawn(EventPlayerSpawn @event, GameEventInfo info) {
 
             CCSPlayerController player = @event.Userid;
 
