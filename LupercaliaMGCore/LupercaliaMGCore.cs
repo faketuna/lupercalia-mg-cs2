@@ -12,11 +12,14 @@ namespace LupercaliaMGCore {
         public override string ModuleDescription => "Provides core MG feature in CS2 with CounterStrikeSharp";
 
         // Feature classes
+        private TeamBasedBodyColor? teamBasedBodyColor;
 
 
 
         public override void Load(bool hotReload)
         {
+            teamBasedBodyColor = new TeamBasedBodyColor(this);
+            teamBasedBodyColor.initialize();
         }
     }
 }
