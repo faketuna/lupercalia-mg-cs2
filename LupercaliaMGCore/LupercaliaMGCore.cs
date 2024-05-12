@@ -13,6 +13,7 @@ namespace LupercaliaMGCore {
 
         // Feature classes
         private TeamBasedBodyColor? teamBasedBodyColor;
+        private DuckFix? duckFix;
 
 
 
@@ -20,6 +21,9 @@ namespace LupercaliaMGCore {
         {
             teamBasedBodyColor = new TeamBasedBodyColor(this);
             teamBasedBodyColor.initialize();
+
+            duckFix = new DuckFix(this, hotReload);
+            duckFix.initialize();
         }
     }
 }
