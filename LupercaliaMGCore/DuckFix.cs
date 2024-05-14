@@ -36,7 +36,7 @@ namespace LupercaliaMGCore {
         }
 
         private HookResult onPlayerConnected(EventPlayerConnectFull @event, GameEventInfo info) {
-            CCSPlayerController player = @event.Userid;
+            CCSPlayerController player = @event.Userid!;
             CCSPlayer_MovementServices movementServices = new CCSPlayer_MovementServices(player.PlayerPawn.Value!.MovementServices!.Handle);
             m_CSSPlugin.RegisterListener<Listeners.OnTick>(() => 
             {

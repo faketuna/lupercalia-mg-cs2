@@ -19,7 +19,7 @@ namespace LupercaliaMGCore {
 
         private HookResult OnPlayerSpawn(EventPlayerSpawn @event, GameEventInfo info) {
 
-            CCSPlayerController player = @event.Userid;
+            CCSPlayerController player = @event.Userid!;
 
             if(player.Team == CsTeam.None || player.Team == CsTeam.Spectator)
                 return HookResult.Continue;
