@@ -3,6 +3,8 @@
 namespace LupercaliaMGCore {
     public class LupercaliaMGCore: BasePlugin
     {
+        public static readonly string PLUGIN_PREFIX  = "[LPŘ MG]";
+
         public override string ModuleName => "Lupercalia MG Core";
 
         public override string ModuleVersion => "0.0.1";
