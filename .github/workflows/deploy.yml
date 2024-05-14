@@ -26,7 +26,7 @@ jobs:
       run: nuget restore
 
     - name: Build
-      run: dotnet build --configuration Release
+      run: dotnet build -c Release -p:DebugType=None -p:DebugSymbols=false
 
   publish:
     runs-on: windows-latest
@@ -46,7 +46,7 @@ jobs:
       run: nuget restore
 
     - name: Build
-      run: dotnet build --configuration Release
+      run: dotnet build -c Release -p:DebugType=None -p:DebugSymbols=false
 
     - name: Create release artifacts
       run: |
@@ -94,6 +94,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: artifacts/LupercaliaMGCore.dll
+        asset_path: artifacts/net8.0/LupercaliaMGCore.dll
         asset_name: LupercaliaMGCore.dll
         asset_content_type: application/octet-stream
