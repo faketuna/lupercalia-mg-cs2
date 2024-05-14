@@ -19,8 +19,8 @@ namespace LupercaliaMGCore {
             }
         }
 
-        public FakeConVar<string> m_CVTeamColorCT {get;} = new("lp_mg_teamcolor_ct", "Should team is scrambled after round end", "0, 0, 255");
-        public FakeConVar<string> m_CVTeamColorT {get;} = new("lp_mg_teamcolor_t", "Should team is scrambled after round end", "255, 0, 0");
+        public FakeConVar<string> m_CVTeamColorCT {get;} = new("lp_mg_teamcolor_ct", "Counter Terrorist's Body color. R, G, B", "0, 0, 255");
+        public FakeConVar<string> m_CVTeamColorT {get;} = new("lp_mg_teamcolor_t", "Terrorist's Body color. R, G, B", "255, 0, 0");
         public FakeConVar<bool> m_CVIsScrambleEnabled {get;} = new("lp_mg_teamscramble_enabled", "Should team is scrambled after round end", true);
         public FakeConVar<int> m_CVMapConfigType {get;} = new ("lp_mg_mapcfg_type", "Map configuration type. 0: disabled, 1: Exact match, 2: Partial Match, 3: Both", 0);
 
