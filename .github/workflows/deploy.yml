@@ -1,4 +1,4 @@
-name: .NET Framework Library CI/CD
+name: .NET CI/CD
 
 on:
   push:
