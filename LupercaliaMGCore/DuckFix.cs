@@ -23,20 +23,18 @@ namespace LupercaliaMGCore {
                     if(player == null || !player.IsValid)
                         continue;
 
-                    CCSPlayer_MovementServices movementServices = new CCSPlayer_MovementServices(player.PlayerPawn.Value!.MovementServices!.Handle);
-                    m_CSSPlugin.RegisterListener<Listeners.OnTick>(() => 
-                    {
-                        if(movementServices != null) {
-                            movementServices.LastDuckTime = 0.0f;
-                            movementServices.DuckSpeed = 8.0f;
-                        }
-                    });
+                    hookPlayerMovement(player);
                 }
             }
         }
 
         private HookResult onPlayerConnected(EventPlayerConnectFull @event, GameEventInfo info) {
             CCSPlayerController player = @event.Userid!;
+            hookPlayerMovement(player);
+            return HookResult.Continue;
+        }
+
+        private void hookPlayerMovement(CCSPlayerController player) {
             CCSPlayer_MovementServices movementServices = new CCSPlayer_MovementServices(player.PlayerPawn.Value!.MovementServices!.Handle);
             m_CSSPlugin.RegisterListener<Listeners.OnTick>(() => 
             {
@@ -45,7 +43,6 @@ namespace LupercaliaMGCore {
                     movementServices.DuckSpeed = 8.0f;
                 }
             });
-            return HookResult.Continue;
         }
     }
 }
