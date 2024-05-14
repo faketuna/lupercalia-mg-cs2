@@ -2,6 +2,7 @@ using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API;
 using System.Drawing;
 using CounterStrikeSharp.API.Modules.Utils;
+using CounterStrikeSharp.API.Modules.Cvars;
 
 namespace LupercaliaMGCore {
     public class TeamBasedBodyColor
@@ -25,12 +26,14 @@ namespace LupercaliaMGCore {
                 return HookResult.Continue;
 
             Color color = Color.Black;
+            List<int> rgb = new List<int>();
             if(player.Team == CsTeam.CounterTerrorist) {
-                color = Color.FromArgb(0, 0 , 255);
+                rgb = PluginSettings.getInstance.m_CVTeamColorCT.Value.Split(',').Select(s => int.Parse(s.Trim())).ToList();
             }
             else if(player.Team == CsTeam.Terrorist) {
-                color = Color.FromArgb(255, 0 , 0);
+                rgb = PluginSettings.getInstance.m_CVTeamColorT.Value.Split(',').Select(s => int.Parse(s.Trim())).ToList();
             }
+            color = Color.FromArgb(rgb[0], rgb[1], rgb[2]);
             
             CBasePlayerPawn playerPawn = player.PlayerPawn.Value!;
 

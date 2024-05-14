@@ -19,9 +19,10 @@ namespace LupercaliaMGCore {
         private TeamScramble? teamScramble;
 
 
-
         public override void Load(bool hotReload)
         {
+            new PluginSettings(this);
+
             teamBasedBodyColor = new TeamBasedBodyColor(this);
             teamBasedBodyColor.initialize();
 
