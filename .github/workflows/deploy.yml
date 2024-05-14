@@ -73,6 +73,10 @@ jobs:
         name: release-artifacts
         path: artifacts/
 
+    - name: check files
+      run : |
+        dir
+
     - name: Create GitHub Release
       id: create_release
       uses: actions/create-release@v1
