@@ -9,9 +9,7 @@ namespace LupercaliaMGCore {
 
         public RoundEndDamageImmunity(LupercaliaMGCore plugin) {
             m_CSSPlugin = plugin;
-        }
 
-        public void initialize() {
             m_CSSPlugin.RegisterEventHandler<EventPlayerHurt>(OnPlayerHurt, HookMode.Pre);
             m_CSSPlugin.RegisterEventHandler<EventRoundPrestart>(OnRoundPreStart);
             m_CSSPlugin.RegisterEventHandler<EventRoundEnd>(OnRoundEnd);

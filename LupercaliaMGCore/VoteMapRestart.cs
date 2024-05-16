@@ -19,9 +19,7 @@ namespace LupercaliaMGCore {
 
         public VoteMapRestart(LupercaliaMGCore plugin) {
             m_CSSPlugin = plugin;
-        }
 
-        public void initialize() {
             mapStartTime = Server.EngineTime;
             m_CSSPlugin.RegisterEventHandler<EventMapTransition>(OnMapTransition);
             m_CSSPlugin.RegisterEventHandler<EventGameNewmap>(OnMapFullyLoaded);

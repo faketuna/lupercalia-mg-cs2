@@ -17,9 +17,7 @@ namespace LupercaliaMGCore {
 
         public VoteRoundRestart(LupercaliaMGCore plugin) {
             m_CSSPlugin = plugin;
-        }
 
-        public void initialize() {
             m_CSSPlugin.AddCommand("css_vrr", "Vote round restart command.", CommandVoteRestartRound);
             m_CSSPlugin.RegisterEventHandler<EventRoundPrestart>(OnRoundPreStart);
         }

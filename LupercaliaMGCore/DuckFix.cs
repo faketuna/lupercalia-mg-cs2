@@ -7,17 +7,13 @@ namespace LupercaliaMGCore {
     public class DuckFix
     {
         private LupercaliaMGCore m_CSSPlugin;
-        private bool isHotReload;
 
         public DuckFix(LupercaliaMGCore plugin, bool hotReload) {
             m_CSSPlugin = plugin;
-            isHotReload = hotReload;
-        }
-        
-        public void initialize() {
+
             m_CSSPlugin.RegisterEventHandler<EventPlayerConnectFull>(onPlayerConnected);
 
-            if(isHotReload) {
+            if(hotReload) {
                 List<CCSPlayerController> players = Utilities.GetPlayers();
                 foreach (CCSPlayerController player in players) {
                     if(player == null || !player.IsValid)

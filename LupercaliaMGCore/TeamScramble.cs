@@ -12,12 +12,9 @@ namespace LupercaliaMGCore {
 
         public TeamScramble(LupercaliaMGCore plugin) {
             m_CSSPlugin = plugin;
-        }
-        
-        public void initialize() {
+
             m_CSSPlugin.RegisterEventHandler<EventRoundEnd>(OnRoundEnd);
         }
-
 
         private HookResult OnRoundEnd(EventRoundEnd @event, GameEventInfo info) {
             if(!PluginSettings.getInstance.m_CVIsScrambleEnabled.Value)

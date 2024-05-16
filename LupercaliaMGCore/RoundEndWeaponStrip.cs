@@ -7,9 +7,7 @@ namespace LupercaliaMGCore {
 
         public RoundEndWeaponStrip(LupercaliaMGCore plugin) {
             m_CSSPlugin = plugin;
-        }
-
-        public void initialize() {
+            
             m_CSSPlugin.RegisterEventHandler<EventRoundPrestart>(OnRoundPreStart, HookMode.Pre);
         }
 

@@ -11,12 +11,9 @@ namespace LupercaliaMGCore {
 
         public TeamBasedBodyColor(LupercaliaMGCore plugin) {
             m_CSSPlugin = plugin;
-        }
-
-        public void initialize() {
+            
             m_CSSPlugin.RegisterEventHandler<EventPlayerSpawn>(OnPlayerSpawn);
         }
-
 
         private HookResult OnPlayerSpawn(EventPlayerSpawn @event, GameEventInfo info) {
 
