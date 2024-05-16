@@ -30,6 +30,7 @@ namespace LupercaliaMGCore {
             new VoteRoundRestart(this);
             new RoundEndDamageImmunity(this);
             new RoundEndWeaponStrip(this);
+            new ScheduledShutdown(this);
         }
     }
 }
