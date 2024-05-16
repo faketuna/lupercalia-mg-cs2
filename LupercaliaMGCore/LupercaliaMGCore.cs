@@ -31,6 +31,7 @@ namespace LupercaliaMGCore {
             new RoundEndDamageImmunity(this);
             new RoundEndWeaponStrip(this);
             new ScheduledShutdown(this);
+            new Respawn(this);
         }
     }
 }
