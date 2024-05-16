@@ -20,7 +20,9 @@ CounterStrikeSharp plugin for Lupercalia MG Server(Soon™)
   - [x] Round end damage immunity 
   - [x] Round end weapon strip
 - [ ] Course
-  - [ ] Auto Respawn with spawn killing detection
+  - [x] Auto Respawn with spawn killing detection
+- [ ] Fun
+  - [ ] Omikuji
 
 ## General
 
@@ -99,6 +101,12 @@ Same feature as [roundEndWeaponStrip](https://github.com/faketuna/roundEndWeapon
 
 - Auto respawn player when died
 - Repeat kill detection
+
+## Fun
+
+### Omikuji
+
+Probability based event system. When player type `!omikuji` in chat something good/bad/unknown event happens.
 
 # ConVars / Config
 
