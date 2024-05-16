@@ -48,7 +48,7 @@ namespace LupercaliaMGCore {
             }
 
             votedPlayers.Add(client);
-            playersRequiredToRestart = (int)Math.Ceiling(votedPlayers.Count * PluginSettings.getInstance.m_CVVoteMapRestartThreshold.Value);
+            playersRequiredToRestart = (int)Math.Ceiling(Utilities.GetPlayers().Count(player => !player.IsBot && !player.IsHLTV) * PluginSettings.getInstance.m_CVVoteMapRestartThreshold.Value);
 
             Server.PrintToChatAll(LupercaliaMGCore.MessageWithPrefix($"{client.PlayerName} wants to restart the map! Type !vmr in chat to vote. ({votedPlayers.Count} votes, {playersRequiredToRestart} required)"));
 
