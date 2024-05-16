@@ -1,5 +1,6 @@
 using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Modules.Cvars;
+using CounterStrikeSharp.API.Modules.Cvars.Validators;
 using Microsoft.Extensions.Logging;
 
 namespace LupercaliaMGCore {
@@ -23,6 +24,9 @@ namespace LupercaliaMGCore {
         public FakeConVar<string> m_CVTeamColorT {get;} = new("lp_mg_teamcolor_t", "Terrorist's Body color. R, G, B", "255, 0, 0");
         public FakeConVar<bool> m_CVIsScrambleEnabled {get;} = new("lp_mg_teamscramble_enabled", "Should team is scrambled after round end", true);
         public FakeConVar<int> m_CVMapConfigType {get;} = new ("lp_mg_mapcfg_type", "Map configuration type. 0: disabled, 1: Exact match, 2: Partial Match, 3: Both", 0);
+        public FakeConVar<double> m_CVVoteMapRestartAllowedTime {get;} = new("lp_mg_vmr_allowed_time", "How long allowed to use vote command after map loaded in seconds.", 60.0D);
+        public FakeConVar<float> m_CVVoteMapRestartThreshold {get;} = new("lp_mg_vmr_vote_threshold", "How percent of votes required to initiate the map restart.", 0.7F, ConVarFlags.FCVAR_NONE, new RangeValidator<float>(0.0F, 1.0F));
+        public FakeConVar<float> m_CVVoteMapRestartRestartTime {get;} = new("lp_mg_vmr_restart_time", "How long to take restarting map after vote passed.", 10.0F, ConVarFlags.FCVAR_NONE, new RangeValidator<float>(0.0F, float.MaxValue));
 
         private LupercaliaMGCore m_CSSPlugin;
 
@@ -75,6 +79,9 @@ namespace LupercaliaMGCore {
             config.WriteLine($"{m_CVMapConfigType.Name} \"{m_CVMapConfigType.Value}\"");
             config.WriteLine($"{m_CVTeamColorCT.Name} \"{m_CVTeamColorCT.Value}\"");
             config.WriteLine($"{m_CVTeamColorT.Name} \"{m_CVTeamColorT.Value}\"");
+            config.WriteLine($"{m_CVVoteMapRestartAllowedTime.Name} \"{m_CVVoteMapRestartAllowedTime.Value}\"");
+            config.WriteLine($"{m_CVVoteMapRestartThreshold.Name} \"{m_CVVoteMapRestartThreshold.Value}\"");
+            config.WriteLine($"{m_CVVoteMapRestartRestartTime.Name} \"{m_CVVoteMapRestartRestartTime.Value}\"");
 
             config.Close();
         }
