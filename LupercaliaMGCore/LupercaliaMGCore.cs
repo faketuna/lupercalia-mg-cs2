@@ -23,6 +23,7 @@ namespace LupercaliaMGCore {
         private DuckFix? duckFix;
         private TeamScramble? teamScramble;
         private VoteMapRestart? voteMapRestart;
+        private VoteRoundRestart? voteRoundRestart;
 
 
         public override void Load(bool hotReload)
@@ -40,6 +41,9 @@ namespace LupercaliaMGCore {
 
             voteMapRestart = new VoteMapRestart(this);
             voteMapRestart.initialize();
+
+            voteRoundRestart = new VoteRoundRestart(this);
+            voteRoundRestart.initialize();
         }
     }
 }

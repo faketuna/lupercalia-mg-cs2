@@ -27,6 +27,8 @@ namespace LupercaliaMGCore {
         public FakeConVar<double> m_CVVoteMapRestartAllowedTime {get;} = new("lp_mg_vmr_allowed_time", "How long allowed to use vote command after map loaded in seconds.", 60.0D);
         public FakeConVar<float> m_CVVoteMapRestartThreshold {get;} = new("lp_mg_vmr_vote_threshold", "How percent of votes required to initiate the map restart.", 0.7F, ConVarFlags.FCVAR_NONE, new RangeValidator<float>(0.0F, 1.0F));
         public FakeConVar<float> m_CVVoteMapRestartRestartTime {get;} = new("lp_mg_vmr_restart_time", "How long to take restarting map after vote passed.", 10.0F, ConVarFlags.FCVAR_NONE, new RangeValidator<float>(0.0F, float.MaxValue));
+        public FakeConVar<float> m_CVVoteRoundRestartThreshold {get;} = new("lp_mg_vrr_vote_threshold", "How percent of votes required to initiate the round restart.", 0.7F, ConVarFlags.FCVAR_NONE, new RangeValidator<float>(0.0F, 1.0F));
+        public FakeConVar<float> m_CVVoteRoundRestartRestartTime {get;} = new("lp_mg_vrr_restart_time", "How long to take restarting round after vote passed.", 10.0F, ConVarFlags.FCVAR_NONE, new RangeValidator<float>(0.0F, float.MaxValue));
 
         private LupercaliaMGCore m_CSSPlugin;
 
@@ -82,6 +84,8 @@ namespace LupercaliaMGCore {
             config.WriteLine($"{m_CVVoteMapRestartAllowedTime.Name} \"{m_CVVoteMapRestartAllowedTime.Value}\"");
             config.WriteLine($"{m_CVVoteMapRestartThreshold.Name} \"{m_CVVoteMapRestartThreshold.Value}\"");
             config.WriteLine($"{m_CVVoteMapRestartRestartTime.Name} \"{m_CVVoteMapRestartRestartTime.Value}\"");
+            config.WriteLine($"{m_CVVoteRoundRestartThreshold.Name} \"{m_CVVoteRoundRestartThreshold.Value}\"");
+            config.WriteLine($"{m_CVVoteRoundRestartRestartTime.Name} \"{m_CVVoteRoundRestartRestartTime.Value}\"");
 
             config.Close();
         }
