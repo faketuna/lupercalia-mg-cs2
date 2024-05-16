@@ -31,8 +31,6 @@ namespace LupercaliaMGCore {
         private void CommandVoteRestartMap(CCSPlayerController? client, CommandInfo info) {
             if(client == null)
                 return;
-            
-            Server.PrintToChatAll($"time: {mapStartTime} | EngineTime: {Server.EngineTime} | PL SETTINGS: {PluginSettings.getInstance.m_CVVoteMapRestartAllowedTime.Value}");
 
             if(isMapRestarting) {
                 client.PrintToChat(LupercaliaMGCore.MessageWithPrefix("Map is already restarting in progress!"));
