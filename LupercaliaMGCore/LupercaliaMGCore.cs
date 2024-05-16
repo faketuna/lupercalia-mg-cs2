@@ -25,6 +25,7 @@ namespace LupercaliaMGCore {
         private VoteMapRestart? voteMapRestart;
         private VoteRoundRestart? voteRoundRestart;
         private RoundEndDamageImmunity? roundEndDamageImmunity;
+        private RoundEndWeaponStrip? roundEndWeaponStrip;
 
 
         public override void Load(bool hotReload)
@@ -48,6 +49,9 @@ namespace LupercaliaMGCore {
 
             roundEndDamageImmunity = new RoundEndDamageImmunity(this);
             roundEndDamageImmunity.initialize();
+
+            roundEndWeaponStrip = new RoundEndWeaponStrip(this);
+            roundEndWeaponStrip.initialize();
         }
     }
 }

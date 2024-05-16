@@ -30,6 +30,7 @@ namespace LupercaliaMGCore {
         public FakeConVar<float> m_CVVoteRoundRestartThreshold {get;} = new("lp_mg_vrr_vote_threshold", "How percent of votes required to initiate the round restart.", 0.7F, ConVarFlags.FCVAR_NONE, new RangeValidator<float>(0.0F, 1.0F));
         public FakeConVar<float> m_CVVoteRoundRestartRestartTime {get;} = new("lp_mg_vrr_restart_time", "How long to take restarting round after vote passed.", 10.0F, ConVarFlags.FCVAR_NONE, new RangeValidator<float>(0.0F, float.MaxValue));
         public FakeConVar<bool> m_CVIsRoundEndDamageImmunityEnabled {get;} = new("lp_mg_redi_enabled", "Should player grant damage immunity after round end until next round starts.", true);
+        public FakeConVar<bool> m_CVIsRoundEndWeaponStripEnabled {get;} = new("lp_mg_rews_enabled", "Should player's weapons are removed before new round starts.", true);
 
         private LupercaliaMGCore m_CSSPlugin;
 
@@ -88,6 +89,7 @@ namespace LupercaliaMGCore {
             config.WriteLine($"{m_CVVoteRoundRestartThreshold.Name} \"{m_CVVoteRoundRestartThreshold.Value}\"");
             config.WriteLine($"{m_CVVoteRoundRestartRestartTime.Name} \"{m_CVVoteRoundRestartRestartTime.Value}\"");
             config.WriteLine($"{m_CVIsRoundEndDamageImmunityEnabled.Name} \"{m_CVIsRoundEndDamageImmunityEnabled.Value}\"");
+            config.WriteLine($"{m_CVIsRoundEndWeaponStripEnabled.Name} \"{m_CVIsRoundEndWeaponStripEnabled.Value}\"");
 
             config.Close();
         }
