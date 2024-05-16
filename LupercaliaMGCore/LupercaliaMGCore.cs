@@ -24,6 +24,7 @@ namespace LupercaliaMGCore {
         private TeamScramble? teamScramble;
         private VoteMapRestart? voteMapRestart;
         private VoteRoundRestart? voteRoundRestart;
+        private RoundEndDamageImmunity? roundEndDamageImmunity;
 
 
         public override void Load(bool hotReload)
@@ -44,6 +45,9 @@ namespace LupercaliaMGCore {
 
             voteRoundRestart = new VoteRoundRestart(this);
             voteRoundRestart.initialize();
+
+            roundEndDamageImmunity = new RoundEndDamageImmunity(this);
+            roundEndDamageImmunity.initialize();
         }
     }
 }

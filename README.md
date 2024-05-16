@@ -17,7 +17,7 @@ CounterStrikeSharp plugin for Lupercalia MG Server(Soon™)
   - [x] Team Based Body Color
   - [x] Team Scramble
   - [ ] Anti camp system
-  - [ ] Round end damage immunity 
+  - [x] Round end damage immunity 
   - [ ] Round end weapon strip
 - [ ] Course
   - [ ] Auto Respawn with spawn killing detection
