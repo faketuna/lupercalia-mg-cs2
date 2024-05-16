@@ -12,13 +12,13 @@ CounterStrikeSharp plugin for Lupercalia MG Server(Soon™)
   - [ ] Easy spectate 
   - [x] Vote map restart
   - [x] Vote round restart
-  - [ ] Scheduled shutdown
+  - [x] Scheduled shutdown
 - [ ] Multigames
   - [x] Team Based Body Color
   - [x] Team Scramble
   - [ ] Anti camp system
   - [x] Round end damage immunity 
-  - [ ] Round end weapon strip
+  - [x] Round end weapon strip
 - [ ] Course
   - [ ] Auto Respawn with spawn killing detection
 
