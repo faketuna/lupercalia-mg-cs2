@@ -18,8 +18,6 @@ namespace LupercaliaMGCore {
 
         public override string ModuleDescription => "Provides core MG feature in CS2 with CounterStrikeSharp";
 
-        // Feature classes
-
 
         public override void Load(bool hotReload)
         {
