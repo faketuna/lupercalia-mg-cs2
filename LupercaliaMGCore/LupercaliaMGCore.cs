@@ -1,9 +1,14 @@
 ﻿using CounterStrikeSharp.API.Core;
+using CounterStrikeSharp.API.Modules.Utils;
 
 namespace LupercaliaMGCore {
     public class LupercaliaMGCore: BasePlugin
     {
-        public static readonly string PLUGIN_PREFIX  = "[LPŘ MG]";
+        public static readonly string PLUGIN_PREFIX  = $" {ChatColors.DarkRed}[{ChatColors.Blue}LPŘ MG{ChatColors.DarkRed}]{ChatColors.Default}";
+
+        public static string MessageWithPrefix(string message) {
+            return $"{PLUGIN_PREFIX} {message}";
+        }
 
         public override string ModuleName => "Lupercalia MG Core";
 
@@ -17,6 +22,7 @@ namespace LupercaliaMGCore {
         private TeamBasedBodyColor? teamBasedBodyColor;
         private DuckFix? duckFix;
         private TeamScramble? teamScramble;
+        private VoteMapRestart? voteMapRestart;
 
 
         public override void Load(bool hotReload)
@@ -31,6 +37,9 @@ namespace LupercaliaMGCore {
 
             teamScramble = new TeamScramble(this);
             teamScramble.initialize();
+
+            voteMapRestart = new VoteMapRestart(this);
+            voteMapRestart.initialize();
         }
     }
 }
