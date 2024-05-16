@@ -10,8 +10,8 @@ CounterStrikeSharp plugin for Lupercalia MG Server(Soon™)
   - [ ] Map config
   - [ ] Rocket
   - [ ] Easy spectate 
-  - [ ] Vote map restart
-  - [ ] Vote round restart
+  - [x] Vote map restart
+  - [x] Vote round restart
   - [ ] Scheduled shutdown
 - [ ] Multigames
   - [x] Team Based Body Color
