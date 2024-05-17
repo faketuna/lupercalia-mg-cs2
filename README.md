@@ -118,16 +118,16 @@ Config file will be generated in `csgo/cfg/lupercalia/`
 - lp_mg_teamscramble_enabled              1           | Should team is scrambled after round end
 - lp_mg_mapcfg_type                       0           | Map configuration type. 0: disabled, 1: Exact match, 2: Partial Match, 3: Both
 - lp_mg_vmr_allowed_time                  60.0        | How long allowed to use vote command after map loaded in seconds.
-- lp_mg_vmr_vote_threshold                0.7F        | How percent of votes required to initiate the map restart.      
-- lp_mg_vmr_restart_time                  10.0F       | How long to take restarting map after vote passed.
-- lp_mg_vrr_vote_threshold                0.7F        | How percent of votes required to initiate the round restart.
-- lp_mg_vrr_restart_time                  10.0F       | How long to take restarting round after vote passed.
+- lp_mg_vmr_vote_threshold                0.7         | How percent of votes required to initiate the map restart.      
+- lp_mg_vmr_restart_time                  10.0        | How long to take restarting map after vote passed.
+- lp_mg_vrr_vote_threshold                0.7         | How percent of votes required to initiate the round restart.
+- lp_mg_vrr_restart_time                  10.0        | How long to take restarting round after vote passed.
 - lp_mg_redi_enabled                      1           | Should player grant damage immunity after round end until next round starts.
 - lp_mg_rews_enabled                      1           | Should player's weapons are removed before new round starts.
 - lp_mg_scheduled_shutdown_time           0500        | Server will be shutdown in specified time. Format is HHmm
 - lp_mg_scheduled_shutdown_warn_time      10          | Show shutdown warning countdown if lp_mg_scheduled_shutdown_round_end is false.
 - lp_mg_scheduled_shutdown_round_end      1           | When set to true server will be shutdown after round end.
 - lp_mg_auto_respawn_enabled              0           | Auto respawn feature is enabled.
-- lp_mg_auto_respawn_repeat_kill_time     1.0F        | Seconds to detect as spawn killing.
-- lp_mg_auto_respawn_time                 1.0F        | How long to respawn after death.
+- lp_mg_auto_respawn_repeat_kill_time     1.0         | Seconds to detect as spawn killing.
+- lp_mg_auto_respawn_time                 1.0         | How long to respawn after death.
 ```
