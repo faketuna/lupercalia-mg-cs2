@@ -9,7 +9,7 @@ CounterStrikeSharp plugin for Lupercalia MG Server(Soon™)
   - [x] DuckFix
   - [ ] Map config
   - [ ] Rocket
-  - [ ] Easy spectate 
+  - [ ] Easy spectate (TODO!) 
   - [x] Vote map restart
   - [x] Vote round restart
   - [x] Scheduled shutdown
@@ -43,6 +43,8 @@ Probability based vertical launching system. And high chance(default) to die due
 Same feature as [Rocket](https://github.com/faketuna/sm-csgo-rocket)
 
 ### Easy spectate
+
+Will be implemented after Trace Ray feature implemented in CounterStrikeSharp.
 
 Spectate aimed player when player is spectating/died and pressing `+use`
 
