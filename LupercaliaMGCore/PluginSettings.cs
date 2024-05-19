@@ -37,6 +37,11 @@ namespace LupercaliaMGCore {
         public FakeConVar<bool> m_CVAutoRespawnEnabled = new("lp_mg_auto_respawn_enabled", "Auto respawn feature is enabled", false);
         public FakeConVar<float> m_CVAutoRespawnSpawnKillingDetectionTime = new("lp_mg_auto_respawn_repeat_kill_time", "Seconds to detect as spawn killing.", 1.0F);
         public FakeConVar<float> m_CVAutoRespawnSpawnTime = new("lp_mg_auto_respawn_time", "How long to respawn after death.", 1.0F);
+        public FakeConVar<bool> m_CVAntiCampEnabled = new("lp_mg_anti_camp_enabled", "Anti camp enabled", true);
+        public FakeConVar<float> m_CVAntiCampDetectionTime = new("lp_mg_anti_camp_detection_time", "How long to take detected as camping in seconds.", 10.0F);
+        public FakeConVar<double> m_CVAntiCampDetectionRadius = new("lp_mg_anti_camp_detection_radius", "Range of area for player should move for avoiding the detected as camping.", 400.0F);
+        public FakeConVar<float> m_CVAntiCampDetectionInterval = new("lp_mg_anti_camp_detection_interval", "Interval to run camping check in seconds.", 0.1F);
+        public FakeConVar<float> m_CVAntiCampMarkingTime = new("lp_mg_anti_camp_glowing_time", "How long to detected player keep glowing.", 10.0F);
 
         private LupercaliaMGCore m_CSSPlugin;
 
@@ -94,6 +99,11 @@ namespace LupercaliaMGCore {
             config.WriteLine($"{m_CVVoteRoundRestartRestartTime.Name} {m_CVVoteRoundRestartRestartTime.Value}");
             config.WriteLine($"{m_CVIsRoundEndDamageImmunityEnabled.Name} {m_CVIsRoundEndDamageImmunityEnabled.Value}");
             config.WriteLine($"{m_CVIsRoundEndWeaponStripEnabled.Name} {m_CVIsRoundEndWeaponStripEnabled.Value}");
+            config.WriteLine($"{m_CVAntiCampEnabled.Name} {m_CVAntiCampEnabled.Value}");
+            config.WriteLine($"{m_CVAntiCampDetectionTime.Name} {m_CVAntiCampDetectionTime.Value}");
+            config.WriteLine($"{m_CVAntiCampDetectionRadius.Name} {m_CVAntiCampDetectionRadius.Value}");
+            config.WriteLine($"{m_CVAntiCampDetectionInterval.Name} {m_CVAntiCampDetectionInterval.Value}");
+            config.WriteLine($"{m_CVAntiCampMarkingTime.Name} {m_CVAntiCampMarkingTime.Value}");
 
             config.Close();
         }

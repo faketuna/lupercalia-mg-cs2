@@ -132,4 +132,9 @@ Config file will be generated in `csgo/cfg/lupercalia/`
 - lp_mg_auto_respawn_enabled              0           | Auto respawn feature is enabled.
 - lp_mg_auto_respawn_repeat_kill_time     1.0         | Seconds to detect as spawn killing.
 - lp_mg_auto_respawn_time                 1.0         | How long to respawn after death.
+- lp_mg_anti_camp_enabled                 1           | Anti camp enabled
+- lp_mg_anti_camp_detection_time          10.0        | How long to detect as camping in seconds.
+- lp_mg_anti_camp_detection_radius        400.0       | Range of area for player should move for avoiding the detected as camping.
+- lp_mg_anti_camp_detection_interval      0.1         | Interval to run camping check in seconds.
+- lp_mg_anti_camp_glowing_time            10.0        | How long to detected player model are keep glowing in seconds.
 ```
