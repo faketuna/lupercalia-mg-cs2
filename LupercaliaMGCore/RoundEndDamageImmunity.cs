@@ -18,6 +18,10 @@ namespace LupercaliaMGCore {
         private HookResult OnPlayerHurt(EventPlayerHurt @event, GameEventInfo info) {
             if(damageImmunity && PluginSettings.getInstance.m_CVIsRoundEndDamageImmunityEnabled.Value) {
                 var player = @event.Userid?.PlayerPawn?.Value;
+
+                if(player == null)
+                    return HookResult.Continue;
+
                 player.Health = player.LastHealth;
                 return HookResult.Continue;
 

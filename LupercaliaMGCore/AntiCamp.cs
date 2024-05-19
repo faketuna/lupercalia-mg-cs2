@@ -100,7 +100,7 @@ namespace LupercaliaMGCore {
         }
 
         private HookResult onPlayerConnect(EventPlayerConnect @event, GameEventInfo info) {
-            CCSPlayerController client = @event.Userid;
+            CCSPlayerController? client = @event.Userid;
 
             if(client == null) 
                 return HookResult.Continue;
@@ -114,7 +114,7 @@ namespace LupercaliaMGCore {
         }
 
         private HookResult onPlayerConnectFull(EventPlayerConnectFull @event, GameEventInfo info) {
-            CCSPlayerController client = @event.Userid;
+            CCSPlayerController? client = @event.Userid;
 
             if(client == null) 
                 return HookResult.Continue;
