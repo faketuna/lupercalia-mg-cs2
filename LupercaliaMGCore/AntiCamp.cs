@@ -14,13 +14,25 @@ namespace LupercaliaMGCore {
         private Dictionary<CCSPlayerController, bool> isPlayerWarned = new Dictionary<CCSPlayerController, bool>();
         private Dictionary<CCSPlayerController, CounterStrikeSharp.API.Modules.Timers.Timer> glowingTimer = new Dictionary<CCSPlayerController, CounterStrikeSharp.API.Modules.Timers.Timer>();
 
+        private bool isRoundStarted = false;
+
         public AntiCamp(LupercaliaMGCore plugin, bool hotReload) {
             m_CSSPlugin = plugin;
 
             m_CSSPlugin.RegisterEventHandler<EventPlayerConnect>(onPlayerConnect, HookMode.Pre);
             m_CSSPlugin.RegisterEventHandler<EventPlayerConnectFull>(onPlayerConnectFull, HookMode.Pre);
 
+            m_CSSPlugin.RegisterEventHandler<EventRoundFreezeEnd>(onRoundFeezeEnd, HookMode.Post);
+            m_CSSPlugin.RegisterEventHandler<EventRoundEnd>(onRoundEnd, HookMode.Post);
+
+
             if(hotReload) {
+                bool isFreezeTimeEnded = Utilities.FindAllEntitiesByDesignerName<CCSGameRulesProxy>("cs_gamerules").First().GameRules?.FreezePeriod ?? false;
+
+                if(isFreezeTimeEnded) {
+                    isRoundStarted = true;
+                }
+
                 foreach(var client in Utilities.GetPlayers()) {
                     if(!client.IsValid || client.IsBot || client.IsHLTV)
                         continue;
@@ -33,6 +45,9 @@ namespace LupercaliaMGCore {
         }
 
         private void checkPlayerIsCamping() {
+            if(!isRoundStarted)
+                return;
+
             foreach(var client in Utilities.GetPlayers()) {
                 if(!client.IsValid || client.IsBot || client.IsHLTV)
                     continue;
@@ -72,6 +87,16 @@ namespace LupercaliaMGCore {
                     playerGlowingTime[client] = PluginSettings.getInstance.m_CVAntiCampMarkingTime.Value;
                 }
             }
+        }
+
+        private HookResult onRoundFeezeEnd(EventRoundFreezeEnd @event, GameEventInfo info) {
+            isRoundStarted = true;
+            return HookResult.Continue;
+        }
+
+        private HookResult onRoundEnd(EventRoundEnd @event, GameEventInfo info) {
+            isRoundStarted = false;
+            return HookResult.Continue;
         }
 
         private HookResult onPlayerConnect(EventPlayerConnect @event, GameEventInfo info) {
