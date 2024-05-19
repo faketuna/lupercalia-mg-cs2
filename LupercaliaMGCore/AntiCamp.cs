@@ -18,6 +18,7 @@ namespace LupercaliaMGCore {
             m_CSSPlugin = plugin;
 
             m_CSSPlugin.RegisterEventHandler<EventPlayerConnect>(onPlayerConnect, HookMode.Pre);
+            m_CSSPlugin.RegisterEventHandler<EventPlayerConnectFull>(onPlayerConnectFull, HookMode.Pre);
 
             if(hotReload) {
                 foreach(var client in Utilities.GetPlayers()) {
@@ -36,6 +37,9 @@ namespace LupercaliaMGCore {
                 if(!client.IsValid || client.IsBot || client.IsHLTV)
                     continue;
 
+                if(!isClientInformationAccessible(client))
+                    continue;
+
                 Vector? clientOrigin = client.PlayerPawn.Value!.AbsOrigin;
                 
                 if(clientOrigin == null)
@@ -52,9 +56,8 @@ namespace LupercaliaMGCore {
 
                 if(distance <= PluginSettings.getInstance.m_CVAntiCampDetectionRadius.Value) {
                     playerCampingTime[client] += PluginSettings.getInstance.m_CVAntiCampDetectionInterval.Value;
-                    string msg = $"You have been camping for {playerCampingTime[client]:F2} | secondsGlowingTime: {playerGlowingTime[client]:F2} \nCurrent Location: {clientOrigin.X:F2} {clientOrigin.Y:F2} {clientOrigin.Z:F2} | Compared Location: {lastLocation.vector.X:F2} {lastLocation.vector.Y:F2} {lastLocation.vector.Z:F2} \nLocation captured time {lastLocation.time:F2} | Difference: {distance:F2}";
-
-                    client.PrintToCenter(msg);
+                    // string msg = $"You have been camping for {playerCampingTime[client]:F2} | secondsGlowingTime: {playerGlowingTime[client]:F2} \nCurrent Location: {clientOrigin.X:F2} {clientOrigin.Y:F2} {clientOrigin.Z:F2} | Compared Location: {lastLocation.vector.X:F2} {lastLocation.vector.Y:F2} {lastLocation.vector.Z:F2} \nLocation captured time {lastLocation.time:F2} | Difference: {distance:F2}";
+                    // client.PrintToCenter(msg);
                 } else {
                     playerCampingTime[client] = 0.0F;
                 }
@@ -85,6 +88,26 @@ namespace LupercaliaMGCore {
             return HookResult.Continue;
         }
 
+        private HookResult onPlayerConnectFull(EventPlayerConnectFull @event, GameEventInfo info) {
+            CCSPlayerController client = @event.Userid;
+
+            if(client == null) 
+                return HookResult.Continue;
+
+            if(!client.IsValid || client.IsBot || client.IsHLTV)
+                return HookResult.Continue;
+            
+            if(isClientInformationAccessible(client))
+                return HookResult.Continue;
+
+            initClientInformation(client);
+            return HookResult.Continue;
+        }
+
+        private bool isClientInformationAccessible(CCSPlayerController client) {
+            return playerPositionHistory.ContainsKey(client) && playerCampingTime.ContainsKey(client) && playerGlowingTime.ContainsKey(client) && isPlayerWarned.ContainsKey(client);
+        }
+
         private void initClientInformation(CCSPlayerController client) {
             playerPositionHistory[client] = new PlayerPositionHistory((int)(PluginSettings.getInstance.m_CVAntiCampDetectionTime.Value / PluginSettings.getInstance.m_CVAntiCampDetectionInterval.Value));
             playerCampingTime[client] = 0.0F;
@@ -94,9 +117,8 @@ namespace LupercaliaMGCore {
 
         private void recreateGlowingTimer(CCSPlayerController client) {
             float timerInterval = PluginSettings.getInstance.m_CVAntiCampDetectionInterval.Value;
-            client.PrintToChat("You have detected as Camping! MOVE!");
             isPlayerWarned[client] = true;
-
+            client.PrintToCenterAlert("You have detected as CAMPING. MOVE!");
             glowingTimer[client] = m_CSSPlugin.AddTimer(timerInterval, () => {
                 if(playerGlowingTime[client] <= 0.0F) {
                     stopPlayerGlowing(client);
@@ -104,7 +126,6 @@ namespace LupercaliaMGCore {
                     glowingTimer[client].Kill();
                 }
                 playerGlowingTime[client] -= timerInterval;
-                Server.PrintToChatAll($"Glowing time {playerGlowingTime[client]}");
             }, TimerFlags.REPEAT);
         }
 
