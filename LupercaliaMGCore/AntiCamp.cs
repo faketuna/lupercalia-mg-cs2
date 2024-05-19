@@ -164,6 +164,14 @@ namespace LupercaliaMGCore {
             playerPawn.Glow.GlowTeam = -1;
             playerPawn.Glow.GlowType = 3;
             playerPawn.Glow.GlowRangeMin = 0;
+            /*
+                We can't send state change to client due to error.
+                Couldn't resolve offset 1584 in CCSPlayerPawn at path (-1 = '')
+                SV:  246/CCSPlayerPawn:  requested resolve all 4 changes, actually resolved only 3 changes
+                SV:    3                                     1584 not resolved
+            */
+            Utilities.SetStateChanged(playerPawn, "CBaseModelEntity", "m_clrRender");
+            Utilities.SetStateChanged(playerPawn, "CBaseModelEntity", "m_Glow");
         }
 
         // TODO Remove Glow player
@@ -174,6 +182,8 @@ namespace LupercaliaMGCore {
             playerPawn.Glow.GlowRange = 0;
             playerPawn.Glow.GlowTeam = 0;
             playerPawn.Glow.GlowType = 0;
+            Utilities.SetStateChanged(playerPawn, "CBaseModelEntity", "m_clrRender");
+            Utilities.SetStateChanged(playerPawn, "CBaseModelEntity", "m_Glow");
         }
 
 
