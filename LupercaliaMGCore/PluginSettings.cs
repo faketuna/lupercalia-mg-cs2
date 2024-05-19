@@ -39,7 +39,7 @@ namespace LupercaliaMGCore {
         public FakeConVar<float> m_CVAutoRespawnSpawnTime = new("lp_mg_auto_respawn_time", "How long to respawn after death.", 1.0F);
         public FakeConVar<bool> m_CVAntiCampEnabled = new("lp_mg_anti_camp_enabled", "Anti camp enabled", true);
         public FakeConVar<float> m_CVAntiCampDetectionTime = new("lp_mg_anti_camp_detection_time", "How long to take detected as camping in seconds.", 10.0F);
-        public FakeConVar<double> m_CVAntiCampDetectionRadius = new("lp_mg_anti_camp_detection_radius", "Range of area for player should move for avoiding the detected as camping.", 400.0F);
+        public FakeConVar<double> m_CVAntiCampDetectionRadius = new("lp_mg_anti_camp_detection_radius", "Range of area for player should move for avoiding the detected as camping.", 200.0F);
         public FakeConVar<float> m_CVAntiCampDetectionInterval = new("lp_mg_anti_camp_detection_interval", "Interval to run camping check in seconds.", 0.1F);
         public FakeConVar<float> m_CVAntiCampMarkingTime = new("lp_mg_anti_camp_glowing_time", "How long to detected player keep glowing.", 10.0F);
 
