@@ -19,6 +19,9 @@ namespace LupercaliaMGCore {
 
             CCSPlayerController player = @event.Userid!;
 
+            if(!player.IsValid)
+                return HookResult.Continue;
+
             if(player.Team == CsTeam.None || player.Team == CsTeam.Spectator)
                 return HookResult.Continue;
 
