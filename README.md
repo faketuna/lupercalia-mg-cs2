@@ -16,7 +16,7 @@ CounterStrikeSharp plugin for Lupercalia MG Server(Soon™)
 - [ ] Multigames
   - [x] Team Based Body Color
   - [x] Team Scramble
-  - [ ] Anti camp system
+  - [ ] Anti camp system (TODO!)
   - [x] Round end damage immunity 
   - [x] Round end weapon strip
 - [ ] Course
@@ -83,7 +83,9 @@ Same feature as [TeamBasedBodyColor](https://github.com/faketuna/TeamBasedBodyCo
 
 ### Anti camp system
 
-- When camp detected player will be slapped
+Player model cannot be glowing atm. After this problem solved It will release ready.
+
+- When camp detected player will be slapped or glowed.
 
 ### Round end damage immunity
 
