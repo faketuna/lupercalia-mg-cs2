@@ -7,7 +7,7 @@ CounterStrikeSharp plugin for Lupercalia MG Server(Soon™)
 
 - [ ] General
   - [x] DuckFix
-  - [ ] Map config
+  - [x] Map config
   - [ ] Rocket
   - [ ] Easy spectate (TODO!) 
   - [x] Vote map restart
