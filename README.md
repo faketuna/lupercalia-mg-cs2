@@ -35,6 +35,28 @@ This feature removes duck cooldown when spamming `+duck` button.
 - Support full map name matching. i.e. `mg_test_multigames`
 - Support start with any prefix. i.e. `mg_`
 
+#### Usage
+
+Put `***.cfg` to `csgo/cfg/lupercalia/map/` folder
+
+This map config folder will automatically created when not exists.
+
+#### ConVar
+
+In default `lp_mg_mapcfg_type` is 0, which means disabled.
+
+If you want to use exact mach i.e. `de_dust2.cfg` set `lp_mg_mapcfg_type` to 1
+
+Or you want to use forward match i.e. `de_.cfg` set `lp_mg_mapcfg_type` to 2
+
+---
+
+In default `lp_mg_mapcfg_execution_timing` is 1 which means Execute on map start only.
+
+If you want to execute at only round start set `lp_mg_mapcfg_execution_timing` to 2
+
+Or you want to execute at both set `lp_mg_mapcfg_execution_timing` to 3
+
 
 ### Rocket
 
@@ -138,6 +160,6 @@ Config file will be generated in `csgo/cfg/lupercalia/`
 - lp_mg_anti_camp_detection_radius        400.0       | Range of area for player should move for avoiding the detected as camping.
 - lp_mg_anti_camp_detection_interval      0.1         | Interval to run camping check in seconds.
 - lp_mg_anti_camp_glowing_time            10.0        | How long to detected player model are keep glowing in seconds.
-- lp_mg_mapcfg_type                       0           | Map configuration type. 0: disabled, 1: Exact match, 2: Partial Match
+- lp_mg_mapcfg_type                       0           | Map configuration type. 0: disabled, 1: Exact match, 2: Forward Match
 - lp_mg_mapcfg_execution_timing           1           | When configs are executed? 0: Does nothing, 1: Execute on map start, 2: Execute on every round start, 3: Execute on map transition and every round start
 ```
