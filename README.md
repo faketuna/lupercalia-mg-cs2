@@ -120,7 +120,6 @@ Config file will be generated in `csgo/cfg/lupercalia/`
 - lp_mg_teamcolor_ct                      0, 0, 255   | Counter Terrorist's Body color. R, G, B
 - lp_mg_teamcolor_t                       255, 0, 0   | Terrorist's Body color. R, G, B
 - lp_mg_teamscramble_enabled              1           | Should team is scrambled after round end
-- lp_mg_mapcfg_type                       0           | Map configuration type. 0: disabled, 1: Exact match, 2: Partial Match, 3: Both
 - lp_mg_vmr_allowed_time                  60.0        | How long allowed to use vote command after map loaded in seconds.
 - lp_mg_vmr_vote_threshold                0.7         | How percent of votes required to initiate the map restart.      
 - lp_mg_vmr_restart_time                  10.0        | How long to take restarting map after vote passed.
@@ -139,4 +138,6 @@ Config file will be generated in `csgo/cfg/lupercalia/`
 - lp_mg_anti_camp_detection_radius        400.0       | Range of area for player should move for avoiding the detected as camping.
 - lp_mg_anti_camp_detection_interval      0.1         | Interval to run camping check in seconds.
 - lp_mg_anti_camp_glowing_time            10.0        | How long to detected player model are keep glowing in seconds.
+- lp_mg_mapcfg_type                       0           | Map configuration type. 0: disabled, 1: Exact match, 2: Partial Match
+- lp_mg_mapcfg_execution_timing           1           | When configs are executed? 0: Does nothing, 1: Execute on map start, 2: Execute on every round start, 3: Execute on map transition and every round start
 ```

@@ -32,6 +32,7 @@ namespace LupercaliaMGCore {
             new RoundEndWeaponStrip(this);
             new ScheduledShutdown(this);
             new Respawn(this);
+            new MapConfig(this);
         }
     }
 }

@@ -23,7 +23,6 @@ namespace LupercaliaMGCore {
         public FakeConVar<string> m_CVTeamColorCT  = new("lp_mg_teamcolor_ct", "Counter Terrorist's Body color. R, G, B", "0, 0, 255");
         public FakeConVar<string> m_CVTeamColorT = new("lp_mg_teamcolor_t", "Terrorist's Body color. R, G, B", "255, 0, 0");
         public FakeConVar<bool> m_CVIsScrambleEnabled = new("lp_mg_teamscramble_enabled", "Should team is scrambled after round end", true);
-        public FakeConVar<int> m_CVMapConfigType = new ("lp_mg_mapcfg_type", "Map configuration type. 0: disabled, 1: Exact match, 2: Partial Match, 3: Both", 0);
         public FakeConVar<double> m_CVVoteMapRestartAllowedTime = new("lp_mg_vmr_allowed_time", "How long allowed to use vote command after map loaded in seconds.", 60.0D);
         public FakeConVar<float> m_CVVoteMapRestartThreshold = new("lp_mg_vmr_vote_threshold", "How percent of votes required to initiate the map restart.", 0.7F, ConVarFlags.FCVAR_NONE, new RangeValidator<float>(0.0F, 1.0F));
         public FakeConVar<float> m_CVVoteMapRestartRestartTime = new("lp_mg_vmr_restart_time", "How long to take restarting map after vote passed.", 10.0F, ConVarFlags.FCVAR_NONE, new RangeValidator<float>(0.0F, float.MaxValue));
@@ -42,6 +41,8 @@ namespace LupercaliaMGCore {
         public FakeConVar<double> m_CVAntiCampDetectionRadius = new("lp_mg_anti_camp_detection_radius", "Range of area for player should move for avoiding the detected as camping.", 200.0F);
         public FakeConVar<float> m_CVAntiCampDetectionInterval = new("lp_mg_anti_camp_detection_interval", "Interval to run camping check in seconds.", 0.1F);
         public FakeConVar<float> m_CVAntiCampMarkingTime = new("lp_mg_anti_camp_glowing_time", "How long to detected player keep glowing.", 10.0F);
+        public FakeConVar<int> m_CVMapConfigExecutionTiming = new("lp_mg_mapcfg_execution_timing", "When configs are executed? 0: Does nothing, 1: Execute on map start, 2: Execute on every round start, 3: Execute on map transition and every round start", 1, ConVarFlags.FCVAR_NONE, new RangeValidator<int>(0, 3));
+        public FakeConVar<int> m_CVMapConfigType = new ("lp_mg_mapcfg_type", "Map configuration type. 0: disabled, 1: Exact match, 2: Partial Match", 1, ConVarFlags.FCVAR_NONE, new RangeValidator<int>(0, 2));
 
         private LupercaliaMGCore m_CSSPlugin;
 
@@ -104,6 +105,7 @@ namespace LupercaliaMGCore {
             config.WriteLine($"{m_CVAntiCampDetectionRadius.Name} {m_CVAntiCampDetectionRadius.Value}");
             config.WriteLine($"{m_CVAntiCampDetectionInterval.Name} {m_CVAntiCampDetectionInterval.Value}");
             config.WriteLine($"{m_CVAntiCampMarkingTime.Name} {m_CVAntiCampMarkingTime.Value}");
+            config.WriteLine($"{m_CVMapConfigExecutionTiming.Name} {m_CVMapConfigExecutionTiming.Value}");
 
             config.Close();
         }
