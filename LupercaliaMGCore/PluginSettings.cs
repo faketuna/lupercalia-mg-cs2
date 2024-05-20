@@ -8,7 +8,7 @@ namespace LupercaliaMGCore {
 
         private static PluginSettings? settingsInstance;
 
-        private const string CONFIG_FOLDER = "csgo/cfg/lupercalia/";
+        public const string CONFIG_FOLDER = "csgo/cfg/lupercalia/";
         private const string CONFIG_FILE = "mgcore.cfg";
 
         public static PluginSettings getInstance {
