@@ -3,11 +3,13 @@ using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Modules.Timers;
 using CounterStrikeSharp.API.Modules.Utils;
+using Microsoft.Extensions.Logging;
 
 namespace LupercaliaMGCore {
     public class AntiCamp {
         private LupercaliaMGCore m_CSSPlugin;
         private CounterStrikeSharp.API.Modules.Timers.Timer timer;
+        private Dictionary<CCSPlayerController, CounterStrikeSharp.API.Modules.Timers.Timer> playerOverlayEntityTimer = new Dictionary<CCSPlayerController, CounterStrikeSharp.API.Modules.Timers.Timer>();
         private Dictionary<CCSPlayerController, float> playerCampingTime = new Dictionary<CCSPlayerController, float>();
         private Dictionary<CCSPlayerController, PlayerPositionHistory> playerPositionHistory= new Dictionary<CCSPlayerController, PlayerPositionHistory>();
         private Dictionary<CCSPlayerController, float> playerGlowingTime = new Dictionary<CCSPlayerController, float>();
@@ -21,6 +23,7 @@ namespace LupercaliaMGCore {
 
             m_CSSPlugin.RegisterEventHandler<EventPlayerConnect>(onPlayerConnect, HookMode.Pre);
             m_CSSPlugin.RegisterEventHandler<EventPlayerConnectFull>(onPlayerConnectFull, HookMode.Pre);
+            m_CSSPlugin.RegisterListener<Listeners.OnClientPutInServer>(OnClientPutInServer);
 
             m_CSSPlugin.RegisterEventHandler<EventRoundFreezeEnd>(onRoundFeezeEnd, HookMode.Post);
             m_CSSPlugin.RegisterEventHandler<EventRoundEnd>(onRoundEnd, HookMode.Post);
@@ -71,8 +74,8 @@ namespace LupercaliaMGCore {
 
                 if(distance <= PluginSettings.getInstance.m_CVAntiCampDetectionRadius.Value) {
                     playerCampingTime[client] += PluginSettings.getInstance.m_CVAntiCampDetectionInterval.Value;
-                    // string msg = $"You have been camping for {playerCampingTime[client]:F2} | secondsGlowingTime: {playerGlowingTime[client]:F2} \nCurrent Location: {clientOrigin.X:F2} {clientOrigin.Y:F2} {clientOrigin.Z:F2} | Compared Location: {lastLocation.vector.X:F2} {lastLocation.vector.Y:F2} {lastLocation.vector.Z:F2} \nLocation captured time {lastLocation.time:F2} | Difference: {distance:F2}";
-                    // client.PrintToCenter(msg);
+                    string msg = $"You have been camping for {playerCampingTime[client]:F2} | secondsGlowingTime: {playerGlowingTime[client]:F2} \nCurrent Location: {clientOrigin.X:F2} {clientOrigin.Y:F2} {clientOrigin.Z:F2} | Compared Location: {lastLocation.vector.X:F2} {lastLocation.vector.Y:F2} {lastLocation.vector.Z:F2} \nLocation captured time {lastLocation.time:F2} | Difference: {distance:F2}";
+                    client.PrintToCenter(msg);
                 } else {
                     playerCampingTime[client] = 0.0F;
                 }
@@ -90,6 +93,12 @@ namespace LupercaliaMGCore {
         }
 
         private HookResult onRoundFeezeEnd(EventRoundFreezeEnd @event, GameEventInfo info) {
+            foreach(CCSPlayerController client in Utilities.GetPlayers()) {
+                if(isClientInformationAccessible(client))
+                    continue;
+                
+                initClientInformation(client);
+            }
             isRoundStarted = true;
             return HookResult.Continue;
         }
@@ -129,6 +138,15 @@ namespace LupercaliaMGCore {
             return HookResult.Continue;
         }
 
+        private void OnClientPutInServer(int clientSlot) {
+            CCSPlayerController? client = Utilities.GetPlayerFromSlot(clientSlot);
+
+            if(client == null)
+                return;
+            
+            initClientInformation(client);
+        }
+
         private bool isClientInformationAccessible(CCSPlayerController client) {
             return playerPositionHistory.ContainsKey(client) && playerCampingTime.ContainsKey(client) && playerGlowingTime.ContainsKey(client) && isPlayerWarned.ContainsKey(client);
         }
@@ -158,32 +176,43 @@ namespace LupercaliaMGCore {
         private void startPlayerGlowing(CCSPlayerController client) {
             playerGlowingTime[client] = 0.0F;
             CCSPlayerPawn playerPawn = client.PlayerPawn.Value!;
-            playerPawn.Glow.GlowColorOverride = Color.Red;
-            playerPawn.RenderMode = RenderMode_t.kRenderGlow;
-            playerPawn.Glow.GlowRange = 6000;
-            playerPawn.Glow.GlowTeam = -1;
-            playerPawn.Glow.GlowType = 3;
-            playerPawn.Glow.GlowRangeMin = 0;
-            /*
-                We can't send state change to client due to error.
-                Couldn't resolve offset 1584 in CCSPlayerPawn at path (-1 = '')
-                SV:  246/CCSPlayerPawn:  requested resolve all 4 changes, actually resolved only 3 changes
-                SV:    3                                     1584 not resolved
-            */
-            Utilities.SetStateChanged(playerPawn, "CBaseModelEntity", "m_clrRender");
-            Utilities.SetStateChanged(playerPawn, "CBaseModelEntity", "m_Glow");
+
+            float timerRepeatDelay = 0.05F;
+
+            playerOverlayEntityTimer[client] = m_CSSPlugin.AddTimer(timerRepeatDelay, () => {
+                CCSPlayerPawn? overlayEntity = Utilities.CreateEntityByName<CCSPlayerPawn>("prop_dynamic");
+                
+                if(overlayEntity == null) {
+                    m_CSSPlugin.Logger.LogError("Failed to create glowing entity!");
+                    return;
+                }
+
+
+                string playerModel = getPlayerModel(client);
+                overlayEntity.SetModel(playerModel);
+                overlayEntity.Teleport(playerPawn.AbsOrigin, new QAngle(0, 0, 0), new Vector(0, 0, 0));
+                overlayEntity.AcceptInput("FollowEntity", playerPawn, overlayEntity, "!activator");
+                overlayEntity.DispatchSpawn();
+
+                overlayEntity.Render = Color.FromArgb(1, 255, 255, 255);
+                overlayEntity.Glow.GlowColorOverride = Color.Red;
+                overlayEntity.Spawnflags = 256U;
+                overlayEntity.RenderMode = RenderMode_t.kRenderGlow;
+                overlayEntity.Glow.GlowRange = 5000;
+                overlayEntity.Glow.GlowTeam = -1;
+                overlayEntity.Glow.GlowType = 3;
+                overlayEntity.Glow.GlowRangeMin = 3;
+
+                m_CSSPlugin.AddTimer(timerRepeatDelay, () => {
+                    overlayEntity.Remove();
+                });
+
+            }, TimerFlags.REPEAT);
         }
 
         // TODO Remove Glow player
         private void stopPlayerGlowing(CCSPlayerController client) {
-            CCSPlayerPawn playerPawn = client.PlayerPawn.Value!;
-            playerPawn.Glow.GlowColorOverride = Color.White;
-            playerPawn.RenderMode = RenderMode_t.kRenderTransColor;
-            playerPawn.Glow.GlowRange = 0;
-            playerPawn.Glow.GlowTeam = 0;
-            playerPawn.Glow.GlowType = 0;
-            Utilities.SetStateChanged(playerPawn, "CBaseModelEntity", "m_clrRender");
-            Utilities.SetStateChanged(playerPawn, "CBaseModelEntity", "m_Glow");
+            playerOverlayEntityTimer[client].Kill();
         }
 
 
@@ -194,6 +223,21 @@ namespace LupercaliaMGCore {
 
             double distanceSquared = deltaX * deltaX + deltaY * deltaY + deltaZ + deltaZ;
             return Math.Sqrt(distanceSquared);
+        }
+
+        private static string getPlayerModel(CCSPlayerController client) {
+            if(client.PlayerPawn.Value == null)
+                return "";
+
+            CCSPlayerPawn playerPawn = client.PlayerPawn.Value;
+
+            if(playerPawn.CBodyComponent == null)
+                return "";
+
+            if(playerPawn.CBodyComponent.SceneNode == null)
+                return "";
+
+            return playerPawn.CBodyComponent!.SceneNode!.GetSkeletonInstance().ModelState.ModelName;
         }
 
         private enum PlayerGlowStatus {

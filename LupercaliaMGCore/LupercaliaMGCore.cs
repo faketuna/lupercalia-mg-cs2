@@ -33,6 +33,7 @@ namespace LupercaliaMGCore {
             new ScheduledShutdown(this);
             new Respawn(this);
             new MapConfig(this);
+            // new AntiCamp(this, hotReload);
         }
     }
 }
