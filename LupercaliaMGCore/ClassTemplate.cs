@@ -5,8 +5,5 @@ namespace LupercaliaMGCore {
         public ClassTemplate(LupercaliaMGCore plugin) {
             m_CSSPlugin = plugin;
         }
-
-        public void initialize() {
-        }
     }
 }
