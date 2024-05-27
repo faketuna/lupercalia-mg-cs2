@@ -66,7 +66,9 @@ Same feature as [Rocket](https://github.com/faketuna/sm-csgo-rocket)
 
 ### Easy spectate
 
-Will be implemented after Trace Ray feature implemented in CounterStrikeSharp.
+~~Will be implemented after Trace Ray feature implemented in CounterStrikeSharp.~~ I found a way to get the player looking entity.
+
+But another problem found. the `spec_player` command is not works as like CS:GO. it means player is actually spec a player when use `spec_player` command but player not spectate the target's POV when a freelook state.
 
 Spectate aimed player when player is spectating/died and pressing `+use`
 
