@@ -93,13 +93,13 @@ namespace LupercaliaMGCore {
         }
 
         private HookResult onRoundFeezeEnd(EventRoundFreezeEnd @event, GameEventInfo info) {
+            isRoundStarted = true;
             foreach(CCSPlayerController client in Utilities.GetPlayers()) {
                 if(isClientInformationAccessible(client))
                     continue;
                 
                 initClientInformation(client);
             }
-            isRoundStarted = true;
             return HookResult.Continue;
         }
 
@@ -142,6 +142,12 @@ namespace LupercaliaMGCore {
             CCSPlayerController? client = Utilities.GetPlayerFromSlot(clientSlot);
 
             if(client == null)
+                return;
+
+            if(!client.IsValid || client.IsBot || client.IsHLTV)
+                return;
+            
+            if(isClientInformationAccessible(client))
                 return;
             
             initClientInformation(client);
@@ -189,6 +195,11 @@ namespace LupercaliaMGCore {
 
 
                 string playerModel = getPlayerModel(client);
+
+                Server.PrintToChatAll($"Player model!: {playerModel}");
+                if(playerModel == "")
+                    return;
+
                 overlayEntity.SetModel(playerModel);
                 overlayEntity.Teleport(playerPawn.AbsOrigin, new QAngle(0, 0, 0), new Vector(0, 0, 0));
                 overlayEntity.AcceptInput("FollowEntity", playerPawn, overlayEntity, "!activator");
