@@ -29,7 +29,6 @@ namespace LupercaliaMGCore {
             int randomValue = rand.Next(0, events.Count);
 
             events[randomValue].function.Invoke(client);
-            Server.PrintToChatAll($"Omikuji caller: {client.PlayerName} | Omikuji name: {events[randomValue].function.GetMethodInfo().GetCustomAttributes(false).ToArray()[0].ToString} | Omikuji type: {events[randomValue].omikujiType}");
         }
 
         private static List<OmikujiInfo> findAllOmikujiMethods(Type targetType) {
