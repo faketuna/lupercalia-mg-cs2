@@ -36,12 +36,13 @@ namespace LupercaliaMGCore {
                 if(!cl.IsValid || cl.IsBot || cl.IsHLTV)
                     continue;
 
+                cl.PrintToChat($"{Omikuji.CHAT_PREFIX} {client.PlayerName} have drew the mega luck! re-spawning the all players!!!");
+
                 if(cl.PawnIsAlive)
                     continue;
 
                 cl.Respawn();
                 cl.Teleport(alivePlayer.PlayerPawn.Value!.AbsOrigin, alivePlayer.PlayerPawn.Value.AbsRotation);
-                cl.PrintToChat($"{Omikuji.CHAT_PREFIX} {client.PlayerName} have drew the mega luck! re-spawning the all players!!!");
             }
         }
     }
