@@ -9,9 +9,8 @@ namespace LupercaliaMGCore {
         public static void playerRespawnEvent(CCSPlayerController client) {
             LupercaliaMGCore.getInstance().Logger.LogDebug("Player drew a omikuji and invoked Player respawn event");
 
-            string msg = "";
-
-            if(!client.PawnIsAlive) {
+            string msg;
+            if (!client.PawnIsAlive) {
                 msg = $"{Omikuji.CHAT_PREFIX} Lucky! {client.PlayerName} have re-spawned!";
             } else {
                 msg = $"{Omikuji.CHAT_PREFIX} Lucky! {client.PlayerName} have draw a fortune! But how unfortunate nothing happened because {client.PlayerName} are still alive.";
@@ -26,7 +25,7 @@ namespace LupercaliaMGCore {
                     client.Teleport(cl.PlayerPawn!.Value!.AbsOrigin);
                 }
 
-                cl.PrintToChat($"{Omikuji.CHAT_PREFIX} Lucky! {client.PlayerName} have re-spawned!");
+                cl.PrintToChat(msg);
             }
         }
     }
