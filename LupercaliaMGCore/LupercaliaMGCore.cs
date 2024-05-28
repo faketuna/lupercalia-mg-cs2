@@ -10,6 +10,12 @@ namespace LupercaliaMGCore {
             return $"{PLUGIN_PREFIX} {message}";
         }
 
+        private static LupercaliaMGCore? instance;
+
+        public static LupercaliaMGCore getInstance() {
+            return instance!;
+        }
+
         public override string ModuleName => "Lupercalia MG Core";
 
         public override string ModuleVersion => "0.1.0";
@@ -21,6 +27,7 @@ namespace LupercaliaMGCore {
 
         public override void Load(bool hotReload)
         {
+            instance = this;
             new PluginSettings(this);
 
             new TeamBasedBodyColor(this);
@@ -34,6 +41,7 @@ namespace LupercaliaMGCore {
             new Respawn(this);
             new MapConfig(this);
             // new AntiCamp(this, hotReload);
+            new Omikuji(this);
         }
     }
 }
