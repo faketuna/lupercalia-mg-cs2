@@ -23,6 +23,12 @@ namespace LupercaliaMGCore {
 
             if(alivePlayer == null) {
                 LupercaliaMGCore.getInstance().Logger.LogDebug("All player respawn event failed due to no one player is alive.");
+                foreach(CCSPlayerController cl in Utilities.GetPlayers()) {
+                    if(!cl.IsValid || cl.IsBot || cl.IsHLTV)
+                        continue;
+
+                    cl.PrintToChat($"{Omikuji.CHAT_PREFIX} Lucky! {client.PlayerName} have draw a fortune! But how unfortunate nothing happened because no one is alive.");
+                }
                 return;
             }
 
