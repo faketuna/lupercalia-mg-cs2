@@ -1,5 +1,7 @@
-﻿using CounterStrikeSharp.API.Core;
+﻿using CounterStrikeSharp.API;
+using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Modules.Utils;
+using Microsoft.Extensions.Logging;
 
 namespace LupercaliaMGCore {
     public class LupercaliaMGCore: BasePlugin
@@ -29,19 +31,41 @@ namespace LupercaliaMGCore {
         {
             instance = this;
             new PluginSettings(this);
+            Logger.LogInformation("Plugin settings initialized");
 
             new TeamBasedBodyColor(this);
+            Logger.LogInformation("TBBC initialized");
+
             new DuckFix(this, hotReload);
+            Logger.LogInformation("DFix initialized");
+
             new TeamScramble(this);
+            Logger.LogInformation("TeamScramble initialized");
+
             new VoteMapRestart(this);
+            Logger.LogInformation("VoteMapRestart initialized");
+
             new VoteRoundRestart(this);
+            Logger.LogInformation("VoteRoundRestart initialized");
+            
             new RoundEndDamageImmunity(this);
+            Logger.LogInformation("RoundEndDamageImmunity initialized");
+
             new RoundEndWeaponStrip(this);
+            Logger.LogInformation("RoundEndWeaponStrip initialized");
+
             new ScheduledShutdown(this);
+            Logger.LogInformation("ScheduledShutdown initialized");
+
             new Respawn(this);
+            Logger.LogInformation("Respawn initialized");
+
             new MapConfig(this);
+            Logger.LogInformation("MapConfig initialized");
+
             // new AntiCamp(this, hotReload);
             new Omikuji(this);
+            Logger.LogInformation("Omikuji initialized");
         }
     }
 }
