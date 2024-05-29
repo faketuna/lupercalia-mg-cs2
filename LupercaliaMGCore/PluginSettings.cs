@@ -150,6 +150,11 @@ namespace LupercaliaMGCore {
             config.WriteLine($"{m_CVAntiCampDetectionInterval.Name} {m_CVAntiCampDetectionInterval.Value}");
             config.WriteLine($"{m_CVAntiCampMarkingTime.Name} {m_CVAntiCampMarkingTime.Value}");
             config.WriteLine($"{m_CVMapConfigExecutionTiming.Name} {m_CVMapConfigExecutionTiming.Value}");
+            config.WriteLine($"{m_CVOmikujiEventWeightMisc.Name} {m_CVOmikujiEventWeightMisc.Value}");
+            config.WriteLine($"{m_CVOmikujiEventWeightBad.Name} {m_CVOmikujiEventWeightBad.Value}");
+            config.WriteLine($"{m_CVOmikujiEventWeightLucky.Name} {m_CVOmikujiEventWeightLucky.Value}");
+            config.WriteLine($"{m_CVOmikujiEventChickenTime.Name} {m_CVOmikujiEventChickenTime.Value}");
+            config.WriteLine($"{m_CVOmikujiEventChickenBodyScale.Name} {m_CVOmikujiEventChickenBodyScale.Value}");
 
             config.Close();
         }
