@@ -108,6 +108,12 @@ namespace LupercaliaMGCore {
         public FakeConVar<int> m_CVOmikujiEventGravityMin = new("lp_mg_omikuji_event_gravity_min", "Minimal value of sv_gravity", 100);
         public FakeConVar<float> m_CVOmikujiEventGravityRestoreTime = new("lp_mg_omikuji_event_gravity_restore_time", "How long to take gravity restored in seconds.", 10.0F);
 
+        /*
+        *   Omikuji - Gravity
+        */
+        public FakeConVar<float> m_CVOmikujiEventPlayerFreeze = new("lp_mg_omikuji_event_player_freeze_time", "How long to player freeze in seconds.", 3.0F);
+
+
         private LupercaliaMGCore m_CSSPlugin;
 
         public PluginSettings(LupercaliaMGCore plugin) {
@@ -246,11 +252,13 @@ namespace LupercaliaMGCore {
             writeConVarConfig(config, m_CVOmikujiEventScreenShakeAmplitude);
             writeConVarConfig(config, m_CVOmikujiEventScreenShakeDuration);
             writeConVarConfig(config, m_CVOmikujiEventScreenShakeFrequency);
+            config.WriteLine("\n");
 
             /*
             *   Omikuji - Player Heal
             */
             writeConVarConfig(config, m_CVOmikujiEventPlayerHeal);
+            config.WriteLine("\n");
 
             /*
             *   Omikuji - Gravity
@@ -258,6 +266,13 @@ namespace LupercaliaMGCore {
             writeConVarConfig(config, m_CVOmikujiEventGravityMax);
             writeConVarConfig(config, m_CVOmikujiEventGravityMin);
             writeConVarConfig(config, m_CVOmikujiEventGravityRestoreTime);
+            config.WriteLine("\n");
+
+            /*
+            *   Omikuji - Gravity
+            */
+            writeConVarConfig(config, m_CVOmikujiEventPlayerFreeze);
+            config.WriteLine("\n");
 
             config.Close();
         }
