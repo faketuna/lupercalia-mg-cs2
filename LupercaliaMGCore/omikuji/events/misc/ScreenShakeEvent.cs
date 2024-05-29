@@ -16,9 +16,9 @@ namespace LupercaliaMGCore {
             }
 
             shakeEnt.Spawnflags = 5U;
-            shakeEnt.Amplitude = 2.5F;
-            shakeEnt.Duration = 5.0F;
-            shakeEnt.Frequency = 20.0F;
+            shakeEnt.Amplitude = PluginSettings.getInstance.m_CVOmikujiEventScreenShakeAmplitude.Value;
+            shakeEnt.Duration = PluginSettings.getInstance.m_CVOmikujiEventScreenShakeDuration.Value;
+            shakeEnt.Frequency = PluginSettings.getInstance.m_CVOmikujiEventScreenShakeFrequency.Value;
 
             shakeEnt.DispatchSpawn();
 

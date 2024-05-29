@@ -89,6 +89,13 @@ namespace LupercaliaMGCore {
         public FakeConVar<float> m_CVOmikujiEventChickenTime = new("lp_mg_omikuji_event_chicken_time", "How long that chicken alive?", 5.0F);
         public FakeConVar<float> m_CVOmikujiEventChickenBodyScale = new("lp_mg_omikuji_event_chicken_body_scale", "Body size of the chicken. Default size is 1.0", 1.0F);
 
+        /*
+        *   Omikuji - Screen shake
+        */
+        public FakeConVar<float> m_CVOmikujiEventScreenShakeAmplitude = new("lp_mg_omikuji_event_screen_shake_amplitude", "How far away from the normal position the camera will wobble. Should be a range between 0 and 16.", 1000.0F);
+        public FakeConVar<float> m_CVOmikujiEventScreenShakeDuration = new("lp_mg_omikuji_event_screen_shake_duration", "The length of time in which to shake the player's screens.", 5.0F);
+        public FakeConVar<float> m_CVOmikujiEventScreenShakeFrequency = new("lp_mg_omikuji_event_screen_shake_frequency", "How many times per second to change the direction of the camera wobble. 40 is generally enough; values higher are hardly distinguishable.", 1000.0F);
+
         private LupercaliaMGCore m_CSSPlugin;
 
         public PluginSettings(LupercaliaMGCore plugin) {
@@ -220,6 +227,13 @@ namespace LupercaliaMGCore {
             writeConVarConfig(config, m_CVOmikujiEventChickenTime);
             writeConVarConfig(config, m_CVOmikujiEventChickenBodyScale);
             config.WriteLine("\n");
+
+            /*
+            *   Omikuji - Screen shake
+            */
+            writeConVarConfig(config, m_CVOmikujiEventScreenShakeAmplitude);
+            writeConVarConfig(config, m_CVOmikujiEventScreenShakeDuration);
+            writeConVarConfig(config, m_CVOmikujiEventScreenShakeFrequency);
 
             config.Close();
         }
