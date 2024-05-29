@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 namespace LupercaliaMGCore {
     public static partial class OmikujiEvents {
 
-        [OmikujiFunc("Player Respawn Event", OmikujiType.EVENT_LUCKY)]
+        [OmikujiFunc("Player Respawn Event", OmikujiType.EVENT_LUCKY, OmikujiCanInvokeWhen.PLAYER_DIED)]
         public static void playerRespawnEvent(CCSPlayerController client) {
             LupercaliaMGCore.getInstance().Logger.LogDebug("Player drew a omikuji and invoked Player respawn event");
 

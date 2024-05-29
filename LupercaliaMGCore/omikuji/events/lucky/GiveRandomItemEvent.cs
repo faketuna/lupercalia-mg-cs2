@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 namespace LupercaliaMGCore {
     public static partial class OmikujiEvents {
 
-        [OmikujiFunc("Give Random Item Event", OmikujiType.EVENT_LUCKY)]
+        [OmikujiFunc("Give Random Item Event", OmikujiType.EVENT_LUCKY, OmikujiCanInvokeWhen.PLAYER_ALIVE)]
         public static void giveRandomItemEvent(CCSPlayerController client) {
             LupercaliaMGCore.getInstance().Logger.LogDebug("Player drew a omikuji and invoked Give random item event");
 

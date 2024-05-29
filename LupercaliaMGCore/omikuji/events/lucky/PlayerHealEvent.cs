@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 namespace LupercaliaMGCore {
     public static partial class OmikujiEvents {
 
-        [OmikujiFunc("Player Heal Event", OmikujiType.EVENT_LUCKY)]
+        [OmikujiFunc("Player Heal Event", OmikujiType.EVENT_LUCKY, OmikujiCanInvokeWhen.PLAYER_ALIVE)]
         public static void playerHealEvent(CCSPlayerController client) {
             LupercaliaMGCore.getInstance().Logger.LogDebug("Player drew a omikuji and invoked Player heal event.");
 
