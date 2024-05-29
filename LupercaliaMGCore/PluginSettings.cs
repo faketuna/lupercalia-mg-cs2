@@ -101,6 +101,13 @@ namespace LupercaliaMGCore {
         */
         public FakeConVar<int> m_CVOmikujiEventPlayerHeal = new("lp_mg_omikuji_event_player_heal_amount", "How many health healed when event occur", 100);
 
+        /*
+        *   Omikuji - Gravity
+        */
+        public FakeConVar<int> m_CVOmikujiEventGravityMax = new("lp_mg_omikuji_event_gravity_max", "Maximum value of sv_gravity", 800);
+        public FakeConVar<int> m_CVOmikujiEventGravityMin = new("lp_mg_omikuji_event_gravity_min", "Minimal value of sv_gravity", 100);
+        public FakeConVar<float> m_CVOmikujiEventGravityRestoreTime = new("lp_mg_omikuji_event_gravity_restore_time", "How long to take gravity restored in seconds.", 10.0F);
+
         private LupercaliaMGCore m_CSSPlugin;
 
         public PluginSettings(LupercaliaMGCore plugin) {
@@ -244,6 +251,13 @@ namespace LupercaliaMGCore {
             *   Omikuji - Player Heal
             */
             writeConVarConfig(config, m_CVOmikujiEventPlayerHeal);
+
+            /*
+            *   Omikuji - Gravity
+            */
+            writeConVarConfig(config, m_CVOmikujiEventGravityMax);
+            writeConVarConfig(config, m_CVOmikujiEventGravityMin);
+            writeConVarConfig(config, m_CVOmikujiEventGravityRestoreTime);
 
             config.Close();
         }

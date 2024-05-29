@@ -11,8 +11,10 @@ namespace LupercaliaMGCore {
         public static void gravityChangeEvent(CCSPlayerController client) {
             LupercaliaMGCore.getInstance().Logger.LogDebug("Player drew a omikuji and invoked Gravity change event");
 
-            // TODO() Get random range from ConVar
-            int randomGravity = random.Next(0, 800);
+            int randomGravity = random.Next(
+                PluginSettings.getInstance.m_CVOmikujiEventGravityMin.Value,
+                PluginSettings.getInstance.m_CVOmikujiEventGravityMax.Value
+            );
 
             string msg;
             if(isInGravityChangeEvent) {
@@ -38,8 +40,7 @@ namespace LupercaliaMGCore {
 
             sv_gravity.SetValue((float)randomGravity);
 
-            // TODO() Get gravity restore time from ConVar
-            float TIMER_INTERVAL_PLACE_HOLDER = 10.0F;
+            float TIMER_INTERVAL_PLACE_HOLDER = PluginSettings.getInstance.m_CVOmikujiEventGravityRestoreTime.Value;
 
             LupercaliaMGCore.getInstance().AddTimer(TIMER_INTERVAL_PLACE_HOLDER, () => {
                 sv_gravity.SetValue(oldGravity);
