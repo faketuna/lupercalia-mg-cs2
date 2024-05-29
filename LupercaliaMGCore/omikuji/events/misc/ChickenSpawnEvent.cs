@@ -26,7 +26,7 @@ namespace LupercaliaMGCore {
             
             ent.DispatchSpawn();
             ent.Teleport(client.PlayerPawn.Value!.AbsOrigin!);
-            ent.CBodyComponent!.SceneNode!.GetSkeletonInstance().Scale = 3.0f;
+            ent.CBodyComponent!.SceneNode!.GetSkeletonInstance().Scale = PluginSettings.getInstance.m_CVOmikujiEventChickenBodyScale.Value;
 
             double hue = 0.0;
             LupercaliaMGCore.getInstance().AddTimer(0.05f, () => {
@@ -42,7 +42,7 @@ namespace LupercaliaMGCore {
                 hue += 120.0F;
             }, CounterStrikeSharp.API.Modules.Timers.TimerFlags.REPEAT);
 
-            LupercaliaMGCore.getInstance().AddTimer(5.0f, () => {
+            LupercaliaMGCore.getInstance().AddTimer(PluginSettings.getInstance.m_CVOmikujiEventChickenTime.Value, () => {
                 ent.AcceptInput("Break");
             });
         }
