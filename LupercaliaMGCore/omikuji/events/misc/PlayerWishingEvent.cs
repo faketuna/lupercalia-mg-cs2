@@ -6,7 +6,7 @@ namespace LupercaliaMGCore {
     public static partial class OmikujiEvents {
         [OmikujiFunc("Player Wishing Event", OmikujiType.EVENT_MISC)]
         
-        public static void playerPlayEvent(CCSPlayerController client) {
+        public static void playerPrayEvent(CCSPlayerController client) {
             LupercaliaMGCore.getInstance().Logger.LogDebug("Player drew a omikuji and invoked Player wishing event");
             foreach(CCSPlayerController cl in Utilities.GetPlayers()) {
                 if(!cl.IsValid || cl.IsBot || cl.IsHLTV)
