@@ -3,6 +3,7 @@ using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Modules.Commands;
 using CounterStrikeSharp.API.Modules.Utils;
+using Microsoft.Extensions.Logging;
 
 namespace LupercaliaMGCore {
     public class Omikuji {
@@ -48,28 +49,36 @@ namespace LupercaliaMGCore {
                     break;
 
             }
+
+            m_CSSPlugin.Logger.LogDebug($"Player {client.PlayerName} is invoked {events[randomValue].function.GetMethodInfo().GetCustomAttribute<OmikujiFuncAttribute>()!.name}");
             events[randomValue].function.Invoke(client);
         }
 
-        private static List<OmikujiInfo> findAllOmikujiMethods(Type targetType) {
+        private List<OmikujiInfo> findAllOmikujiMethods(Type targetType) {
             List<OmikujiInfo> omikujiInfos = new List<OmikujiInfo>();
 
+            m_CSSPlugin.Logger.LogTrace("Finding all method marked as Static and Public from specified class");
             MethodInfo[] methods = targetType.GetMethods(BindingFlags.Static | BindingFlags.Public);
 
+            m_CSSPlugin.Logger.LogTrace("Iterating all methods");
             foreach(MethodInfo method in methods) {
+                m_CSSPlugin.Logger.LogTrace("Getting custom attribute");
                 OmikujiFuncAttribute? attribute = method.GetCustomAttribute<OmikujiFuncAttribute>();
 
                 if(attribute == null)
                     continue;
                 
 
+                m_CSSPlugin.Logger.LogTrace("Getting all parameters");
                 ParameterInfo[] parameters = method.GetParameters();
 
                 if (method.ReturnType != typeof(void) || parameters.Length != 1 || parameters[0].ParameterType != typeof(CCSPlayerController))
                     continue;
                 
+                m_CSSPlugin.Logger.LogTrace("Creating delegate function for omikuji event");
                 OmikujiInfo.BasicOmikujiEvent delegateFunc = (OmikujiInfo.BasicOmikujiEvent)Delegate.CreateDelegate(typeof(OmikujiInfo.BasicOmikujiEvent), method);
 
+                m_CSSPlugin.Logger.LogTrace("Adding OmikujiInfo");
                 omikujiInfos.Add(new OmikujiInfo(attribute.omikujiType, attribute.whenOmikujiCanInvoke ,delegateFunc));
             }
 
