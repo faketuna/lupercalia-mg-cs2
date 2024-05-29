@@ -43,7 +43,8 @@ namespace LupercaliaMGCore {
             }, CounterStrikeSharp.API.Modules.Timers.TimerFlags.REPEAT);
 
             LupercaliaMGCore.getInstance().AddTimer(PluginSettings.getInstance.m_CVOmikujiEventChickenTime.Value, () => {
-                ent.AcceptInput("Break");
+                if(ent.IsValid)
+                    ent.AcceptInput("Break");
             });
         }
 
