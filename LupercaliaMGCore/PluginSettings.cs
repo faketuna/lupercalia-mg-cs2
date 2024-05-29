@@ -96,6 +96,11 @@ namespace LupercaliaMGCore {
         public FakeConVar<float> m_CVOmikujiEventScreenShakeDuration = new("lp_mg_omikuji_event_screen_shake_duration", "The length of time in which to shake the player's screens.", 5.0F);
         public FakeConVar<float> m_CVOmikujiEventScreenShakeFrequency = new("lp_mg_omikuji_event_screen_shake_frequency", "How many times per second to change the direction of the camera wobble. 40 is generally enough; values higher are hardly distinguishable.", 1000.0F);
 
+        /*
+        *   Omikuji - Player Heal
+        */
+        public FakeConVar<int> m_CVOmikujiEventPlayerHeal = new("lp_mg_omikuji_event_player_heal_amount", "How many health healed when event occur", 100);
+
         private LupercaliaMGCore m_CSSPlugin;
 
         public PluginSettings(LupercaliaMGCore plugin) {
@@ -234,6 +239,11 @@ namespace LupercaliaMGCore {
             writeConVarConfig(config, m_CVOmikujiEventScreenShakeAmplitude);
             writeConVarConfig(config, m_CVOmikujiEventScreenShakeDuration);
             writeConVarConfig(config, m_CVOmikujiEventScreenShakeFrequency);
+
+            /*
+            *   Omikuji - Player Heal
+            */
+            writeConVarConfig(config, m_CVOmikujiEventPlayerHeal);
 
             config.Close();
         }
