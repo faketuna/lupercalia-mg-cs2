@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Modules.Cvars;
 using CounterStrikeSharp.API.Modules.Cvars.Validators;
@@ -136,78 +137,52 @@ namespace LupercaliaMGCore {
             /*
             *   Team based body color
             */
-            config.WriteLine($"// {m_CVTeamColorCT.Description}");
-            config.WriteLine($"{m_CVTeamColorCT.Name} {m_CVTeamColorCT.Value}");
-            config.WriteLine();
-            config.WriteLine($"// {m_CVTeamColorCT.Description}");
-            config.WriteLine($"{m_CVTeamColorT.Name} {m_CVTeamColorT.Value}");
+            writeConVarConfig(config, m_CVTeamColorCT);
+            writeConVarConfig(config, m_CVTeamColorT);
             config.WriteLine("\n");
 
 
             /*
             *   Team scramble
             */
-            config.WriteLine($"// {m_CVIsScrambleEnabled.Description}");
-            config.WriteLine($"{m_CVIsScrambleEnabled.Name} {Convert.ToInt32(m_CVIsScrambleEnabled.Value)}");
+            writeConVarConfig(config, m_CVIsScrambleEnabled);
             config.WriteLine("\n");
 
 
             /*
             *   Vote round/map restart
             */
-            config.WriteLine($"// {m_CVVoteMapRestartAllowedTime.Description}");
-            config.WriteLine($"{m_CVVoteMapRestartAllowedTime.Name} {m_CVVoteMapRestartAllowedTime.Value}");
-            config.WriteLine();
-            config.WriteLine($"// {m_CVVoteMapRestartThreshold.Description}");
-            config.WriteLine($"{m_CVVoteMapRestartThreshold.Name} {m_CVVoteMapRestartThreshold.Value}");
-            config.WriteLine();
-            config.WriteLine($"// {m_CVVoteMapRestartRestartTime.Description}");
-            config.WriteLine($"{m_CVVoteMapRestartRestartTime.Name} {m_CVVoteMapRestartRestartTime.Value}");
-            config.WriteLine();
-            config.WriteLine($"// {m_CVVoteRoundRestartThreshold.Description}");
-            config.WriteLine($"{m_CVVoteRoundRestartThreshold.Name} {m_CVVoteRoundRestartThreshold.Value}");
-            config.WriteLine();
-            config.WriteLine($"// {m_CVVoteRoundRestartRestartTime.Description}");
-            config.WriteLine($"{m_CVVoteRoundRestartRestartTime.Name} {m_CVVoteRoundRestartRestartTime.Value}");
+            writeConVarConfig(config, m_CVVoteMapRestartAllowedTime);
+            writeConVarConfig(config, m_CVVoteMapRestartThreshold);
+            writeConVarConfig(config, m_CVVoteMapRestartRestartTime);
+            writeConVarConfig(config, m_CVVoteRoundRestartThreshold);
+            writeConVarConfig(config, m_CVVoteRoundRestartRestartTime);
             config.WriteLine("\n");
 
 
             /*
             *   Round end enhancement
             */
-            config.WriteLine($"// {m_CVIsRoundEndDamageImmunityEnabled.Description}");
-            config.WriteLine($"{m_CVIsRoundEndDamageImmunityEnabled.Name} {Convert.ToInt32(m_CVIsRoundEndDamageImmunityEnabled.Value)}");
-            config.WriteLine();
-            config.WriteLine($"// {m_CVIsRoundEndWeaponStripEnabled.Description}");
-            config.WriteLine($"{m_CVIsRoundEndWeaponStripEnabled.Name} {Convert.ToInt32(m_CVIsRoundEndWeaponStripEnabled.Value)}");
+            writeConVarConfig(config, m_CVIsRoundEndDamageImmunityEnabled);
+            writeConVarConfig(config, m_CVIsRoundEndWeaponStripEnabled);
             config.WriteLine("\n");
 
 
             /*
             *   Scheduled shutdown
             */
-            config.WriteLine($"// {m_CVScheduledShutdownTime.Description}");
-            config.WriteLine($"{m_CVScheduledShutdownTime.Name} {m_CVScheduledShutdownTime.Value}");
-            config.WriteLine();
-            config.WriteLine($"// {m_CVScheduledShutdownWarningTime.Description}");
-            config.WriteLine($"{m_CVScheduledShutdownWarningTime.Name} {m_CVScheduledShutdownWarningTime.Value}");
-            config.WriteLine();
-            config.WriteLine($"// {m_CVScheduledShutdownRoundEnd.Description}");
-            config.WriteLine($"{m_CVScheduledShutdownRoundEnd.Name} {Convert.ToInt32(m_CVScheduledShutdownRoundEnd.Value)}");
+            writeConVarConfig(config, m_CVScheduledShutdownTime);
+            writeConVarConfig(config, m_CVScheduledShutdownWarningTime);
+            writeConVarConfig(config, m_CVScheduledShutdownRoundEnd);
             config.WriteLine("\n");
 
 
             /*
             *   Auto respawn
             */
-            config.WriteLine($"// {m_CVAutoRespawnEnabled.Description}");
-            config.WriteLine($"{m_CVAutoRespawnEnabled.Name} {Convert.ToInt32(m_CVAutoRespawnEnabled.Value)}");
-            config.WriteLine();
-            config.WriteLine($"// {m_CVAutoRespawnSpawnKillingDetectionTime.Description}");
-            config.WriteLine($"{m_CVAutoRespawnSpawnKillingDetectionTime.Name} {m_CVAutoRespawnSpawnKillingDetectionTime.Value}");
-            config.WriteLine();
-            config.WriteLine($"// {m_CVAutoRespawnSpawnTime.Description}");
-            config.WriteLine($"{m_CVAutoRespawnSpawnTime.Name} {m_CVAutoRespawnSpawnTime.Value}");
+            writeConVarConfig(config, m_CVAutoRespawnEnabled);
+            writeConVarConfig(config, m_CVAutoRespawnSpawnKillingDetectionTime);
+            writeConVarConfig(config, m_CVAutoRespawnSpawnTime);
             config.WriteLine("\n");
 
 
@@ -215,58 +190,50 @@ namespace LupercaliaMGCore {
             /*
             *   Anti camp
             */
-            config.WriteLine($"// {m_CVAntiCampEnabled.Description}");
-            config.WriteLine($"{m_CVAntiCampEnabled.Name} {Convert.ToInt32(m_CVAntiCampEnabled.Value)}");
-            config.WriteLine();
-            config.WriteLine($"// {m_CVAntiCampDetectionTime.Description}");
-            config.WriteLine($"{m_CVAntiCampDetectionTime.Name} {m_CVAntiCampDetectionTime.Value}");
-            config.WriteLine();
-            config.WriteLine($"// {m_CVAntiCampDetectionRadius.Description}");
-            config.WriteLine($"{m_CVAntiCampDetectionRadius.Name} {m_CVAntiCampDetectionRadius.Value}");
-            config.WriteLine();
-            config.WriteLine($"// {m_CVAntiCampDetectionInterval.Description}");
-            config.WriteLine($"{m_CVAntiCampDetectionInterval.Name} {m_CVAntiCampDetectionInterval.Value}");
-            config.WriteLine();
-            config.WriteLine($"// {m_CVAntiCampMarkingTime.Description}");
-            config.WriteLine($"{m_CVAntiCampMarkingTime.Name} {m_CVAntiCampMarkingTime.Value}");
+            writeConVarConfig(config, m_CVAntiCampEnabled);
+            writeConVarConfig(config, m_CVAntiCampDetectionTime);
+            writeConVarConfig(config, m_CVAntiCampDetectionRadius);
+            writeConVarConfig(config, m_CVAntiCampDetectionInterval);
+            writeConVarConfig(config, m_CVAntiCampMarkingTime);
             config.WriteLine("\n");
 
 
             /*
             *   Map config
             */
-            config.WriteLine($"// {m_CVMapConfigType.Description}");
-            config.WriteLine($"{m_CVMapConfigType.Name} {m_CVMapConfigType.Value}");
-            config.WriteLine();
-            config.WriteLine($"// {m_CVMapConfigExecutionTiming.Description}");
-            config.WriteLine($"{m_CVMapConfigExecutionTiming.Name} {m_CVMapConfigExecutionTiming.Value}");
+            writeConVarConfig(config, m_CVMapConfigType);
+            writeConVarConfig(config, m_CVMapConfigExecutionTiming);
             config.WriteLine("\n");
 
 
             /*
             *   Omikuji
             */
-            config.WriteLine($"// {m_CVOmikujiEventWeightMisc.Description}");
-            config.WriteLine($"{m_CVOmikujiEventWeightMisc.Name} {m_CVOmikujiEventWeightMisc.Value}");
-            config.WriteLine();
-            config.WriteLine($"// {m_CVOmikujiEventWeightBad.Description}");
-            config.WriteLine($"{m_CVOmikujiEventWeightBad.Name} {m_CVOmikujiEventWeightBad.Value}");
-            config.WriteLine();
-            config.WriteLine($"// {m_CVOmikujiEventWeightLucky.Description}");
-            config.WriteLine($"{m_CVOmikujiEventWeightLucky.Name} {m_CVOmikujiEventWeightLucky.Value}");
+            writeConVarConfig(config, m_CVOmikujiEventWeightMisc);
+            writeConVarConfig(config, m_CVOmikujiEventWeightBad);
+            writeConVarConfig(config, m_CVOmikujiEventWeightLucky);
             config.WriteLine("\n");
 
             /*
             *   Omikuji - Chicken
             */
-            config.WriteLine($"// {m_CVOmikujiEventChickenTime.Description}");
-            config.WriteLine($"{m_CVOmikujiEventChickenTime.Name} {m_CVOmikujiEventChickenTime.Value}");
-            config.WriteLine();
-            config.WriteLine($"// {m_CVOmikujiEventChickenBodyScale.Description}");
-            config.WriteLine($"{m_CVOmikujiEventChickenBodyScale.Name} {m_CVOmikujiEventChickenBodyScale.Value}");
+            writeConVarConfig(config, m_CVOmikujiEventChickenTime);
+            writeConVarConfig(config, m_CVOmikujiEventChickenBodyScale);
             config.WriteLine("\n");
 
             config.Close();
+        }
+
+        private static void writeConVarConfig<T>(StreamWriter configFile, FakeConVar<T> convar)where T : IComparable<T>{
+            configFile.WriteLine($"// {convar.Description}");
+            if(typeof(T) == typeof(bool)) {
+                var conValue = convar.Value;
+                bool value = Unsafe.As<T, bool>(ref conValue);
+                configFile.WriteLine($"{convar.Name} {Convert.ToInt32(value)}");
+            } else {
+                configFile.WriteLine($"{convar.Name} {convar.Value}");
+            }
+            configFile.WriteLine();
         }
     }
 }
