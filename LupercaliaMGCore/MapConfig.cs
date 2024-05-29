@@ -21,7 +21,6 @@ namespace LupercaliaMGCore {
                 throw new InvalidOperationException("Map config directory is not exists and failed to create.");
 
             updateConfigsDictionary();
-            executeConfigs();
 
             m_CSSPlugin.RegisterEventHandler<EventRoundPrestart>(OnRoundPreStart, HookMode.Post);
             m_CSSPlugin.RegisterListener<Listeners.OnMapStart>(OnMapStart);
@@ -43,25 +42,46 @@ namespace LupercaliaMGCore {
         }
 
         private void executeConfigs() {
+            m_CSSPlugin.Logger.LogDebug("Updating the config dictionary");
             updateConfigsDictionary();
 
-            if(PluginSettings.getInstance.m_CVMapConfigType.Value == 0)
+            int mapCfgType = PluginSettings.getInstance.m_CVMapConfigType.Value;
+
+            m_CSSPlugin.Logger.LogDebug("Checking the Map Config type");
+            if(mapCfgType == 0)
+                return;
+
+            m_CSSPlugin.Logger.LogDebug("Iterating the config file");
+
+            string? mapName = Server.MapName;
+
+            if(mapName == null)
                 return;
 
             foreach(MapConfigFile conf in configs) {
-                if(MathUtil.DecomposePowersOfTwo(PluginSettings.getInstance.m_CVMapConfigType.Value).Contains(2) && !Server.MapName.StartsWith(conf.name))
+                m_CSSPlugin.Logger.LogDebug("Checking the map config type");
+
+                if(MathUtil.DecomposePowersOfTwo(mapCfgType).Contains(2) && !mapName.StartsWith(conf.name))
                     continue;
                 
-                if(MathUtil.DecomposePowersOfTwo(PluginSettings.getInstance.m_CVMapConfigType.Value).Contains(1) && !Server.MapName.Equals(conf.name))
+                
+                m_CSSPlugin.Logger.LogDebug("Checking the map config type 2");
+                
+                m_CSSPlugin.Logger.LogTrace($"{conf.name} {conf.path}");
+
+                if(MathUtil.DecomposePowersOfTwo(mapCfgType).Contains(1) && !mapName.Equals(conf.name))
                     continue;
 
+                m_CSSPlugin.Logger.LogDebug("Executing config!");
                 Server.ExecuteCommand($"exec {conf.path}");
             }
         }
 
         private void updateConfigsDictionary() {
+            m_CSSPlugin.Logger.LogDebug("Get files from directory");
             string[] files = Directory.GetFiles(configFolder, "", SearchOption.TopDirectoryOnly);
 
+            m_CSSPlugin.Logger.LogDebug("Clearing configs");
             configs.Clear();
             foreach(string file in files) {
                 string fileName = Path.GetFileName(file);
@@ -70,6 +90,7 @@ namespace LupercaliaMGCore {
 
                 string relativePath = Path.GetRelativePath(Path.GetFullPath(Path.Combine(Server.GameDirectory, "csgo/cfg/")), file);
 
+                m_CSSPlugin.Logger.LogTrace("Adding config");
                 configs.Add(new MapConfigFile(fileName[..fileName.LastIndexOf(".")], relativePath));
             }
         }
