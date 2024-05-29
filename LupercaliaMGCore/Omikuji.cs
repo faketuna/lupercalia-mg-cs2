@@ -9,6 +9,7 @@ namespace LupercaliaMGCore {
         private LupercaliaMGCore m_CSSPlugin;
         public static readonly string CHAT_PREFIX = $" {ChatColors.Gold}[Omikuji]{ChatColors.Default}";
 
+        private Random random = new Random();
 
         private List<OmikujiInfo> events;
 
@@ -24,10 +25,16 @@ namespace LupercaliaMGCore {
             if(client == null)
                 return;
 
-            Random rand = new Random();
+            int randomValue;
+            OmikujiType randomOmikujiType = getRandomOmikujiType();
 
-            int randomValue = rand.Next(0, events.Count);
-
+            while(true) {
+                randomValue = random.Next(0, events.Count);
+                if(events[randomValue].omikujiType == randomOmikujiType) {
+                    break;
+                }
+            }
+            Server.PrintToChatAll($"{randomOmikujiType}");
             events[randomValue].function.Invoke(client);
         }
 
@@ -54,6 +61,27 @@ namespace LupercaliaMGCore {
             }
 
             return omikujiInfos;
+        }
+
+        private OmikujiType getRandomOmikujiType() {
+            int weightMisc = PluginSettings.getInstance.m_CVOmikujiEventWeightMisc.Value;
+            int weightBad = PluginSettings.getInstance.m_CVOmikujiEventWeightBad.Value;
+            int weightLucky = PluginSettings.getInstance.m_CVOmikujiEventWeightLucky.Value;
+            int rand = random.Next(0, weightMisc + weightBad + weightLucky);
+
+            OmikujiType type;
+
+            if(rand < weightMisc) {
+                type = OmikujiType.EVENT_MISC;
+            }
+            else if (rand < weightMisc + weightBad) {
+                type = OmikujiType.EVENT_BAD;
+            }
+            else {
+                type = OmikujiType.EVENT_LUCKY;
+            }
+
+            return type;
         }
     }
 }
