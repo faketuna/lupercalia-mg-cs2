@@ -117,15 +117,21 @@ namespace LupercaliaMGCore {
         private LupercaliaMGCore m_CSSPlugin;
 
         public PluginSettings(LupercaliaMGCore plugin) {
+            plugin.Logger.LogDebug("Setting the instance info");
             settingsInstance = this;
+            plugin.Logger.LogDebug("Setting the plugin instance");
             m_CSSPlugin = plugin;
+            plugin.Logger.LogDebug("Initializing the settings");
             initializeSettings();
+            plugin.Logger.LogDebug("Registering the fake convar");
             m_CSSPlugin.RegisterFakeConVars(typeof(PluginSettings), this);
         }
 
         public bool initializeSettings() {
+            m_CSSPlugin.Logger.LogDebug("Generate path to config folder");
             string configFolder = Path.Combine(Server.GameDirectory, CONFIG_FOLDER);
 
+            m_CSSPlugin.Logger.LogDebug("Checking existence of config folder");
             if(!Directory.Exists(configFolder)) {
                 m_CSSPlugin.Logger.LogInformation($"Failed to find the config folder. Trying to generate...");
 
@@ -137,8 +143,10 @@ namespace LupercaliaMGCore {
                 }
             }
 
+            m_CSSPlugin.Logger.LogDebug("Generate path to config file");
             string configLocation = Path.Combine(configFolder, CONFIG_FILE);
 
+            m_CSSPlugin.Logger.LogDebug("Checking existence of config file");
             if(!File.Exists(configLocation)) {
                 m_CSSPlugin.Logger.LogInformation($"Failed to find the config file. Trying to generate...");
 
@@ -152,6 +160,7 @@ namespace LupercaliaMGCore {
                 m_CSSPlugin.Logger.LogInformation($"Config file created.");
             }
 
+            m_CSSPlugin.Logger.LogDebug("Executing config");
             Server.ExecuteCommand($"exec lupercalia/{CONFIG_FILE}");
             return true;
         }
