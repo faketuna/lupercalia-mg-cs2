@@ -29,7 +29,7 @@ namespace LupercaliaMGCore {
             ent.CBodyComponent!.SceneNode!.GetSkeletonInstance().Scale = PluginSettings.getInstance.m_CVOmikujiEventChickenBodyScale.Value;
 
             double hue = 0.0;
-            LupercaliaMGCore.getInstance().AddTimer(0.05f, () => {
+            LupercaliaMGCore.getInstance().AddTimer(0.01f, () => {
                 if(!ent.IsValid)
                     return;
 
@@ -39,7 +39,7 @@ namespace LupercaliaMGCore {
                 ent.RenderMode = RenderMode_t.kRenderTransColor;
                 ent.Render = ColorFromHSV(hue, 1, 1);
                 Utilities.SetStateChanged(ent, "CBaseModelEntity", "m_clrRender");
-                hue += 120.0F;
+                hue += 30.0F;
             }, CounterStrikeSharp.API.Modules.Timers.TimerFlags.REPEAT);
 
             LupercaliaMGCore.getInstance().AddTimer(PluginSettings.getInstance.m_CVOmikujiEventChickenTime.Value, () => {
