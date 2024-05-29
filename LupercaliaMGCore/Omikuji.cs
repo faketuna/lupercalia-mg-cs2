@@ -27,14 +27,27 @@ namespace LupercaliaMGCore {
 
             int randomValue;
             OmikujiType randomOmikujiType = getRandomOmikujiType();
+            bool isPlayerAlive = client.PawnIsAlive;
+            OmikujiInfo omikujiInfo;
 
             while(true) {
                 randomValue = random.Next(0, events.Count);
-                if(events[randomValue].omikujiType == randomOmikujiType) {
-                    break;
+                if(events[randomValue].omikujiType != randomOmikujiType) {
+                    continue;
                 }
+
+                omikujiInfo = events[randomValue];
+
+                if(omikujiInfo.whenOmikujiCanInvoke == OmikujiCanInvokeWhen.ANYTIME)
+                    break;
+                
+                if(omikujiInfo.whenOmikujiCanInvoke == OmikujiCanInvokeWhen.PLAYER_ALIVE && isPlayerAlive)
+                    break;
+                
+                if(omikujiInfo.whenOmikujiCanInvoke == OmikujiCanInvokeWhen.PLAYER_DIED && !isPlayerAlive)
+                    break;
+
             }
-            Server.PrintToChatAll($"{randomOmikujiType}");
             events[randomValue].function.Invoke(client);
         }
 
@@ -57,7 +70,7 @@ namespace LupercaliaMGCore {
                 
                 OmikujiInfo.BasicOmikujiEvent delegateFunc = (OmikujiInfo.BasicOmikujiEvent)Delegate.CreateDelegate(typeof(OmikujiInfo.BasicOmikujiEvent), method);
 
-                omikujiInfos.Add(new OmikujiInfo(attribute.omikujiType, delegateFunc));
+                omikujiInfos.Add(new OmikujiInfo(attribute.omikujiType, attribute.whenOmikujiCanInvoke ,delegateFunc));
             }
 
             return omikujiInfos;

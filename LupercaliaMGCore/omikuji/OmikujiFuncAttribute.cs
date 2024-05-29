@@ -8,10 +8,12 @@ namespace LupercaliaMGCore {
 
         public readonly string name;
         public readonly OmikujiType omikujiType;
+        public readonly OmikujiCanInvokeWhen whenOmikujiCanInvoke;
 
-        public OmikujiFuncAttribute(string name, OmikujiType type) {
+        public OmikujiFuncAttribute(string name, OmikujiType type, OmikujiCanInvokeWhen whenOmikujiCanInvoke = OmikujiCanInvokeWhen.ANYTIME) {
             this.name = name;
             omikujiType = type;
+            this.whenOmikujiCanInvoke = whenOmikujiCanInvoke;
         }
 
     }
