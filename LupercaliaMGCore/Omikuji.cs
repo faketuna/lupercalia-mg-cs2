@@ -19,6 +19,9 @@ namespace LupercaliaMGCore {
 
             m_CSSPlugin.AddCommand("css_omikuji", "draw a fortune.", CommandOmikuji);
             events = findAllOmikujiMethods(typeof(OmikujiEvents));
+            foreach(Action action in findAllOmikujiInitializationMethods(typeof(OmikujiEvents))) {
+                action.Invoke();
+            }
         }
 
 
@@ -83,6 +86,32 @@ namespace LupercaliaMGCore {
             }
 
             return omikujiInfos;
+        }
+
+        
+        private List<Action> findAllOmikujiInitializationMethods(Type targetType) { 
+            List<Action> initializers = new List<Action>();
+
+            m_CSSPlugin.Logger.LogDebug("Finding all initializer method marked as Static and Public/Private from specified class");
+            MethodInfo[] methods = targetType.GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+
+            m_CSSPlugin.Logger.LogDebug("Iterating all methods");
+            foreach(MethodInfo method in methods) {
+                m_CSSPlugin.Logger.LogDebug("Getting custom attribute");
+                OmikujiInitilizerFuncAttribute? attribute = method.GetCustomAttribute<OmikujiInitilizerFuncAttribute>();
+
+                if(attribute == null)
+                    continue;
+                
+                
+                if (method.ReturnType != typeof(void))
+                    continue;
+                
+                m_CSSPlugin.Logger.LogDebug("Adding initializer method to list");
+                initializers.Add((Action)Delegate.CreateDelegate(typeof(Action), method));
+            }
+
+            return initializers;
         }
 
         private OmikujiType getRandomOmikujiType() {
