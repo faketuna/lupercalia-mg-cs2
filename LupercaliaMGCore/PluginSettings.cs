@@ -113,6 +113,11 @@ namespace LupercaliaMGCore {
         */
         public FakeConVar<float> m_CVOmikujiEventPlayerFreeze = new("lp_mg_omikuji_event_player_freeze_time", "How long to player freeze in seconds.", 3.0F);
 
+        /*
+        *   Omikuji - GiveRandomItem
+        */
+        public FakeConVar<int> m_CVOmikujiEventGiveRandomItemAvoidCount = new("lp_mg_omikuji_event_give_random_item_avoid_duplication_history", "How many histories save to avoid give duplicated item.", 10);
+
 
         private LupercaliaMGCore m_CSSPlugin;
 
@@ -281,6 +286,12 @@ namespace LupercaliaMGCore {
             *   Omikuji - Gravity
             */
             writeConVarConfig(config, m_CVOmikujiEventPlayerFreeze);
+            config.WriteLine("\n");
+
+            /*
+            *   Omikuji - GiveRandomItem
+            */ 
+            writeConVarConfig(config, m_CVOmikujiEventGiveRandomItemAvoidCount);
             config.WriteLine("\n");
 
             config.Close();

@@ -8,21 +8,64 @@ namespace LupercaliaMGCore {
 
         [OmikujiFunc("Give Random Item Event", OmikujiType.EVENT_LUCKY, OmikujiCanInvokeWhen.PLAYER_ALIVE)]
         public static void giveRandomItemEvent(CCSPlayerController client) {
-            LupercaliaMGCore.getInstance().Logger.LogDebug("Player drew a omikuji and invoked Give random item event");
+            SimpleLogging.LogDebug("Player drew a omikuji and invoked Give random item event");
 
-            string randomItem;
+            CsItem randomItem;
+            SimpleLogging.LogDebug("Iterating the all player");
             foreach(CCSPlayerController cl in Utilities.GetPlayers()) {
                 if(!cl.IsValid || cl.IsBot || cl.IsHLTV)
                     continue;
 
-                randomItem = pickRandomItem();
+                if(!cl.PawnIsAlive)
+                    continue;
 
-                cl.GiveNamedItem((CsItem)Enum.Parse(typeof(CsItem), randomItem));
+                SimpleLogging.LogDebug("Picking random item");
+                randomItem = pickRandomItem(cl);
 
+                cl.GiveNamedItem(randomItem);
+
+                SimpleLogging.LogDebug("Enqueue a picked up item to recently picked up items list");
+                recentlyPickedUpItems[cl].Enqueue(randomItem);
                 cl.PrintToChat($"{Omikuji.CHAT_PREFIX} {client.PlayerName} have drew the fortune! And you have received the {randomItem}!");
             }
+
+            SimpleLogging.LogDebug("Give random item event finished");
         }
 
+        private static Dictionary<CCSPlayerController, FixedSizeQueue<CsItem>> recentlyPickedUpItems = new Dictionary<CCSPlayerController, FixedSizeQueue<CsItem>>();
+
+        [OmikujiInitilizerFunc]
+        private static void initializeGiveRandomItemEvent() {
+            // Late Initialize the this event to avoid CounterStrikeSharp.API.Core.NativeException: Global Variables not initialized yet.
+            // This is a temporary workaround until get better solutions
+            LupercaliaMGCore.getInstance().AddTimer(0.01F, () => {
+                SimpleLogging.LogDebug($"Initializing the Give Random Item Event. This is a late initialization for avoid error.");
+
+                SimpleLogging.LogDebug("Registering the Player Spawn event for initialize late joiners recently picked up items list");
+                LupercaliaMGCore.getInstance().RegisterEventHandler<EventPlayerSpawn>((@event, info) => {
+                    CCSPlayerController? client = @event.Userid;
+                    
+                    if(client == null)
+                        return HookResult.Continue;
+
+                    recentlyPickedUpItems[client] = new FixedSizeQueue<CsItem>(PluginSettings.getInstance.m_CVOmikujiEventGiveRandomItemAvoidCount.Value);
+                    
+                    return HookResult.Continue;
+                });
+                SimpleLogging.LogDebug("Registered the Player Spawn event");
+
+                SimpleLogging.LogDebug("Initializing the recently picked up items list for connected players");
+                foreach(CCSPlayerController cl in Utilities.GetPlayers()) {
+                    if(!cl.IsValid || cl.IsBot || cl.IsHLTV)
+                        continue;
+
+                    if(!recentlyPickedUpItems.TryGetValue(cl, out _)) {
+                        recentlyPickedUpItems[cl] = new FixedSizeQueue<CsItem>(PluginSettings.getInstance.m_CVOmikujiEventGiveRandomItemAvoidCount.Value);
+                    }
+                }
+                SimpleLogging.LogDebug("Finished initializing the recently picked up items list");
+            });
+        }
 
         private static List<CsItem> invalidItems = new List<CsItem>() {
                 CsItem.XRayGrenade,
@@ -44,33 +87,41 @@ namespace LupercaliaMGCore {
                 CsItem.Firebomb,
                 CsItem.Glock18,
                 CsItem.Krieg,
-                // DZ Items are not implemented yet
+                // Not implemented items
                 CsItem.Bumpmine,
                 CsItem.BreachCharge,
                 CsItem.Shield,
                 CsItem.Bomb,
                 CsItem.Tablet,
+                CsItem.Snowball,
             };
 
 
         // HE Grenade giving rate is definitely low. investigate later.
-        private static string pickRandomItem() {
-            string item;
+        private static CsItem pickRandomItem(CCSPlayerController client) {
+            SimpleLogging.LogDebug($"pickRandomItem() called. caller: {client.PlayerName}");
+            CsItem item;
+
             string[] items = Enum.GetNames(typeof(CsItem));
             int itemsCount = items.Count();
 
+            SimpleLogging.LogTrace($"CsItems item counts are {itemsCount}");
+
             int randomNum;
 
-            Random random = new Random();
+            SimpleLogging.LogTrace("Picking random item");
             while(true) {
                 randomNum = random.Next(0, itemsCount);
 
-                item = items[randomNum];
-                if(!invalidItems.Contains((CsItem)Enum.Parse(typeof(CsItem), item))) {
+                item = (CsItem)Enum.Parse(typeof(CsItem), items[randomNum]);
+
+                if(!invalidItems.Contains(item) && !recentlyPickedUpItems[client].Contains(item)) {
                     break;
                 }
+                SimpleLogging.LogTrace("Random item are duplicated with recently picked up items");
             }
 
+            SimpleLogging.LogTrace($"Random item are picked: {item}");
             return item;
         }
     }
