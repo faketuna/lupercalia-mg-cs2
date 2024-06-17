@@ -7,7 +7,7 @@ namespace LupercaliaMGCore {
     public static partial class OmikujiEvents {
         [OmikujiFunc("Chicken Spawn Event", OmikujiType.EVENT_MISC)]
         public static void chickenSpawnEvent(CCSPlayerController client) {
-            LupercaliaMGCore.getInstance().Logger.LogDebug("Player drew a omikuji and invoked Chicken spawn event");
+            SimpleLogging.LogDebug("Player drew a omikuji and invoked Chicken spawn event");
             foreach(CCSPlayerController cl in Utilities.GetPlayers()) {
                 if(!cl.IsValid || cl.IsBot || cl.IsHLTV)
                     continue;

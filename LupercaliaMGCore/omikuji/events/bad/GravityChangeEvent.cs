@@ -9,7 +9,7 @@ namespace LupercaliaMGCore {
 
         [OmikujiFunc("Gravity change event", OmikujiType.EVENT_BAD)]
         public static void gravityChangeEvent(CCSPlayerController client) {
-            LupercaliaMGCore.getInstance().Logger.LogDebug("Player drew a omikuji and invoked Gravity change event");
+            SimpleLogging.LogDebug("Player drew a omikuji and invoked Gravity change event");
 
             int randomGravity = random.Next(
                 PluginSettings.getInstance.m_CVOmikujiEventGravityMin.Value,

@@ -7,7 +7,7 @@ namespace LupercaliaMGCore {
 
         [OmikujiFunc("Nothing Event", OmikujiType.EVENT_MISC)]
         public static void nothingEvent(CCSPlayerController client) {
-            LupercaliaMGCore.getInstance().Logger.LogDebug("Player drew a omikuji and invoked Nothing event");
+            SimpleLogging.LogDebug("Player drew a omikuji and invoked Nothing event");
             foreach(CCSPlayerController cl in Utilities.GetPlayers()) {
                 if(!cl.IsValid || cl.IsBot || cl.IsHLTV)
                     continue;

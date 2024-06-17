@@ -7,7 +7,7 @@ namespace LupercaliaMGCore {
 
         [OmikujiFunc("Screen Shake Event", OmikujiType.EVENT_MISC)]
         public static void screenShakeEvent(CCSPlayerController client) {
-            LupercaliaMGCore.getInstance().Logger.LogDebug("Player drew a omikuji and invoked Screen shake event");
+            SimpleLogging.LogDebug("Player drew a omikuji and invoked Screen shake event");
 
             CEnvShake? shakeEnt = Utilities.CreateEntityByName<CEnvShake>("env_shake");
             if(shakeEnt == null) {

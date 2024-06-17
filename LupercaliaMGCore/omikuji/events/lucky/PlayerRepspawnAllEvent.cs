@@ -7,7 +7,7 @@ namespace LupercaliaMGCore {
 
         [OmikujiFunc("All Player Respawn Event", OmikujiType.EVENT_LUCKY)]
         public static void PlayerRespawnAllEvent(CCSPlayerController client) {
-            LupercaliaMGCore.getInstance().Logger.LogDebug("Player drew a omikuji and invoked All player respawn event.");
+            SimpleLogging.LogDebug("Player drew a omikuji and invoked All player respawn event.");
 
             CCSPlayerController? alivePlayer = null;
 
@@ -22,7 +22,7 @@ namespace LupercaliaMGCore {
             }
 
             if(alivePlayer == null) {
-                LupercaliaMGCore.getInstance().Logger.LogDebug("All player respawn event failed due to no one player is alive.");
+                SimpleLogging.LogDebug("All player respawn event failed due to no one player is alive.");
                 foreach(CCSPlayerController cl in Utilities.GetPlayers()) {
                     if(!cl.IsValid || cl.IsBot || cl.IsHLTV)
                         continue;
