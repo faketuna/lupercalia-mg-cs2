@@ -118,6 +118,12 @@ namespace LupercaliaMGCore {
         */
         public FakeConVar<int> m_CVOmikujiEventGiveRandomItemAvoidCount = new("lp_mg_omikuji_event_give_random_item_avoid_duplication_history", "How many histories save to avoid give duplicated item.", 10);
 
+        /*
+        *   Omikuji - Player Slap
+        */
+        public FakeConVar<int> m_CVOmikujiEventPlayerSlapPowerMin = new("lp_mg_omikuji_event_player_slap_power_min", "Minimal power of slap.", 0);
+        public FakeConVar<int> m_CVOmikujiEventPlayerSlapPowerMax = new("lp_mg_omikuji_event_player_slap_power_max", "Maximum power of slap.", 30000);
+
 
         private LupercaliaMGCore m_CSSPlugin;
 
@@ -292,6 +298,13 @@ namespace LupercaliaMGCore {
             *   Omikuji - GiveRandomItem
             */ 
             writeConVarConfig(config, m_CVOmikujiEventGiveRandomItemAvoidCount);
+            config.WriteLine("\n");
+
+            /*
+            *   Omikuji - Player Slap
+            */
+            writeConVarConfig(config, m_CVOmikujiEventPlayerSlapPowerMin);
+            writeConVarConfig(config, m_CVOmikujiEventPlayerSlapPowerMax);
             config.WriteLine("\n");
 
             config.Close();
