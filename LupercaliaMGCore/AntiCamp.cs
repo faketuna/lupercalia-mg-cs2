@@ -46,36 +46,6 @@ namespace LupercaliaMGCore {
             }
 
             timer = m_CSSPlugin.AddTimer(PluginSettings.getInstance.m_CVAntiCampDetectionInterval.Value, checkPlayerIsCamping, TimerFlags.REPEAT);
-            m_CSSPlugin.AddCommand("css_test", "", testCmd);
-            m_CSSPlugin.AddCommand("css_test2", "", testCmd2);
-        }
-
-        private void testCmd(CCSPlayerController? client, CommandInfo info) {
-            if(client == null) 
-                return;
-            
-            foreach(var cl in Utilities.GetPlayers()) {
-                if(!cl.IsValid || cl.IsHLTV)
-                    continue;
-                
-                if(cl.PlayerName.Contains(info.GetArg(1), StringComparison.InvariantCultureIgnoreCase)) {
-                    startPlayerGlowing(cl);
-                }
-            }
-        }
-
-        private void testCmd2(CCSPlayerController? client, CommandInfo info) {
-            if(client == null) 
-                return;
-            
-            foreach(var cl in Utilities.GetPlayers()) {
-                if(!cl.IsValid || cl.IsHLTV)
-                    continue;
-                
-                if(cl.PlayerName.Contains(info.GetArg(1), StringComparison.InvariantCultureIgnoreCase)) {
-                    stopPlayerGlowing(cl);
-                }
-            }
         }
 
         private void checkPlayerIsCamping() {
