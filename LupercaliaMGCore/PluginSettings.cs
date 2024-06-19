@@ -113,7 +113,7 @@ namespace LupercaliaMGCore {
         public FakeConVar<double> m_CVOmikujiEventGravitySelectionWeight = new("lp_mg_omikuji_event_gravity_selection_weight", "Selection weight of this event", 30.0D);
 
         /*
-        *   Omikuji - Gravity
+        *   Omikuji - Freeze
         */
         public FakeConVar<float> m_CVOmikujiEventPlayerFreeze = new("lp_mg_omikuji_event_player_freeze_time", "How long to player freeze in seconds.", 3.0F);
         public FakeConVar<double> m_CVOmikujiEventPlayerFreezeSelectionWeight = new("lp_mg_omikuji_event_player_freeze_selection_weight", "Selection weight of this event", 30.0D);
@@ -310,7 +310,7 @@ namespace LupercaliaMGCore {
             config.WriteLine("\n");
 
             /*
-            *   Omikuji - Gravity
+            *   Omikuji - Freeze
             */
             writeConVarConfig(config, m_CVOmikujiEventPlayerFreeze);
             writeConVarConfig(config, m_CVOmikujiEventPlayerFreezeSelectionWeight);
