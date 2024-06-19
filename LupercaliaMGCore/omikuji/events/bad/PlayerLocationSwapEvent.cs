@@ -20,7 +20,7 @@ namespace LupercaliaMGCore {
 
             SimpleLogging.LogTrace("Player Location Swap Event: Start iterating the player list for initialize player location dictionary");
             foreach(CCSPlayerController cl in Utilities.GetPlayers()) {
-                if(!cl.IsValid /*|| cl.IsBot */ || cl.IsHLTV)
+                if(!cl.IsValid || cl.IsBot  || cl.IsHLTV)
                     continue;
 
                 if(!cl.PawnIsAlive)
@@ -54,7 +54,7 @@ namespace LupercaliaMGCore {
 
             SimpleLogging.LogTrace($"Player Location Swap Event: Many players alive {alive.Count}! Swapping!");
             foreach(CCSPlayerController cl in Utilities.GetPlayers()) {
-                if(!cl.IsValid /*|| cl.IsBot */ || cl.IsHLTV)
+                if(!cl.IsValid || cl.IsBot  || cl.IsHLTV)
                     continue;
 
                 if(!cl.PawnIsAlive)
@@ -64,7 +64,9 @@ namespace LupercaliaMGCore {
 
                 for(int i = alive.Count -1; i >= 0; i--) {
                     if(alive[i].player != cl && !alive[i].alreadyChosen) {
-                        vec = alive[i].vector;
+                        var al = alive[i];
+                        vec = al.vector;
+                        alive[i] = (al.vector, al.player, true);
                         break;
                     }
                 }
@@ -74,6 +76,7 @@ namespace LupercaliaMGCore {
                     continue;
                 }
 
+                SimpleLogging.LogTrace($"Teleport {cl.PlayerName} to {vec.X}, {vec.Y}, {vec.Z}");
                 cl.PlayerPawn.Value!.Teleport(vec, cl.PlayerPawn.Value!.EyeAngles, cl.PlayerPawn.Value!.AbsVelocity);
             }
 
