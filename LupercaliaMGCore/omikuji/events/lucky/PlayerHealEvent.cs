@@ -11,9 +11,9 @@ namespace LupercaliaMGCore {
 
             string msg;
             if(client.PawnIsAlive) {
-                msg = $"{Omikuji.CHAT_PREFIX} {client.PlayerName} have drew the fortune! {client.PlayerName}'s HP have healed the {PluginSettings.getInstance.m_CVOmikujiEventPlayerHeal.Value}HP!";
+                msg = $"{Omikuji.CHAT_PREFIX} {client.PlayerName} have drew the fortune! {client.PlayerName}'s HP are healed to {PluginSettings.getInstance.m_CVOmikujiEventPlayerHeal.Value}HP!";
             } else {
-                msg = $"{Omikuji.CHAT_PREFIX} {client.PlayerName} have drew the fortune! But how unfortunate we can't heal the HP because {client.PlayerName} is already dead.";
+            msg = $"{Omikuji.CHAT_PREFIX} {client.PlayerName} have drew the fortune! But how unfortunate we can't heal the HP because {client.PlayerName} is already dead.";
             }
 
 
