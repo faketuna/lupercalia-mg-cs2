@@ -75,9 +75,8 @@ namespace LupercaliaMGCore {
             });
         }
 
-        public double getOmikujiWeight()
-        {
-            throw new NotImplementedException();
+        public double getOmikujiWeight() {
+            return PluginSettings.getInstance.m_CVOmikujiEventGiveRandomItemSelectionWeight.Value;
         }
 
         private static List<CsItem> invalidItems = new List<CsItem>() {

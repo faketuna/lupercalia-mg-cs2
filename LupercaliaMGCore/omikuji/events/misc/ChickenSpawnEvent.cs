@@ -27,9 +27,8 @@ namespace LupercaliaMGCore {
         }
 
         public void initialize() {}
-        public double getOmikujiWeight()
-        {
-            throw new NotImplementedException();
+        public double getOmikujiWeight() {
+            return PluginSettings.getInstance.m_CVOmikujiEventChickenSelectionWeight.Value;
         }
 
         private static void createGamingChicken(CCSPlayerController client) {

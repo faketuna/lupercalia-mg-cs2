@@ -88,6 +88,7 @@ namespace LupercaliaMGCore {
         */
         public FakeConVar<float> m_CVOmikujiEventChickenTime = new("lp_mg_omikuji_event_chicken_time", "How long that chicken alive?", 5.0F);
         public FakeConVar<float> m_CVOmikujiEventChickenBodyScale = new("lp_mg_omikuji_event_chicken_body_scale", "Body size of the chicken. Default size is 1.0", 1.0F);
+        public FakeConVar<double> m_CVOmikujiEventChickenSelectionWeight = new("lp_mg_omikuji_event_chicken_selection_weight", "Selection weight of this event", 160.0D);
 
         /*
         *   Omikuji - Screen shake
@@ -95,11 +96,13 @@ namespace LupercaliaMGCore {
         public FakeConVar<float> m_CVOmikujiEventScreenShakeAmplitude = new("lp_mg_omikuji_event_screen_shake_amplitude", "How far away from the normal position the camera will wobble. Should be a range between 0 and 16.", 1000.0F);
         public FakeConVar<float> m_CVOmikujiEventScreenShakeDuration = new("lp_mg_omikuji_event_screen_shake_duration", "The length of time in which to shake the player's screens.", 5.0F);
         public FakeConVar<float> m_CVOmikujiEventScreenShakeFrequency = new("lp_mg_omikuji_event_screen_shake_frequency", "How many times per second to change the direction of the camera wobble. 40 is generally enough; values higher are hardly distinguishable.", 1000.0F);
+        public FakeConVar<double> m_CVOmikujiEventScreenShakeSelectionWeight = new("lp_mg_omikuji_event_screen_shake_selection_weight", "Selection weight of this event", 30.0D);
 
         /*
         *   Omikuji - Player Heal
         */
         public FakeConVar<int> m_CVOmikujiEventPlayerHeal = new("lp_mg_omikuji_event_player_heal_amount", "How many health healed when event occur", 100);
+        public FakeConVar<double> m_CVOmikujiEventPlayerHealSelectionWeight = new("lp_mg_omikuji_event_player_heal_selection_weight", "Selection weight of this event", 30.0D);
 
         /*
         *   Omikuji - Gravity
@@ -107,22 +110,36 @@ namespace LupercaliaMGCore {
         public FakeConVar<int> m_CVOmikujiEventGravityMax = new("lp_mg_omikuji_event_gravity_max", "Maximum value of sv_gravity", 800);
         public FakeConVar<int> m_CVOmikujiEventGravityMin = new("lp_mg_omikuji_event_gravity_min", "Minimal value of sv_gravity", 100);
         public FakeConVar<float> m_CVOmikujiEventGravityRestoreTime = new("lp_mg_omikuji_event_gravity_restore_time", "How long to take gravity restored in seconds.", 10.0F);
+        public FakeConVar<double> m_CVOmikujiEventGravitySelectionWeight = new("lp_mg_omikuji_event_gravity_selection_weight", "Selection weight of this event", 30.0D);
 
         /*
         *   Omikuji - Gravity
         */
         public FakeConVar<float> m_CVOmikujiEventPlayerFreeze = new("lp_mg_omikuji_event_player_freeze_time", "How long to player freeze in seconds.", 3.0F);
+        public FakeConVar<double> m_CVOmikujiEventPlayerFreezeSelectionWeight = new("lp_mg_omikuji_event_player_freeze_selection_weight", "Selection weight of this event", 30.0D);
 
         /*
         *   Omikuji - GiveRandomItem
         */
         public FakeConVar<int> m_CVOmikujiEventGiveRandomItemAvoidCount = new("lp_mg_omikuji_event_give_random_item_avoid_duplication_history", "How many histories save to avoid give duplicated item.", 10);
+        public FakeConVar<double> m_CVOmikujiEventGiveRandomItemSelectionWeight = new("lp_mg_omikuji_event_give_random_item_selection_weight", "Selection weight of this event", 30.0D);
 
         /*
         *   Omikuji - Player Slap
         */
         public FakeConVar<int> m_CVOmikujiEventPlayerSlapPowerMin = new("lp_mg_omikuji_event_player_slap_power_min", "Minimal power of slap.", 0);
         public FakeConVar<int> m_CVOmikujiEventPlayerSlapPowerMax = new("lp_mg_omikuji_event_player_slap_power_max", "Maximum power of slap.", 30000);
+        public FakeConVar<double> m_CVOmikujiEventPlayerSlapSelectionWeight = new("lp_mg_omikuji_event_player_slap_item_selection_weight", "Selection weight of this event", 30.0D);
+
+        /*
+        *   Omikuji - Selection weights
+        */
+        public FakeConVar<double> m_CVOmikujiEventNothingSelectionWeight = new("lp_mg_omikuji_event_nothing_swap_selection_weight", "Selection weight of this event", 30.0D);
+        public FakeConVar<double> m_CVOmikujiEventPlayerWishingSelectionWeight = new("lp_mg_omikuji_event_player_wishing_selection_weight", "Selection weight of this event", 30.0D);
+        public FakeConVar<double> m_CVOmikujiEventPlayerLocationSwapSelectionWeight = new("lp_mg_omikuji_event_player_location_swap_selection_weight", "Selection weight of this event", 30.0D);
+        public FakeConVar<double> m_CVOmikujiEventPlayerRespawnSelectionWeight = new("lp_mg_omikuji_event_player_respawn_selection_weight", "Selection weight of this event", 30.0D);
+        public FakeConVar<double> m_CVOmikujiEventAllPlayerRespawnSelectionWeight = new("lp_mg_omikuji_event_all_player_respawn_selection_weight", "Selection weight of this event", 30.0D);
+
 
 
         private LupercaliaMGCore m_CSSPlugin;
@@ -264,6 +281,7 @@ namespace LupercaliaMGCore {
             */
             writeConVarConfig(config, m_CVOmikujiEventChickenTime);
             writeConVarConfig(config, m_CVOmikujiEventChickenBodyScale);
+            writeConVarConfig(config, m_CVOmikujiEventChickenSelectionWeight);
             config.WriteLine("\n");
 
             /*
@@ -272,12 +290,14 @@ namespace LupercaliaMGCore {
             writeConVarConfig(config, m_CVOmikujiEventScreenShakeAmplitude);
             writeConVarConfig(config, m_CVOmikujiEventScreenShakeDuration);
             writeConVarConfig(config, m_CVOmikujiEventScreenShakeFrequency);
+            writeConVarConfig(config, m_CVOmikujiEventScreenShakeSelectionWeight);
             config.WriteLine("\n");
 
             /*
             *   Omikuji - Player Heal
             */
             writeConVarConfig(config, m_CVOmikujiEventPlayerHeal);
+            writeConVarConfig(config, m_CVOmikujiEventPlayerHealSelectionWeight);
             config.WriteLine("\n");
 
             /*
@@ -286,18 +306,21 @@ namespace LupercaliaMGCore {
             writeConVarConfig(config, m_CVOmikujiEventGravityMax);
             writeConVarConfig(config, m_CVOmikujiEventGravityMin);
             writeConVarConfig(config, m_CVOmikujiEventGravityRestoreTime);
+            writeConVarConfig(config, m_CVOmikujiEventGravitySelectionWeight);
             config.WriteLine("\n");
 
             /*
             *   Omikuji - Gravity
             */
             writeConVarConfig(config, m_CVOmikujiEventPlayerFreeze);
+            writeConVarConfig(config, m_CVOmikujiEventPlayerFreezeSelectionWeight);
             config.WriteLine("\n");
 
             /*
             *   Omikuji - GiveRandomItem
             */ 
             writeConVarConfig(config, m_CVOmikujiEventGiveRandomItemAvoidCount);
+            writeConVarConfig(config, m_CVOmikujiEventGiveRandomItemSelectionWeight);
             config.WriteLine("\n");
 
             /*
@@ -305,6 +328,17 @@ namespace LupercaliaMGCore {
             */
             writeConVarConfig(config, m_CVOmikujiEventPlayerSlapPowerMin);
             writeConVarConfig(config, m_CVOmikujiEventPlayerSlapPowerMax);
+            writeConVarConfig(config, m_CVOmikujiEventPlayerSlapSelectionWeight);
+            config.WriteLine("\n");
+
+            /*
+            *   Omikuji - Selection weights
+            */
+            writeConVarConfig(config, m_CVOmikujiEventNothingSelectionWeight);
+            writeConVarConfig(config, m_CVOmikujiEventPlayerWishingSelectionWeight);
+            writeConVarConfig(config, m_CVOmikujiEventPlayerLocationSwapSelectionWeight);
+            writeConVarConfig(config, m_CVOmikujiEventPlayerRespawnSelectionWeight);
+            writeConVarConfig(config, m_CVOmikujiEventAllPlayerRespawnSelectionWeight);
             config.WriteLine("\n");
 
             config.Close();
