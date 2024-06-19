@@ -27,6 +27,8 @@ namespace LupercaliaMGCore {
             if(player.IsBot || player.IsHLTV)
                 return HookResult.Continue;
 
+            SimpleLogging.LogDebug($"[Respawn] [Player {player.PlayerName}] Trying to respawn.");
+
             int index = (int)player.Index;
 
             if(!playerLastRespawnTime.ContainsKey(index)) {
@@ -35,14 +37,18 @@ namespace LupercaliaMGCore {
 
             if(Server.EngineTime - playerLastRespawnTime[index] <= PluginSettings.getInstance.m_CVAutoRespawnSpawnKillingDetectionTime.Value) {
                 repeatKillDetected = true;
+                SimpleLogging.LogDebug($"[Respawn] [Player {player.PlayerName}] Repeat kill is detected.");
                 Server.PrintToChatAll(LupercaliaMGCore.MessageWithPrefix($"{ChatColors.Green}Repeat kill detected! {ChatColors.Default}Respawn is {ChatColors.DarkRed}disabled{ChatColors.Default} in this round."));
                 return HookResult.Continue;
             }
 
+            SimpleLogging.LogDebug($"[Respawn] [Player {player.PlayerName}] Respawning player.");
             m_CSSPlugin.AddTimer(PluginSettings.getInstance.m_CVAutoRespawnSpawnTime.Value, () => {
+                SimpleLogging.LogDebug($"[Respawn] [Player {player.PlayerName}] Respawned.");
                 respawnPlayer(player);
             }, TimerFlags.STOP_ON_MAPCHANGE);
 
+            SimpleLogging.LogDebug($"[Respawn] [Player {player.PlayerName}] Done.");
             return HookResult.Continue;
         }
 

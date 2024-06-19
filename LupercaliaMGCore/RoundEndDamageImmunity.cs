@@ -23,6 +23,7 @@ namespace LupercaliaMGCore {
                     return HookResult.Continue;
 
                 player.Health = player.LastHealth;
+                SimpleLogging.LogTrace($"[Round End Damage Immunity] [Player {player.Controller.Value!.PlayerName}] Nullified damage");
                 return HookResult.Continue;
 
             }
@@ -31,11 +32,13 @@ namespace LupercaliaMGCore {
 
         private HookResult OnRoundPreStart(EventRoundPrestart @event, GameEventInfo info) {
             damageImmunity = false;
+            SimpleLogging.LogDebug("[Round End Damage Immunity] Disabled.");
             return HookResult.Continue;
         }
 
         private HookResult OnRoundEnd(EventRoundEnd @event, GameEventInfo info) {
             damageImmunity = true;
+            SimpleLogging.LogDebug("[Round End Damage Immunity] Enabled.");
             return HookResult.Continue;
         }
     }

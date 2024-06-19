@@ -158,15 +158,18 @@ namespace LupercaliaMGCore {
         }
 
         private void initClientInformation(CCSPlayerController client) {
+            SimpleLogging.LogDebug($"[Anti Camp] [Player {client.PlayerName}] Initializing the client information.");
             playerPositionHistory[client] = new PlayerPositionHistory((int)(PluginSettings.getInstance.m_CVAntiCampDetectionTime.Value / PluginSettings.getInstance.m_CVAntiCampDetectionInterval.Value));
             playerCampingTime[client] = 0.0F;
             playerGlowingTime[client] = 0.0F;
             isPlayerWarned[client] = false;
+            SimpleLogging.LogDebug($"[Anti Camp] [Player {client.PlayerName}] Initialized.");
         }
 
         private void recreateGlowingTimer(CCSPlayerController client) {
             float timerInterval = PluginSettings.getInstance.m_CVAntiCampDetectionInterval.Value;
             isPlayerWarned[client] = true;
+            SimpleLogging.LogDebug($"[Anti Camp] [Player {client.PlayerName}] Warned as camping.");
             client.PrintToCenterAlert("You have detected as CAMPING. MOVE!");
             glowingTimer[client] = m_CSSPlugin.AddTimer(timerInterval, () => {
                 if(playerGlowingTime[client] <= 0.0F) {
@@ -180,31 +183,35 @@ namespace LupercaliaMGCore {
 
         // TODO Glow player
         private void startPlayerGlowing(CCSPlayerController client) {
+            SimpleLogging.LogDebug($"[Anti Camp] [Player {client.PlayerName}] Start player glow");
             playerGlowingTime[client] = 0.0F;
             CCSPlayerPawn playerPawn = client.PlayerPawn.Value!;
 
             float timerRepeatDelay = 0.05F;
 
+            SimpleLogging.LogDebug($"[Anti Camp] [Player {client.PlayerName}] Creating overlay entity.");
             playerOverlayEntityTimer[client] = m_CSSPlugin.AddTimer(timerRepeatDelay, () => {
                 CCSPlayerPawn? overlayEntity = Utilities.CreateEntityByName<CCSPlayerPawn>("prop_dynamic");
                 
                 if(overlayEntity == null) {
-                    m_CSSPlugin.Logger.LogError("Failed to create glowing entity!");
+                    SimpleLogging.LogDebug($"[Anti Camp] [Player {client.PlayerName}] Failed to create glowing entity!");
                     return;
                 }
 
 
                 string playerModel = getPlayerModel(client);
 
-                Server.PrintToChatAll($"Player model!: {playerModel}");
+                SimpleLogging.LogTrace($"[Anti Camp] [Player {client.PlayerName}] player model: {playerModel}");
                 if(playerModel == "")
                     return;
 
+                SimpleLogging.LogTrace($"[Anti Camp] [Player {client.PlayerName}] Setting player model to overlay entity.");
                 overlayEntity.SetModel(playerModel);
                 overlayEntity.Teleport(playerPawn.AbsOrigin, new QAngle(0, 0, 0), new Vector(0, 0, 0));
                 overlayEntity.AcceptInput("FollowEntity", playerPawn, overlayEntity, "!activator");
                 overlayEntity.DispatchSpawn();
 
+                SimpleLogging.LogTrace($"[Anti Camp] [Player {client.PlayerName}] Changing overlay entity's render mode.");
                 overlayEntity.Render = Color.FromArgb(1, 255, 255, 255);
                 overlayEntity.Glow.GlowColorOverride = Color.Red;
                 overlayEntity.Spawnflags = 256U;
@@ -215,6 +222,7 @@ namespace LupercaliaMGCore {
                 overlayEntity.Glow.GlowRangeMin = 3;
 
                 m_CSSPlugin.AddTimer(timerRepeatDelay, () => {
+                    SimpleLogging.LogTrace($"[Anti Camp] [Player {client.PlayerName}] Timer fired, removing overlay entity.");
                     overlayEntity.Remove();
                 });
 
@@ -223,6 +231,7 @@ namespace LupercaliaMGCore {
 
         // TODO Remove Glow player
         private void stopPlayerGlowing(CCSPlayerController client) {
+            SimpleLogging.LogDebug($"[Anti Camp] [Player {client.PlayerName}] Glow removed");
             playerOverlayEntityTimer[client].Kill();
         }
 

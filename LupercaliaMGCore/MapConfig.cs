@@ -30,6 +30,7 @@ namespace LupercaliaMGCore {
             if(!MathUtil.DecomposePowersOfTwo(PluginSettings.getInstance.m_CVMapConfigExecutionTiming.Value).Contains(2))
                 return HookResult.Continue;
 
+            SimpleLogging.LogDebug("[Map Config] Executing configs at round PreStart.");
             executeConfigs();
             return HookResult.Continue;
         }
@@ -38,51 +39,57 @@ namespace LupercaliaMGCore {
             if(!MathUtil.DecomposePowersOfTwo(PluginSettings.getInstance.m_CVMapConfigExecutionTiming.Value).Contains(1))
                 return;
             
+            SimpleLogging.LogDebug("[Map Config] Executing configs at map start.");
             executeConfigs();
         }
 
         private void executeConfigs() {
-            m_CSSPlugin.Logger.LogDebug("Updating the config dictionary");
+            SimpleLogging.LogTrace("[Map Config] Updating the config dictionary");
             updateConfigsDictionary();
 
             int mapCfgType = PluginSettings.getInstance.m_CVMapConfigType.Value;
 
-            m_CSSPlugin.Logger.LogDebug("Checking the Map Config type");
-            if(mapCfgType == 0)
+            SimpleLogging.LogTrace("[Map Config] Checking the Map Config type");
+            if(mapCfgType == 0) {
+                SimpleLogging.LogTrace("[Map Config] mapCfgType is 0. cancelling the execution.");
                 return;
-
-            m_CSSPlugin.Logger.LogDebug("Iterating the config file");
+            }
 
             string? mapName = Server.MapName;
 
-            if(mapName == null)
+            if(mapName == null) {
+                SimpleLogging.LogTrace("[Map Config] mapName is null. cancelling the execution.");
                 return;
+            }
 
+
+            SimpleLogging.LogTrace("[Map Config] Iterating the config file");
             foreach(MapConfigFile conf in configs) {
-                m_CSSPlugin.Logger.LogDebug("Checking the map config type");
+                SimpleLogging.LogTrace("[Map Config] Checking the map config type");
 
                 if(MathUtil.DecomposePowersOfTwo(mapCfgType).Contains(2) && !mapName.StartsWith(conf.name))
                     continue;
                 
                 
-                m_CSSPlugin.Logger.LogDebug("Checking the map config type 2");
+                SimpleLogging.LogTrace("[Map Config] Checking the map config type 2");
                 
-                m_CSSPlugin.Logger.LogTrace($"{conf.name} {conf.path}");
+                SimpleLogging.LogTrace($"{conf.name} {conf.path}");
 
                 if(MathUtil.DecomposePowersOfTwo(mapCfgType).Contains(1) && !mapName.Equals(conf.name))
                     continue;
 
-                m_CSSPlugin.Logger.LogDebug("Executing config!");
+                SimpleLogging.LogTrace($"[Map Config] Executing config {conf.name} located at {conf.path}");
                 Server.ExecuteCommand($"exec {conf.path}");
             }
         }
 
         private void updateConfigsDictionary() {
-            m_CSSPlugin.Logger.LogDebug("Get files from directory");
+            SimpleLogging.LogTrace("[Map Config] Get files from directory");
             string[] files = Directory.GetFiles(configFolder, "", SearchOption.TopDirectoryOnly);
 
-            m_CSSPlugin.Logger.LogDebug("Clearing configs");
+            SimpleLogging.LogTrace("[Map Config] Clearing configs");
             configs.Clear();
+            SimpleLogging.LogTrace("[Map Config] Iterating files");
             foreach(string file in files) {
                 string fileName = Path.GetFileName(file);
                 if(!fileName.EndsWith(".cfg", StringComparison.InvariantCultureIgnoreCase))
@@ -90,8 +97,8 @@ namespace LupercaliaMGCore {
 
                 string relativePath = Path.GetRelativePath(Path.GetFullPath(Path.Combine(Server.GameDirectory, "csgo/cfg/")), file);
 
-                m_CSSPlugin.Logger.LogTrace("Adding config");
                 configs.Add(new MapConfigFile(fileName[..fileName.LastIndexOf(".")], relativePath));
+                SimpleLogging.LogTrace($"[Map Config] Adding config {configs.Last().name}, {configs.Last().path}");
             }
         }
 

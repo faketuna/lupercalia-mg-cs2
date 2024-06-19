@@ -35,12 +35,15 @@ namespace LupercaliaMGCore {
             if(client == null)
                 return;
 
+            SimpleLogging.LogDebug($"[Omikuji] [Player {client.PlayerName}] trying to draw omikuji.");
+            SimpleLogging.LogTrace($"[Omikuji] [Player {client.PlayerName}] Picking random omikuji type.");
             OmikujiType randomOmikujiType = getRandomOmikujiType();
             var events = OmikujiEvents.getEvents()[randomOmikujiType];
             bool isPlayerAlive = client.PawnIsAlive;
 
             OmikujiEvent omikuji;
             
+            SimpleLogging.LogTrace($"[Omikuji] [Player {client.PlayerName}] Picking random omikuji.");
             while(true) {
                 omikuji = selectWeightedRandom(events);
 
@@ -55,6 +58,7 @@ namespace LupercaliaMGCore {
                 }
             }
 
+            SimpleLogging.LogTrace($"[Omikuji] [Player {client.PlayerName}] Executing omikuji...");
             omikuji.execute(client);
         }
 

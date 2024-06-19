@@ -46,6 +46,7 @@ namespace LupercaliaMGCore {
                     time--;
                 }, TimerFlags.REPEAT);
             }
+            SimpleLogging.LogDebug($"[Scheduled Shutdown] Shutdown initiated.");
         }
 
         private HookResult OnRoundEnd(EventRoundEnd @event, GameEventInfo info) {
@@ -69,6 +70,7 @@ namespace LupercaliaMGCore {
                     initiateShutdown();
                 }
             }, TimerFlags.REPEAT);
+            SimpleLogging.LogDebug($"[Scheduled Shutdown] Cancelled shutdown.");
         }
 
         private void CommandCancelShutdown(CCSPlayerController? client, CommandInfo info) {
