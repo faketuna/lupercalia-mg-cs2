@@ -15,6 +15,8 @@ namespace LupercaliaMGCore {
 
         private List<(OmikujiType omikujiType, double weight)> omikujiTypes = new List<(OmikujiType omikujiType, double weight)>();
 
+        private Dictionary<CCSPlayerController, double> lastCommandUseTime = new Dictionary<CCSPlayerController, double>();
+
         public Omikuji(LupercaliaMGCore plugin) {
             m_CSSPlugin = plugin;
 
@@ -30,10 +32,25 @@ namespace LupercaliaMGCore {
             OmikujiEvents.initializeOmikujiEvents();
         }
 
+        private HookResult OnPlayerConnected(EventPlayerConnect @event, GameEventInfo info) {
+            CCSPlayerController? client = @event.Userid;
 
+            if(client == null)
+                return HookResult.Continue;
+
+            lastCommandUseTime[client] = 0.0D;
+            return HookResult.Continue;
+        }
+
+        // TODO Implement cooldown.
         private void CommandOmikuji(CCSPlayerController? client, CommandInfo info) {
             if(client == null)
                 return;
+
+            if(Server.EngineTime - lastCommandUseTime[client] < PluginSettings.getInstance.m_CVOmikujiCommandCooldown.Value) {
+                client.PrintToChat($"{CHAT_PREFIX} Your omikuji is in cooldown! Please wait for {(Server.EngineTime - lastCommandUseTime[client]).ToString("#.#")} seconds.");
+                return;
+            }
 
             SimpleLogging.LogDebug($"[Omikuji] [Player {client.PlayerName}] trying to draw omikuji.");
             SimpleLogging.LogTrace($"[Omikuji] [Player {client.PlayerName}] Picking random omikuji type.");
@@ -59,6 +76,7 @@ namespace LupercaliaMGCore {
             }
 
             SimpleLogging.LogTrace($"[Omikuji] [Player {client.PlayerName}] Executing omikuji...");
+            lastCommandUseTime[client] = Server.EngineTime;
             omikuji.execute(client);
         }
 

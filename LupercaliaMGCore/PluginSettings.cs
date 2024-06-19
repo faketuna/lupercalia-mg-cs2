@@ -89,6 +89,7 @@ namespace LupercaliaMGCore {
         public FakeConVar<int> m_CVOmikujiEventWeightMisc = new("lp_mg_omikuji_event_weight_misc", "Weight of misc event. You can set to any value.", 90);
         public FakeConVar<int> m_CVOmikujiEventWeightBad = new("lp_mg_omikuji_event_weight_bad", "Weight of bad event. You can set to any value.", 5);
         public FakeConVar<int> m_CVOmikujiEventWeightLucky = new("lp_mg_omikuji_event_weight_lucky", "Weight of lucky event. You can set to any value.", 5);
+        public FakeConVar<double> m_CVOmikujiCommandCooldown = new("lp_mg_omikuji_command_cooldown", "Cooldown of omikuji command.", 60.0D);
 
         /*
         *   Omikuji - Chicken
@@ -288,6 +289,7 @@ namespace LupercaliaMGCore {
             writeConVarConfig(config, m_CVOmikujiEventWeightMisc);
             writeConVarConfig(config, m_CVOmikujiEventWeightBad);
             writeConVarConfig(config, m_CVOmikujiEventWeightLucky);
+            writeConVarConfig(config, m_CVOmikujiCommandCooldown);
             config.WriteLine("\n");
 
             /*
