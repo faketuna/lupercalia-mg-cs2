@@ -38,7 +38,7 @@ namespace LupercaliaMGCore {
             playerLastButtonPressedTime[player] = Server.EngineTime;
 
             m_CSSPlugin.RegisterListener<Listeners.OnTick>(() => {
-                if(player.Buttons != PlayerButtons.Use)
+                if((player.Buttons & PlayerButtons.Use) == 0)
                     return;
                 
                 if(Server.EngineTime - playerLastButtonPressedTime[player] < buttonCooldown)
