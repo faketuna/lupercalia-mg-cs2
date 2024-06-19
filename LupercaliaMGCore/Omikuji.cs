@@ -29,6 +29,14 @@ namespace LupercaliaMGCore {
             omikujiTypes.Add((OmikujiType.EVENT_LUCKY, PluginSettings.getInstance.m_CVOmikujiEventWeightLucky.Value));
             omikujiTypes.Add((OmikujiType.EVENT_MISC, PluginSettings.getInstance.m_CVOmikujiEventWeightMisc.Value));
 
+            // For hot reload
+            foreach(CCSPlayerController client in Utilities.GetPlayers()) {
+                if(!client.IsValid || client.IsBot || client.IsHLTV)
+                    continue;
+                
+                lastCommandUseTime[client] = 0.0D;
+            }
+
             OmikujiEvents.initializeOmikujiEvents();
         }
 
