@@ -3,10 +3,15 @@ using CounterStrikeSharp.API.Core;
 using Microsoft.Extensions.Logging;
 
 namespace LupercaliaMGCore {
-    public static partial class OmikujiEvents {
+    public class PlayerRespawnAllEvent: OmikujiEvent {
+        public string eventName => "Player Respawn All Event";
 
-        [OmikujiFunc("All Player Respawn Event", OmikujiType.EVENT_LUCKY)]
-        public static void PlayerRespawnAllEvent(CCSPlayerController client) {
+        public OmikujiType omikujiType => OmikujiType.EVENT_LUCKY;
+
+        public OmikujiCanInvokeWhen omikujiCanInvokeWhen => OmikujiCanInvokeWhen.ANYTIME;
+
+        public void execute(CCSPlayerController client)
+        {
             SimpleLogging.LogDebug("Player drew a omikuji and invoked All player respawn event.");
 
             CCSPlayerController? alivePlayer = null;
@@ -44,6 +49,12 @@ namespace LupercaliaMGCore {
                 cl.Respawn();
                 cl.Teleport(alivePlayer.PlayerPawn.Value!.AbsOrigin, alivePlayer.PlayerPawn.Value.AbsRotation);
             }
+        }
+
+        public void initialize() {}
+        public double getOmikujiWeight()
+        {
+            throw new NotImplementedException();
         }
     }
 }

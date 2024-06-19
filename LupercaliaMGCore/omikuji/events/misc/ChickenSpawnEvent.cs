@@ -4,9 +4,15 @@ using CounterStrikeSharp.API.Core;
 using Microsoft.Extensions.Logging;
 
 namespace LupercaliaMGCore {
-    public static partial class OmikujiEvents {
-        [OmikujiFunc("Chicken Spawn Event", OmikujiType.EVENT_MISC)]
-        public static void chickenSpawnEvent(CCSPlayerController client) {
+    public class ChickenSpawnEvent: OmikujiEvent {
+        public string eventName => "Chicken Spawn Event";
+
+        public OmikujiType omikujiType => OmikujiType.EVENT_MISC;
+
+        public OmikujiCanInvokeWhen omikujiCanInvokeWhen => OmikujiCanInvokeWhen.ANYTIME;
+
+        public void execute(CCSPlayerController client)
+        {
             SimpleLogging.LogDebug("Player drew a omikuji and invoked Chicken spawn event");
             foreach(CCSPlayerController cl in Utilities.GetPlayers()) {
                 if(!cl.IsValid || cl.IsBot || cl.IsHLTV)
@@ -18,6 +24,12 @@ namespace LupercaliaMGCore {
                 if(cl.PawnIsAlive)
                     createGamingChicken(client);
             }
+        }
+
+        public void initialize() {}
+        public double getOmikujiWeight()
+        {
+            throw new NotImplementedException();
         }
 
         private static void createGamingChicken(CCSPlayerController client) {
@@ -73,6 +85,5 @@ namespace LupercaliaMGCore {
             else
                 return Color.FromArgb(255, v, p, q);
         }
-
     }
 }

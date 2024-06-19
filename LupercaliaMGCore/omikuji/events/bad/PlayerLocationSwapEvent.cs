@@ -3,10 +3,17 @@ using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Modules.Utils;
 
 namespace LupercaliaMGCore {
-    public static partial class OmikujiEvents {
+    public class PlayerLocationSwapEvent: OmikujiEvent {
+        public string eventName => "Player Location Swap Event";
 
-        [OmikujiFunc("Player Location Sawp Event", OmikujiType.EVENT_BAD)]
-        public static void playerLocationSwapEvent(CCSPlayerController client) {
+        public OmikujiType omikujiType => OmikujiType.EVENT_BAD;
+
+        public OmikujiCanInvokeWhen omikujiCanInvokeWhen => OmikujiCanInvokeWhen.PLAYER_ALIVE;
+
+        private static Random random = OmikujiEvents.random;
+
+        public void execute(CCSPlayerController client)
+        {
             SimpleLogging.LogDebug("Player drew a omikuji and invoked Player Location Swap Event");
 
             List<(Vector vector, CCSPlayerController player, bool alreadyChosen)> alive = new List<(Vector vector, CCSPlayerController player, bool alreadyChosen)>();
@@ -75,5 +82,11 @@ namespace LupercaliaMGCore {
             Server.PrintToChatAll($"{Omikuji.CHAT_PREFIX} {client.PlayerName} have drew the fortune! Unlucky! all players location is swapping!");
         }
 
+        public void initialize() {}
+
+        public double getOmikujiWeight()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

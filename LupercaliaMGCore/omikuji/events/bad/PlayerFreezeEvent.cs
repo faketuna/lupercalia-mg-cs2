@@ -3,10 +3,15 @@ using CounterStrikeSharp.API.Core;
 using Microsoft.Extensions.Logging;
 
 namespace LupercaliaMGCore {
-    public static partial class OmikujiEvents {        
-        
-        [OmikujiFunc("Player Freeze Event", OmikujiType.EVENT_BAD, OmikujiCanInvokeWhen.PLAYER_ALIVE)]
-        public static void playerFreezeEvent(CCSPlayerController client) {
+    public class PlayerFreezeEvent: OmikujiEvent {
+        public string eventName => "Player Freeze Event";
+
+        public OmikujiType omikujiType => OmikujiType.EVENT_BAD;
+
+        public OmikujiCanInvokeWhen omikujiCanInvokeWhen => OmikujiCanInvokeWhen.PLAYER_ALIVE;
+
+        public void execute(CCSPlayerController client)
+        {
             SimpleLogging.LogDebug("Player drew a omikuji and invoked Player freeze event");
 
             if(!client.PawnIsAlive) {
@@ -36,7 +41,13 @@ namespace LupercaliaMGCore {
                 SimpleLogging.LogDebug("Player freeze event: Move type changed to MOVETYPE_WALK");
                 Server.PrintToChatAll($"{Omikuji.CHAT_PREFIX} You are now unfrozen!");
             });
+        }
 
+        public void initialize() {}
+
+        public double getOmikujiWeight()
+        {
+            throw new NotImplementedException();
         }
     }
 }

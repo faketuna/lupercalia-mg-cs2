@@ -3,10 +3,15 @@ using CounterStrikeSharp.API.Core;
 using Microsoft.Extensions.Logging;
 
 namespace LupercaliaMGCore {
-    public static partial class OmikujiEvents {
+    public class NothingEvent: OmikujiEvent {
+        public string eventName => "Nothing Event";
 
-        [OmikujiFunc("Nothing Event", OmikujiType.EVENT_MISC)]
-        public static void nothingEvent(CCSPlayerController client) {
+        public OmikujiType omikujiType => OmikujiType.EVENT_MISC;
+
+        public OmikujiCanInvokeWhen omikujiCanInvokeWhen => OmikujiCanInvokeWhen.ANYTIME;
+
+        public void execute(CCSPlayerController client)
+        {
             SimpleLogging.LogDebug("Player drew a omikuji and invoked Nothing event");
             foreach(CCSPlayerController cl in Utilities.GetPlayers()) {
                 if(!cl.IsValid || cl.IsBot || cl.IsHLTV)
@@ -14,6 +19,13 @@ namespace LupercaliaMGCore {
 
                 cl.PrintToChat($"{Omikuji.CHAT_PREFIX} {client.PlayerName} have drew the fortune! But nothing happened!");
             }
+        }
+
+        public void initialize() {}
+
+        public double getOmikujiWeight()
+        {
+            throw new NotImplementedException();
         }
     }
 }

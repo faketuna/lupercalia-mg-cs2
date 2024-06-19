@@ -4,10 +4,20 @@ using CounterStrikeSharp.API.Modules.Entities.Constants;
 using Microsoft.Extensions.Logging;
 
 namespace LupercaliaMGCore {
-    public static partial class OmikujiEvents {
+    public class GiveRandomItemEvent: OmikujiEvent {
 
-        [OmikujiFunc("Give Random Item Event", OmikujiType.EVENT_LUCKY, OmikujiCanInvokeWhen.PLAYER_ALIVE)]
-        public static void giveRandomItemEvent(CCSPlayerController client) {
+        public string eventName => "Give Random Item Event";
+
+        public OmikujiType omikujiType => OmikujiType.EVENT_LUCKY;
+
+        public OmikujiCanInvokeWhen omikujiCanInvokeWhen => OmikujiCanInvokeWhen.ANYTIME;
+
+        private static Random random = OmikujiEvents.random;
+
+        private static Dictionary<CCSPlayerController, FixedSizeQueue<CsItem>> recentlyPickedUpItems = new Dictionary<CCSPlayerController, FixedSizeQueue<CsItem>>();
+
+        public void execute(CCSPlayerController client)
+        {
             SimpleLogging.LogDebug("Player drew a omikuji and invoked Give random item event");
 
             CsItem randomItem;
@@ -32,10 +42,8 @@ namespace LupercaliaMGCore {
             SimpleLogging.LogDebug("Give random item event finished");
         }
 
-        private static Dictionary<CCSPlayerController, FixedSizeQueue<CsItem>> recentlyPickedUpItems = new Dictionary<CCSPlayerController, FixedSizeQueue<CsItem>>();
-
-        [OmikujiInitilizerFunc]
-        private static void initializeGiveRandomItemEvent() {
+        public void initialize()
+        {
             // Late Initialize the this event to avoid CounterStrikeSharp.API.Core.NativeException: Global Variables not initialized yet.
             // This is a temporary workaround until get better solutions
             LupercaliaMGCore.getInstance().AddTimer(0.01F, () => {
@@ -67,35 +75,39 @@ namespace LupercaliaMGCore {
             });
         }
 
-        private static List<CsItem> invalidItems = new List<CsItem>() {
-                CsItem.XRayGrenade,
-                CsItem.IncGrenade,
-                CsItem.FragGrenade,
-                CsItem.HE,
-                CsItem.Taser,
-                CsItem.Knife,
-                CsItem.DefaultKnifeCT,
-                CsItem.DefaultKnifeT,
-                CsItem.Revolver,
-                CsItem.P2K,
-                CsItem.CZ,
-                CsItem.AutoSniperCT,
-                CsItem.AutoSniperT,
-                CsItem.Diversion,
-                CsItem.KevlarHelmet,
-                CsItem.Dualies,
-                CsItem.Firebomb,
-                CsItem.Glock18,
-                CsItem.Krieg,
-                // Not implemented items
-                CsItem.Bumpmine,
-                CsItem.BreachCharge,
-                CsItem.Shield,
-                CsItem.Bomb,
-                CsItem.Tablet,
-                CsItem.Snowball,
-            };
+        public double getOmikujiWeight()
+        {
+            throw new NotImplementedException();
+        }
 
+        private static List<CsItem> invalidItems = new List<CsItem>() {
+            CsItem.XRayGrenade,
+            CsItem.IncGrenade,
+            CsItem.FragGrenade,
+            CsItem.HE,
+            CsItem.Taser,
+            CsItem.Knife,
+            CsItem.DefaultKnifeCT,
+            CsItem.DefaultKnifeT,
+            CsItem.Revolver,
+            CsItem.P2K,
+            CsItem.CZ,
+            CsItem.AutoSniperCT,
+            CsItem.AutoSniperT,
+            CsItem.Diversion,
+            CsItem.KevlarHelmet,
+            CsItem.Dualies,
+            CsItem.Firebomb,
+            CsItem.Glock18,
+            CsItem.Krieg,
+            // Not implemented items
+            CsItem.Bumpmine,
+            CsItem.BreachCharge,
+            CsItem.Shield,
+            CsItem.Bomb,
+            CsItem.Tablet,
+            CsItem.Snowball,
+        };
 
         // HE Grenade giving rate is definitely low. investigate later.
         private static CsItem pickRandomItem(CCSPlayerController client) {

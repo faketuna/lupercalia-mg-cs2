@@ -3,10 +3,15 @@ using CounterStrikeSharp.API.Core;
 using Microsoft.Extensions.Logging;
 
 namespace LupercaliaMGCore {
-    public static partial class OmikujiEvents {
+    public class ScreenShakeEvent: OmikujiEvent {
+        public string eventName => "Screen Shake Event";
 
-        [OmikujiFunc("Screen Shake Event", OmikujiType.EVENT_MISC)]
-        public static void screenShakeEvent(CCSPlayerController client) {
+        public OmikujiType omikujiType => OmikujiType.EVENT_MISC;
+
+        public OmikujiCanInvokeWhen omikujiCanInvokeWhen => OmikujiCanInvokeWhen.ANYTIME;
+
+        public void execute(CCSPlayerController client)
+        {
             SimpleLogging.LogDebug("Player drew a omikuji and invoked Screen shake event");
 
             CEnvShake? shakeEnt = Utilities.CreateEntityByName<CEnvShake>("env_shake");
@@ -32,6 +37,13 @@ namespace LupercaliaMGCore {
             }
 
             shakeEnt.Remove();
+        }
+
+        public void initialize() {}
+
+        public double getOmikujiWeight()
+        {
+            throw new NotImplementedException();
         }
     }
 }

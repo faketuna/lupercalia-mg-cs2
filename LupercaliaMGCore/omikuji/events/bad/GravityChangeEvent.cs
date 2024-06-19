@@ -4,11 +4,20 @@ using CounterStrikeSharp.API.Modules.Cvars;
 using Microsoft.Extensions.Logging;
 
 namespace LupercaliaMGCore {
-    public static partial class OmikujiEvents {
+    public class GravityChangeEvent: OmikujiEvent {
+
+        public string eventName => "Gravity Change Event";
+
+        public OmikujiType omikujiType => OmikujiType.EVENT_BAD;
+
+        public OmikujiCanInvokeWhen omikujiCanInvokeWhen => OmikujiCanInvokeWhen.ANYTIME;
+
         private static bool isInGravityChangeEvent = false;
 
-        [OmikujiFunc("Gravity change event", OmikujiType.EVENT_BAD)]
-        public static void gravityChangeEvent(CCSPlayerController client) {
+        private static Random random = OmikujiEvents.random;
+
+        public void execute(CCSPlayerController client)
+        {
             SimpleLogging.LogDebug("Player drew a omikuji and invoked Gravity change event");
 
             int randomGravity = random.Next(
@@ -52,6 +61,13 @@ namespace LupercaliaMGCore {
                     isInGravityChangeEvent = false;
                 }
             });
+        }
+
+        public void initialize() {}
+
+        public double getOmikujiWeight() {
+            // TODO Implement weight cvar first.
+            return 0.0D;
         }
     }
 }

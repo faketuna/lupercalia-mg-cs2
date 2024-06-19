@@ -3,10 +3,15 @@ using CounterStrikeSharp.API.Core;
 using Microsoft.Extensions.Logging;
 
 namespace LupercaliaMGCore {
-    public static partial class OmikujiEvents {
+    public class PlayerHealEvent: OmikujiEvent {
+        public string eventName => "Player Heal Event";
 
-        [OmikujiFunc("Player Heal Event", OmikujiType.EVENT_LUCKY, OmikujiCanInvokeWhen.PLAYER_ALIVE)]
-        public static void playerHealEvent(CCSPlayerController client) {
+        public OmikujiType omikujiType => OmikujiType.EVENT_LUCKY;
+
+        public OmikujiCanInvokeWhen omikujiCanInvokeWhen => OmikujiCanInvokeWhen.PLAYER_ALIVE;
+
+        public void execute(CCSPlayerController client)
+        {
             SimpleLogging.LogDebug("Player drew a omikuji and invoked Player heal event.");
 
             string msg;
@@ -35,6 +40,13 @@ namespace LupercaliaMGCore {
                 playerPawn.Health += PluginSettings.getInstance.m_CVOmikujiEventPlayerHeal.Value;
             }
             Utilities.SetStateChanged(playerPawn, "CBaseEntity", "m_iHealth");
+        }
+
+        public void initialize() {}
+
+        public double getOmikujiWeight()
+        {
+            throw new NotImplementedException();
         }
     }
 }

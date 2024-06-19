@@ -1,12 +1,18 @@
 using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
+using CounterStrikeSharp.API.Modules.Memory;
 using Microsoft.Extensions.Logging;
 
 namespace LupercaliaMGCore {
-    public static partial class OmikujiEvents {
+    public class PlayerRespawnEvent: OmikujiEvent {
+        public string eventName => "Player Respawn Event";
 
-        [OmikujiFunc("Player Respawn Event", OmikujiType.EVENT_LUCKY, OmikujiCanInvokeWhen.PLAYER_DIED)]
-        public static void playerRespawnEvent(CCSPlayerController client) {
+        public OmikujiType omikujiType => OmikujiType.EVENT_LUCKY;
+
+        public OmikujiCanInvokeWhen omikujiCanInvokeWhen => OmikujiCanInvokeWhen.PLAYER_DIED;
+
+        public void execute(CCSPlayerController client)
+        {
             SimpleLogging.LogDebug("Player drew a omikuji and invoked Player respawn event");
 
             string msg;
@@ -21,12 +27,21 @@ namespace LupercaliaMGCore {
                     continue;
                 
                 if(!client.PawnIsAlive && cl.PawnIsAlive) {
-                    client.Respawn();
-                    client.Teleport(cl.PlayerPawn!.Value!.AbsOrigin);
+                    Server.NextFrame(() => {
+                        client.Respawn();
+                        client.Teleport(cl.PlayerPawn!.Value!.AbsOrigin);
+                    });
                 }
 
                 cl.PrintToChat(msg);
             }
+        }
+
+        public void initialize() {}
+
+        public double getOmikujiWeight()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -3,11 +3,17 @@ using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Modules.Utils;
 
 namespace LupercaliaMGCore {
-    public static partial class OmikujiEvents {
+    public class PlayerSlapEvent: OmikujiEvent {
+        public string eventName => "Player Slap Event";
 
+        public OmikujiType omikujiType => OmikujiType.EVENT_BAD;
 
-        [OmikujiFunc("Player Slap Event", OmikujiType.EVENT_BAD, OmikujiCanInvokeWhen.PLAYER_ALIVE)]
-        public static void playerSlapEvent(CCSPlayerController client) {
+        public OmikujiCanInvokeWhen omikujiCanInvokeWhen => OmikujiCanInvokeWhen.PLAYER_ALIVE;
+
+        private static Random random = OmikujiEvents.random;
+
+        public void execute(CCSPlayerController client)
+        {
             SimpleLogging.LogDebug("Player drew a omikuji and invoked Player Slap Event");
 
             CCSPlayerPawn? pawn = client.PlayerPawn.Value;
@@ -31,7 +37,13 @@ namespace LupercaliaMGCore {
             SimpleLogging.LogTrace($"Player Slap Event: Player velocity - {velo.X} {velo.Y} {velo.Z}");
             
             Server.PrintToChatAll($"{Omikuji.CHAT_PREFIX} {client.PlayerName} have drew the fortune! Unlucky! {client.PlayerName} is slapped!");
+        }
 
+        public void initialize() {}
+
+        public double getOmikujiWeight()
+        {
+            throw new NotImplementedException();
         }
     }
 }
