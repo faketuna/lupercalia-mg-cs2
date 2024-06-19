@@ -35,13 +35,6 @@ namespace LupercaliaMGCore {
             if(client == null)
                 return;
 
-            // var @event = OmikujiEvents.getEvents()[OmikujiType.EVENT_MISC];
-            // foreach(var evt in @event) {
-            //     if(evt.eventName.Contains("Shake", StringComparison.CurrentCultureIgnoreCase)) {
-            //         evt.execute(client);
-            //     }
-            // }
-
             OmikujiType randomOmikujiType = getRandomOmikujiType();
             var events = OmikujiEvents.getEvents()[randomOmikujiType];
             bool isPlayerAlive = client.PawnIsAlive;
