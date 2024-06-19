@@ -7,9 +7,9 @@ namespace LupercaliaMGCore {
                 return;
             }
             if(PluginSettings.getInstance.m_CVPluginDebugShowChat.Value) {
-                Server.PrintToChatAll(information);
+                Server.PrintToChatAll("[LPR MG DEBUG] " + information);
             }
-            Server.PrintToConsole(information);
+            Server.PrintToConsole("[LPR MG DEBUG] " + information);
         }
 
         public static void LogTrace(string information) {
@@ -17,9 +17,9 @@ namespace LupercaliaMGCore {
                 return;
             }
             if(PluginSettings.getInstance.m_CVPluginDebugShowChat.Value) {
-                Server.PrintToChatAll(information);
+                Server.PrintToChatAll("[LPR MG TRACE] " + information);
             }
-            Server.PrintToConsole(information);
+            Server.PrintToConsole("[LPR MG TRACE] " + information);
         }
     }
 }
