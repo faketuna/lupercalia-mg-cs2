@@ -10,6 +10,8 @@ namespace LupercaliaMGCore {
     {
         private LupercaliaMGCore m_CSSPlugin;
 
+        private static Random random = new Random();
+
         public TeamScramble(LupercaliaMGCore plugin) {
             m_CSSPlugin = plugin;
 
@@ -23,36 +25,49 @@ namespace LupercaliaMGCore {
             SimpleLogging.LogDebug("[Team Scramble] Called");
 
             List<CCSPlayerController> players = Utilities.GetPlayers();
+
             int playerCount = players.Count;
             int playerCountHalf = playerCount/2;
-            List<uint> pickedPlayer = new List<uint>();
-
             SimpleLogging.LogTrace($"[Team Scramble] player count: {playerCount}, half: {playerCountHalf}");
 
-            var unixTimestamp = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-            Random random = new Random(unixTimestamp);
+            int teamCountCT = 0;
+            int teamCountT = 0;
 
-            SimpleLogging.LogDebug($"[Team Scramble] Iterating half of players to join CounterTerrorist force");
-            for(int i = playerCountHalf; i > 0; i--) {
-                if(pickedPlayer.Contains(players[i].Index)) {
-                    i++;
-                    continue;
+            foreach(var client in players) {
+                int randomTeam = random.Next(0, 5000);
+                if(randomTeam >= 2500) {
+                    if(teamCountCT >= playerCountHalf) {
+                        SimpleLogging.LogTrace($"Player {client.PlayerName} moved to Terrorist");
+                        client.SwitchTeam(CsTeam.Terrorist);
+                    }
+                    else {
+                        SimpleLogging.LogTrace($"Player {client.PlayerName} moved to CT");
+                        client.SwitchTeam(CsTeam.CounterTerrorist);
+                        teamCountCT++;
+                    }
                 }
-
-                int index = random.Next(playerCount);
-                pickedPlayer.Add(players[index].Index);
-                players[index].SwitchTeam(CsTeam.CounterTerrorist);
-                SimpleLogging.LogTrace($"[Team Scramble] Player {players[index].PlayerName} is moved to CounterTerrorist");
+                else {
+                    if(teamCountT >= playerCountHalf) {
+                        SimpleLogging.LogTrace($"Player {client.PlayerName} moved to CT");
+                        client.SwitchTeam(CsTeam.CounterTerrorist);
+                    }
+                    else {
+                        SimpleLogging.LogTrace($"Player {client.PlayerName} moved to Terrorist");
+                        client.SwitchTeam(CsTeam.Terrorist);
+                        teamCountT++;
+                    }
+                }
             }
 
-            for(int i = playerCount-1; i >= 0; i--) {
-                if(pickedPlayer.Contains(players[i].Index)) 
-                    continue;
-                
-                players[i].SwitchTeam(CsTeam.Terrorist);
-                SimpleLogging.LogTrace($"[Team Scramble] Player {players[i].PlayerName} is moved to Terrorist");
-            }
-            
+            // for(int i = 0; i < playerCountHalf; i++) {
+            //     players[i].SwitchTeam(CsTeam.CounterTerrorist);
+            //     SimpleLogging.LogTrace($"Player {players[i].PlayerName} moved to CounterTerrorist");
+            // }
+
+            // for(int i = playerCountHalf; i < playerCount; i++) {
+            //     players[i].SwitchTeam(CsTeam.Terrorist);
+            //     SimpleLogging.LogTrace($"Player {players[i].PlayerName} moved to Terrorist");
+            // }
 
             SimpleLogging.LogDebug("[Team Scramble] Done");
             return HookResult.Continue;
