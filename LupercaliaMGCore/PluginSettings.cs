@@ -81,7 +81,7 @@ namespace LupercaliaMGCore {
         */
 
         public FakeConVar<int> m_CVPluginDebugLevel = new("lp_mg_debug_level", "0: Nothing, 1: Print debug message, 2: Print debug, trace message", 0, ConVarFlags.FCVAR_NONE, new RangeValidator<int>(0,2));
-        public FakeConVar<bool> m_CVPluginDebugShowChat = new("lp_mg_debug_show_chat", "Debug message shown in chat?", false);
+        public FakeConVar<bool> m_CVPluginDebugShowClientConsole = new("lp_mg_debug_show_console", "Debug message shown in client console?", false);
 
         /*
         *   Omikuji
@@ -279,7 +279,7 @@ namespace LupercaliaMGCore {
             *   Plugin debug
             */
             writeConVarConfig(config, m_CVPluginDebugLevel);
-            writeConVarConfig(config, m_CVPluginDebugShowChat);
+            writeConVarConfig(config, m_CVPluginDebugShowClientConsole);
             config.WriteLine("\n");
 
             /*
