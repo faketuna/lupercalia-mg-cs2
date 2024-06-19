@@ -2,6 +2,7 @@ using System.Reflection;
 using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Modules.Commands;
+using CounterStrikeSharp.API.Modules.Memory;
 using CounterStrikeSharp.API.Modules.Utils;
 using Microsoft.Extensions.Logging;
 
@@ -10,18 +11,23 @@ namespace LupercaliaMGCore {
         private LupercaliaMGCore m_CSSPlugin;
         public static readonly string CHAT_PREFIX = $" {ChatColors.Gold}[Omikuji]{ChatColors.Default}";
 
-        private Random random = new Random();
+        private static Random random = new Random();
 
-        private List<OmikujiInfo> events;
+        private List<(OmikujiType omikujiType, double weight)> omikujiTypes = new List<(OmikujiType omikujiType, double weight)>();
 
         public Omikuji(LupercaliaMGCore plugin) {
             m_CSSPlugin = plugin;
 
             m_CSSPlugin.AddCommand("css_omikuji", "draw a fortune.", CommandOmikuji);
-            events = findAllOmikujiMethods(typeof(OmikujiEvents));
-            foreach(Action action in findAllOmikujiInitializationMethods(typeof(OmikujiEvents))) {
-                action.Invoke();
-            }
+            // foreach(Action action in findAllOmikujiInitializationMethods(typeof(OmikujiEvents))) {
+            //     action.Invoke();
+            // }
+
+            omikujiTypes.Add((OmikujiType.EVENT_BAD, PluginSettings.getInstance.m_CVOmikujiEventWeightBad.Value));
+            omikujiTypes.Add((OmikujiType.EVENT_LUCKY, PluginSettings.getInstance.m_CVOmikujiEventWeightLucky.Value));
+            omikujiTypes.Add((OmikujiType.EVENT_MISC, PluginSettings.getInstance.m_CVOmikujiEventWeightMisc.Value));
+
+            OmikujiEvents.initializeOmikujiEvents();
         }
 
 
@@ -29,110 +35,77 @@ namespace LupercaliaMGCore {
             if(client == null)
                 return;
 
-            int randomValue;
+            // var @event = OmikujiEvents.getEvents()[OmikujiType.EVENT_MISC];
+            // foreach(var evt in @event) {
+            //     if(evt.eventName.Contains("Shake", StringComparison.CurrentCultureIgnoreCase)) {
+            //         evt.execute(client);
+            //     }
+            // }
+
             OmikujiType randomOmikujiType = getRandomOmikujiType();
+            var events = OmikujiEvents.getEvents()[randomOmikujiType];
             bool isPlayerAlive = client.PawnIsAlive;
-            OmikujiInfo omikujiInfo;
 
+            OmikujiEvent omikuji;
+            
             while(true) {
-                randomValue = random.Next(0, events.Count);
-                if(events[randomValue].omikujiType != randomOmikujiType) {
-                    continue;
+                omikuji = selectWeightedRandom(events);
+
+                if(omikuji.omikujiCanInvokeWhen == OmikujiCanInvokeWhen.ANYTIME) {
+                    break;
                 }
-
-                omikujiInfo = events[randomValue];
-
-                if(omikujiInfo.whenOmikujiCanInvoke == OmikujiCanInvokeWhen.ANYTIME)
+                else if (omikuji.omikujiCanInvokeWhen == OmikujiCanInvokeWhen.PLAYER_DIED && !isPlayerAlive) {
                     break;
-                
-                if(omikujiInfo.whenOmikujiCanInvoke == OmikujiCanInvokeWhen.PLAYER_ALIVE && isPlayerAlive)
+                }
+                else if (omikuji.omikujiCanInvokeWhen == OmikujiCanInvokeWhen.PLAYER_ALIVE && isPlayerAlive) {
                     break;
-                
-                if(omikujiInfo.whenOmikujiCanInvoke == OmikujiCanInvokeWhen.PLAYER_DIED && !isPlayerAlive)
-                    break;
-
+                }
             }
 
-            m_CSSPlugin.Logger.LogDebug($"Player {client.PlayerName} is invoked {events[randomValue].function.GetMethodInfo().GetCustomAttribute<OmikujiFuncAttribute>()!.name}");
-            events[randomValue].function.Invoke(client);
-        }
-
-        private List<OmikujiInfo> findAllOmikujiMethods(Type targetType) {
-            List<OmikujiInfo> omikujiInfos = new List<OmikujiInfo>();
-
-            m_CSSPlugin.Logger.LogTrace("Finding all method marked as Static and Public from specified class");
-            MethodInfo[] methods = targetType.GetMethods(BindingFlags.Static | BindingFlags.Public);
-
-            m_CSSPlugin.Logger.LogTrace("Iterating all methods");
-            foreach(MethodInfo method in methods) {
-                m_CSSPlugin.Logger.LogTrace("Getting custom attribute");
-                OmikujiFuncAttribute? attribute = method.GetCustomAttribute<OmikujiFuncAttribute>();
-
-                if(attribute == null)
-                    continue;
-                
-
-                m_CSSPlugin.Logger.LogTrace("Getting all parameters");
-                ParameterInfo[] parameters = method.GetParameters();
-
-                if (method.ReturnType != typeof(void) || parameters.Length != 1 || parameters[0].ParameterType != typeof(CCSPlayerController))
-                    continue;
-                
-                m_CSSPlugin.Logger.LogTrace("Creating delegate function for omikuji event");
-                OmikujiInfo.BasicOmikujiEvent delegateFunc = (OmikujiInfo.BasicOmikujiEvent)Delegate.CreateDelegate(typeof(OmikujiInfo.BasicOmikujiEvent), method);
-
-                m_CSSPlugin.Logger.LogTrace("Adding OmikujiInfo");
-                omikujiInfos.Add(new OmikujiInfo(attribute.omikujiType, attribute.whenOmikujiCanInvoke ,delegateFunc));
-            }
-
-            return omikujiInfos;
-        }
-
-        
-        private List<Action> findAllOmikujiInitializationMethods(Type targetType) { 
-            List<Action> initializers = new List<Action>();
-
-            m_CSSPlugin.Logger.LogDebug("Finding all initializer method marked as Static and Public/Private from specified class");
-            MethodInfo[] methods = targetType.GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
-
-            m_CSSPlugin.Logger.LogDebug("Iterating all methods");
-            foreach(MethodInfo method in methods) {
-                m_CSSPlugin.Logger.LogDebug("Getting custom attribute");
-                OmikujiInitilizerFuncAttribute? attribute = method.GetCustomAttribute<OmikujiInitilizerFuncAttribute>();
-
-                if(attribute == null)
-                    continue;
-                
-                
-                if (method.ReturnType != typeof(void))
-                    continue;
-                
-                m_CSSPlugin.Logger.LogDebug("Adding initializer method to list");
-                initializers.Add((Action)Delegate.CreateDelegate(typeof(Action), method));
-            }
-
-            return initializers;
+            omikuji.execute(client);
         }
 
         private OmikujiType getRandomOmikujiType() {
-            int weightMisc = PluginSettings.getInstance.m_CVOmikujiEventWeightMisc.Value;
-            int weightBad = PluginSettings.getInstance.m_CVOmikujiEventWeightBad.Value;
-            int weightLucky = PluginSettings.getInstance.m_CVOmikujiEventWeightLucky.Value;
-            int rand = random.Next(0, weightMisc + weightBad + weightLucky);
+            return selectWeightedRandom(omikujiTypes);
+        }
 
-            OmikujiType type;
 
-            if(rand < weightMisc) {
-                type = OmikujiType.EVENT_MISC;
-            }
-            else if (rand < weightMisc + weightBad) {
-                type = OmikujiType.EVENT_BAD;
-            }
-            else {
-                type = OmikujiType.EVENT_LUCKY;
+        private static T selectWeightedRandom<T>(List<(T item, double weight)> weightedItems) {
+            double totalWeight = 0.0D;
+            foreach(var item in weightedItems) {
+                totalWeight += item.weight;
             }
 
-            return type;
+            double randomVal = random.NextDouble() * totalWeight;
+
+            foreach(var item in weightedItems) {
+                if(randomVal < item.weight) {
+                    return item.item;
+                }
+
+                randomVal -= item.weight;
+            }
+
+            return weightedItems[0].item;
+        }
+
+        private static OmikujiEvent selectWeightedRandom(List<OmikujiEvent> weightedItems) {
+            double totalWeight = 0.0D;
+            foreach(var item in weightedItems) {
+                totalWeight += item.getOmikujiWeight();
+            }
+
+            double randomVal = random.NextDouble() * totalWeight;
+
+            foreach(var item in weightedItems) {
+                if(randomVal < item.getOmikujiWeight()) {
+                    return item;
+                }
+
+                randomVal -= item.getOmikujiWeight();
+            }
+
+            return weightedItems[0];
         }
     }
 }
