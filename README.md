@@ -13,16 +13,16 @@ CounterStrikeSharp plugin for Lupercalia MG Server(Soon™)
   - [x] Vote map restart
   - [x] Vote round restart
   - [x] Scheduled shutdown
-- [ ] Multigames
+- [x] Multigames
   - [x] Team Based Body Color
   - [x] Team Scramble
-  - [ ] Anti camp system (TODO!)
+  - [x] Anti camp system (TODO!)
   - [x] Round end damage immunity 
   - [x] Round end weapon strip
-- [ ] Course
+- [x] Course
   - [x] Auto Respawn with spawn killing detection
 - [ ] Fun
-  - [ ] Omikuji
+  - [x] Omikuji
 
 ## General
 
@@ -138,30 +138,4 @@ Probability based event system. When player type `!omikuji` in chat something go
 
 # ConVars / Config
 
-Config file will be generated in `csgo/cfg/lupercalia/`
-
-```
-- lp_mg_teamcolor_ct                      0, 0, 255   | Counter Terrorist's Body color. R, G, B
-- lp_mg_teamcolor_t                       255, 0, 0   | Terrorist's Body color. R, G, B
-- lp_mg_teamscramble_enabled              1           | Should team is scrambled after round end
-- lp_mg_vmr_allowed_time                  60.0        | How long allowed to use vote command after map loaded in seconds.
-- lp_mg_vmr_vote_threshold                0.7         | How percent of votes required to initiate the map restart.      
-- lp_mg_vmr_restart_time                  10.0        | How long to take restarting map after vote passed.
-- lp_mg_vrr_vote_threshold                0.7         | How percent of votes required to initiate the round restart.
-- lp_mg_vrr_restart_time                  10.0        | How long to take restarting round after vote passed.
-- lp_mg_redi_enabled                      1           | Should player grant damage immunity after round end until next round starts.
-- lp_mg_rews_enabled                      1           | Should player's weapons are removed before new round starts.
-- lp_mg_scheduled_shutdown_time           0500        | Server will be shutdown in specified time. Format is HHmm
-- lp_mg_scheduled_shutdown_warn_time      10          | Show shutdown warning countdown if lp_mg_scheduled_shutdown_round_end is false.
-- lp_mg_scheduled_shutdown_round_end      1           | When set to true server will be shutdown after round end.
-- lp_mg_auto_respawn_enabled              0           | Auto respawn feature is enabled.
-- lp_mg_auto_respawn_repeat_kill_time     1.0         | Seconds to detect as spawn killing.
-- lp_mg_auto_respawn_time                 1.0         | How long to respawn after death.
-- lp_mg_anti_camp_enabled                 1           | Anti camp enabled
-- lp_mg_anti_camp_detection_time          10.0        | How long to detect as camping in seconds.
-- lp_mg_anti_camp_detection_radius        400.0       | Range of area for player should move for avoiding the detected as camping.
-- lp_mg_anti_camp_detection_interval      0.1         | Interval to run camping check in seconds.
-- lp_mg_anti_camp_glowing_time            10.0        | How long to detected player model are keep glowing in seconds.
-- lp_mg_mapcfg_type                       0           | Map configuration type. 0: disabled, 1: Exact match, 2: Forward Match
-- lp_mg_mapcfg_execution_timing           1           | When configs are executed? 0: Does nothing, 1: Execute on map start, 2: Execute on every round start, 3: Execute on map transition and every round start
-```
+See generated configs in `csgo/cfg/lupercalia/`
