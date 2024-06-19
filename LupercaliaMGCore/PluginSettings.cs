@@ -77,6 +77,13 @@ namespace LupercaliaMGCore {
         public FakeConVar<int> m_CVMapConfigType = new ("lp_mg_mapcfg_type", "Map configuration type. 0: disabled, 1: Exact match, 2: Partial Match", 1, ConVarFlags.FCVAR_NONE, new RangeValidator<int>(0, 2));
 
         /*
+        *   Plugin debugging
+        */
+
+        public FakeConVar<int> m_CVPluginDebugLevel = new("lp_mg_debug_level", "0: Nothing, 1: Print debug message, 2: Print debug, trace message", 0, ConVarFlags.FCVAR_NONE, new RangeValidator<int>(0,2));
+        public FakeConVar<bool> m_CVPluginDebugShowChat = new("lp_mg_debug_show_chat", "Debug message shown in chat?", false);
+
+        /*
         *   Omikuji
         */
         public FakeConVar<int> m_CVOmikujiEventWeightMisc = new("lp_mg_omikuji_event_weight_misc", "Weight of misc event. You can set to any value.", 90);
@@ -267,6 +274,13 @@ namespace LupercaliaMGCore {
             writeConVarConfig(config, m_CVMapConfigExecutionTiming);
             config.WriteLine("\n");
 
+
+            /*
+            *   Plugin debug
+            */
+            writeConVarConfig(config, m_CVPluginDebugLevel);
+            writeConVarConfig(config, m_CVPluginDebugShowChat);
+            config.WriteLine("\n");
 
             /*
             *   Omikuji
