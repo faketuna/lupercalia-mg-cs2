@@ -1,6 +1,7 @@
 using System.Drawing;
 using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
+using CounterStrikeSharp.API.Modules.Commands;
 using CounterStrikeSharp.API.Modules.Timers;
 using CounterStrikeSharp.API.Modules.Utils;
 using Microsoft.Extensions.Logging;
@@ -9,7 +10,7 @@ namespace LupercaliaMGCore {
     public class AntiCamp {
         private LupercaliaMGCore m_CSSPlugin;
         private CounterStrikeSharp.API.Modules.Timers.Timer timer;
-        private Dictionary<CCSPlayerController, CounterStrikeSharp.API.Modules.Timers.Timer> playerOverlayEntityTimer = new Dictionary<CCSPlayerController, CounterStrikeSharp.API.Modules.Timers.Timer>();
+        private Dictionary<CCSPlayerController, (CBaseModelEntity? glowEntity, CBaseModelEntity? relayEntity)> playerGlowingEntity = new Dictionary<CCSPlayerController, (CBaseModelEntity? glowEntity, CBaseModelEntity? relayEntity)>();
         private Dictionary<CCSPlayerController, float> playerCampingTime = new Dictionary<CCSPlayerController, float>();
         private Dictionary<CCSPlayerController, PlayerPositionHistory> playerPositionHistory= new Dictionary<CCSPlayerController, PlayerPositionHistory>();
         private Dictionary<CCSPlayerController, float> playerGlowingTime = new Dictionary<CCSPlayerController, float>();
@@ -45,6 +46,36 @@ namespace LupercaliaMGCore {
             }
 
             timer = m_CSSPlugin.AddTimer(PluginSettings.getInstance.m_CVAntiCampDetectionInterval.Value, checkPlayerIsCamping, TimerFlags.REPEAT);
+            m_CSSPlugin.AddCommand("css_test", "", testCmd);
+            m_CSSPlugin.AddCommand("css_test2", "", testCmd2);
+        }
+
+        private void testCmd(CCSPlayerController? client, CommandInfo info) {
+            if(client == null) 
+                return;
+            
+            foreach(var cl in Utilities.GetPlayers()) {
+                if(!cl.IsValid || cl.IsHLTV)
+                    continue;
+                
+                if(cl.PlayerName.Contains(info.GetArg(1), StringComparison.InvariantCultureIgnoreCase)) {
+                    startPlayerGlowing(cl);
+                }
+            }
+        }
+
+        private void testCmd2(CCSPlayerController? client, CommandInfo info) {
+            if(client == null) 
+                return;
+            
+            foreach(var cl in Utilities.GetPlayers()) {
+                if(!cl.IsValid || cl.IsHLTV)
+                    continue;
+                
+                if(cl.PlayerName.Contains(info.GetArg(1), StringComparison.InvariantCultureIgnoreCase)) {
+                    stopPlayerGlowing(cl);
+                }
+            }
         }
 
         private void checkPlayerIsCamping() {
@@ -75,7 +106,7 @@ namespace LupercaliaMGCore {
                 if(distance <= PluginSettings.getInstance.m_CVAntiCampDetectionRadius.Value) {
                     playerCampingTime[client] += PluginSettings.getInstance.m_CVAntiCampDetectionInterval.Value;
                     string msg = $"You have been camping for {playerCampingTime[client]:F2} | secondsGlowingTime: {playerGlowingTime[client]:F2} \nCurrent Location: {clientOrigin.X:F2} {clientOrigin.Y:F2} {clientOrigin.Z:F2} | Compared Location: {lastLocation.vector.X:F2} {lastLocation.vector.Y:F2} {lastLocation.vector.Z:F2} \nLocation captured time {lastLocation.time:F2} | Difference: {distance:F2}";
-                    client.PrintToCenter(msg);
+                    client.PrintToCenterHtml(msg);
                 } else {
                     playerCampingTime[client] = 0.0F;
                 }
@@ -187,52 +218,52 @@ namespace LupercaliaMGCore {
             playerGlowingTime[client] = 0.0F;
             CCSPlayerPawn playerPawn = client.PlayerPawn.Value!;
 
-            float timerRepeatDelay = 0.05F;
-
             SimpleLogging.LogDebug($"[Anti Camp] [Player {client.PlayerName}] Creating overlay entity.");
-            playerOverlayEntityTimer[client] = m_CSSPlugin.AddTimer(timerRepeatDelay, () => {
-                CCSPlayerPawn? overlayEntity = Utilities.CreateEntityByName<CCSPlayerPawn>("prop_dynamic");
-                
-                if(overlayEntity == null) {
-                    SimpleLogging.LogDebug($"[Anti Camp] [Player {client.PlayerName}] Failed to create glowing entity!");
-                    return;
-                }
+            CBaseModelEntity? modelGlow = Utilities.CreateEntityByName<CBaseModelEntity>("prop_dynamic");
+            CBaseModelEntity? modelRelay = Utilities.CreateEntityByName<CBaseModelEntity>("prop_dynamic");
+            
+            if(modelGlow == null || modelRelay == null) {
+                SimpleLogging.LogDebug($"[Anti Camp] [Player {client.PlayerName}] Failed to create glowing entity!");
+                return;
+            }
 
 
-                string playerModel = getPlayerModel(client);
+            string playerModel = getPlayerModel(client);
 
-                SimpleLogging.LogTrace($"[Anti Camp] [Player {client.PlayerName}] player model: {playerModel}");
-                if(playerModel == "")
-                    return;
+            SimpleLogging.LogTrace($"[Anti Camp] [Player {client.PlayerName}] player model: {playerModel}");
+            if(playerModel == "")
+                return;
 
-                SimpleLogging.LogTrace($"[Anti Camp] [Player {client.PlayerName}] Setting player model to overlay entity.");
-                overlayEntity.SetModel(playerModel);
-                overlayEntity.Teleport(playerPawn.AbsOrigin, new QAngle(0, 0, 0), new Vector(0, 0, 0));
-                overlayEntity.AcceptInput("FollowEntity", playerPawn, overlayEntity, "!activator");
-                overlayEntity.DispatchSpawn();
+            // Code from Joakim in CounterStrikeSharp Discord
+            // https://discord.com/channels/1160907911501991946/1235212931394834432/1245928951449387009
+            SimpleLogging.LogTrace($"[Anti Camp] [Player {client.PlayerName}] Setting player model to overlay entity.");
+            modelRelay.SetModel(playerModel);
+            modelRelay.Spawnflags = 256u;
+            modelRelay.RenderMode = RenderMode_t.kRenderNone;
+            modelRelay.DispatchSpawn();
 
-                SimpleLogging.LogTrace($"[Anti Camp] [Player {client.PlayerName}] Changing overlay entity's render mode.");
-                overlayEntity.Render = Color.FromArgb(1, 255, 255, 255);
-                overlayEntity.Glow.GlowColorOverride = Color.Red;
-                overlayEntity.Spawnflags = 256U;
-                overlayEntity.RenderMode = RenderMode_t.kRenderGlow;
-                overlayEntity.Glow.GlowRange = 5000;
-                overlayEntity.Glow.GlowTeam = -1;
-                overlayEntity.Glow.GlowType = 3;
-                overlayEntity.Glow.GlowRangeMin = 3;
+            modelGlow.SetModel(playerModel);
+            modelGlow.Spawnflags = 256u;
+            modelGlow.DispatchSpawn();
 
-                m_CSSPlugin.AddTimer(timerRepeatDelay, () => {
-                    SimpleLogging.LogTrace($"[Anti Camp] [Player {client.PlayerName}] Timer fired, removing overlay entity.");
-                    overlayEntity.Remove();
-                });
+            SimpleLogging.LogTrace($"[Anti Camp] [Player {client.PlayerName}] Changing overlay entity's render mode.");
+            modelGlow.Glow.GlowColorOverride = Color.Red;
+            modelGlow.Glow.GlowRange = 5000;
+            modelGlow.Glow.GlowTeam = -1;
+            modelGlow.Glow.GlowType = 3;
+            modelGlow.Glow.GlowRangeMin = 100;
 
-            }, TimerFlags.REPEAT);
+            modelRelay.AcceptInput("FollowEntity", playerPawn, modelRelay, "!activator");
+            modelGlow.AcceptInput("FollowEntity", modelRelay, modelGlow, "!activator");
+
+            playerGlowingEntity[client] = (modelGlow, modelRelay);
         }
 
         // TODO Remove Glow player
         private void stopPlayerGlowing(CCSPlayerController client) {
             SimpleLogging.LogDebug($"[Anti Camp] [Player {client.PlayerName}] Glow removed");
-            playerOverlayEntityTimer[client].Kill();
+            playerGlowingEntity[client].glowEntity?.Remove();
+            playerGlowingEntity[client].relayEntity?.Remove();
         }
 
 

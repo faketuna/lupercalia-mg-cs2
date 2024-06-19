@@ -63,7 +63,9 @@ namespace LupercaliaMGCore {
             new MapConfig(this);
             Logger.LogInformation("MapConfig initialized");
 
-            // new AntiCamp(this, hotReload);
+            new AntiCamp(this, hotReload);
+            Logger.LogInformation("Anti Camp initialized");
+
             new Omikuji(this);
             Logger.LogInformation("Omikuji initialized");
         }
