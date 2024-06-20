@@ -182,7 +182,6 @@ namespace LupercaliaMGCore {
             }, TimerFlags.REPEAT);
         }
 
-        // TODO Glow player
         private void startPlayerGlowing(CCSPlayerController client) {
             SimpleLogging.LogDebug($"[Anti Camp] [Player {client.PlayerName}] Start player glow");
             playerGlowingTime[client] = 0.0F;
@@ -229,7 +228,6 @@ namespace LupercaliaMGCore {
             playerGlowingEntity[client] = (modelGlow, modelRelay);
         }
 
-        // TODO Remove Glow player
         private void stopPlayerGlowing(CCSPlayerController client) {
             SimpleLogging.LogDebug($"[Anti Camp] [Player {client.PlayerName}] Glow removed");
             if(playerGlowingEntity[client].glowEntity != null && playerGlowingEntity[client].glowEntity!.IsValid) {

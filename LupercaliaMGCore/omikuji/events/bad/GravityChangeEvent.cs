@@ -66,7 +66,6 @@ namespace LupercaliaMGCore {
         public void initialize() {}
 
         public double getOmikujiWeight() {
-            // TODO Implement weight cvar first.
             return PluginSettings.getInstance.m_CVOmikujiEventGravitySelectionWeight.Value;
         }
     }

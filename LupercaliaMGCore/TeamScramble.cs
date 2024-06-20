@@ -59,16 +59,6 @@ namespace LupercaliaMGCore {
                 }
             }
 
-            // for(int i = 0; i < playerCountHalf; i++) {
-            //     players[i].SwitchTeam(CsTeam.CounterTerrorist);
-            //     SimpleLogging.LogTrace($"Player {players[i].PlayerName} moved to CounterTerrorist");
-            // }
-
-            // for(int i = playerCountHalf; i < playerCount; i++) {
-            //     players[i].SwitchTeam(CsTeam.Terrorist);
-            //     SimpleLogging.LogTrace($"Player {players[i].PlayerName} moved to Terrorist");
-            // }
-
             SimpleLogging.LogDebug("[Team Scramble] Done");
             return HookResult.Continue;
         }
