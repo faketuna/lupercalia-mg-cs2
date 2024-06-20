@@ -21,7 +21,7 @@ CounterStrikeSharp plugin for Lupercalia MG Server(Soon™)
   - [x] Round end weapon strip
 - [x] Course
   - [x] Auto Respawn with spawn killing detection
-- [ ] Fun
+- [x] Fun
   - [x] Omikuji
 
 ## General
@@ -72,8 +72,6 @@ But another problem found. the `spec_player` command is not works as like CS:GO.
 
 Spectate aimed player when player is spectating/died and pressing `+use`
 
-Maybe implemented as separated plugin.
-
 Same feature as [sm-CSGO-easyspectate](https://github.com/faketuna/sm-CSGO-easyspectate). 
 
 ### Vote map restart
@@ -103,13 +101,10 @@ Same feature as [TeamBasedBodyColor](https://github.com/faketuna/TeamBasedBodyCo
 ### Team Scramble
 
 - Scrambles team when round end.
-- More feature is may will implement
 
 ### Anti camp system
 
-Player model cannot be glowing atm. After this problem solved It will release ready.
-
-- When camp detected player will be slapped or glowed.
+- When camp detected player will be glow.
 
 ### Round end damage immunity
 
