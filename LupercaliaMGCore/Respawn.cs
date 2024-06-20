@@ -1,5 +1,6 @@
 using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
+using CounterStrikeSharp.API.Modules.Commands;
 using CounterStrikeSharp.API.Modules.Timers;
 using CounterStrikeSharp.API.Modules.Utils;
 
@@ -7,6 +8,9 @@ namespace LupercaliaMGCore {
     public class Respawn {
         private LupercaliaMGCore m_CSSPlugin;
         private bool repeatKillDetected = false;
+
+        private static string CHAT_PREFIX = $"{ChatColors.Green}[Respawn]{ChatColors.Default}";
+
         private Dictionary<int ,double> playerLastRespawnTime = new Dictionary<int, double>();
 
         public Respawn(LupercaliaMGCore plugin) {
@@ -27,7 +31,7 @@ namespace LupercaliaMGCore {
             if(player.IsBot || player.IsHLTV)
                 return HookResult.Continue;
 
-            SimpleLogging.LogDebug($"[Respawn] [Player {player.PlayerName}] Trying to respawn.");
+            SimpleLogging.LogDebug($"{CHAT_PREFIX} [Player {player.PlayerName}] Trying to respawn.");
 
             int index = (int)player.Index;
 
@@ -37,18 +41,18 @@ namespace LupercaliaMGCore {
 
             if(Server.EngineTime - playerLastRespawnTime[index] <= PluginSettings.getInstance.m_CVAutoRespawnSpawnKillingDetectionTime.Value) {
                 repeatKillDetected = true;
-                SimpleLogging.LogDebug($"[Respawn] [Player {player.PlayerName}] Repeat kill is detected.");
+                SimpleLogging.LogDebug($"{CHAT_PREFIX} [Player {player.PlayerName}] Repeat kill is detected.");
                 Server.PrintToChatAll(LupercaliaMGCore.MessageWithPrefix($"{ChatColors.Green}Repeat kill detected! {ChatColors.Default}Respawn is {ChatColors.DarkRed}disabled{ChatColors.Default} in this round."));
                 return HookResult.Continue;
             }
 
-            SimpleLogging.LogDebug($"[Respawn] [Player {player.PlayerName}] Respawning player.");
+            SimpleLogging.LogDebug($"{CHAT_PREFIX} [Player {player.PlayerName}] Respawning player.");
             m_CSSPlugin.AddTimer(PluginSettings.getInstance.m_CVAutoRespawnSpawnTime.Value, () => {
-                SimpleLogging.LogDebug($"[Respawn] [Player {player.PlayerName}] Respawned.");
+                SimpleLogging.LogDebug($"{CHAT_PREFIX} [Player {player.PlayerName}] Respawned.");
                 respawnPlayer(player);
             }, TimerFlags.STOP_ON_MAPCHANGE);
 
-            SimpleLogging.LogDebug($"[Respawn] [Player {player.PlayerName}] Done.");
+            SimpleLogging.LogDebug($"{CHAT_PREFIX} [Player {player.PlayerName}] Done.");
             return HookResult.Continue;
         }
 
@@ -80,7 +84,7 @@ namespace LupercaliaMGCore {
                 return;
 
             client.Respawn();
-            client.PrintToChat(LupercaliaMGCore.MessageWithPrefix("You have been Auto-Respawned!"));
+            client.PrintToChat($"{CHAT_PREFIX} You have been Auto-Respawned!");
         }
     }
 }
