@@ -63,7 +63,7 @@ namespace LupercaliaMGCore {
             }
 
             if(Server.EngineTime - lastCommandUseTime[client] < PluginSettings.getInstance.m_CVOmikujiCommandCooldown.Value) {
-                client.PrintToChat($"{CHAT_PREFIX} Your omikuji is in cooldown! Please wait for {(Server.EngineTime - lastCommandUseTime[client]).ToString("#.#")} seconds.");
+                client.PrintToChat($"{CHAT_PREFIX} Your omikuji is in cooldown! Please wait for {(PluginSettings.getInstance.m_CVOmikujiCommandCooldown.Value - (Server.EngineTime - lastCommandUseTime[client])).ToString("#.#")} seconds.");
                 return;
             }
 
