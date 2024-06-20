@@ -75,8 +75,8 @@ namespace LupercaliaMGCore {
 
                 if(distance <= PluginSettings.getInstance.m_CVAntiCampDetectionRadius.Value) {
                     playerCampingTime[client] += PluginSettings.getInstance.m_CVAntiCampDetectionInterval.Value;
-                    string msg = $"You have been camping for {playerCampingTime[client]:F2} | secondsGlowingTime: {playerGlowingTime[client]:F2} \nCurrent Location: {clientOrigin.X:F2} {clientOrigin.Y:F2} {clientOrigin.Z:F2} | Compared Location: {lastLocation.vector.X:F2} {lastLocation.vector.Y:F2} {lastLocation.vector.Z:F2} \nLocation captured time {lastLocation.time:F2} | Difference: {distance:F2}";
-                    client.PrintToCenterHtml(msg);
+                    // string msg = $"You have been camping for {playerCampingTime[client]:F2} | secondsGlowingTime: {playerGlowingTime[client]:F2} \nCurrent Location: {clientOrigin.X:F2} {clientOrigin.Y:F2} {clientOrigin.Z:F2} | Compared Location: {lastLocation.vector.X:F2} {lastLocation.vector.Y:F2} {lastLocation.vector.Z:F2} \nLocation captured time {lastLocation.time:F2} | Difference: {distance:F2}";
+                    // client.PrintToCenterHtml(msg);
                 } else {
                     playerCampingTime[client] = 0.0F;
                 }
