@@ -22,6 +22,7 @@ namespace LupercaliaMGCore {
             m_CSSPlugin = plugin;
 
             m_CSSPlugin.AddCommand("css_omikuji", "draw a fortune.", CommandOmikuji);
+            m_CSSPlugin.RegisterEventHandler<EventPlayerConnect>(OnPlayerConnected);
 
             omikujiTypes.Add((OmikujiType.EVENT_BAD, PluginSettings.getInstance.m_CVOmikujiEventWeightBad.Value));
             omikujiTypes.Add((OmikujiType.EVENT_LUCKY, PluginSettings.getInstance.m_CVOmikujiEventWeightLucky.Value));
@@ -56,8 +57,7 @@ namespace LupercaliaMGCore {
             if(client == null)
                 return;
             
-            bool isWaiting = false;
-            if(isWaitingForEventExecution.TryGetValue(client, out isWaiting) && isWaiting) {
+            if(isWaitingForEventExecution[client]) {
                 client.PrintToChat($"{CHAT_PREFIX} Your omikuji is not yet to be executed! Please wait!");
                 return;
             }
