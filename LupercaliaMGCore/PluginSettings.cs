@@ -90,6 +90,8 @@ namespace LupercaliaMGCore {
         public FakeConVar<int> m_CVOmikujiEventWeightBad = new("lp_mg_omikuji_event_weight_bad", "Weight of bad event. You can set to any value.", 5);
         public FakeConVar<int> m_CVOmikujiEventWeightLucky = new("lp_mg_omikuji_event_weight_lucky", "Weight of lucky event. You can set to any value.", 5);
         public FakeConVar<double> m_CVOmikujiCommandCooldown = new("lp_mg_omikuji_command_cooldown", "Cooldown of omikuji command.", 60.0D);
+        public FakeConVar<int> m_CVOmikujiCommandExecutionDelayMin = new("lp_mg_omikuji_command_execution_delay_min", "Minimum time of omikuji event executed after execution of command.", 5);
+        public FakeConVar<int> m_CVOmikujiCommandExecutionDelayMax = new("lp_mg_omikuji_command_execution_delay_max", "Maximum time of omikuji event executed after execution of command.", 10);
 
         /*
         *   Omikuji - Chicken
@@ -290,6 +292,8 @@ namespace LupercaliaMGCore {
             writeConVarConfig(config, m_CVOmikujiEventWeightBad);
             writeConVarConfig(config, m_CVOmikujiEventWeightLucky);
             writeConVarConfig(config, m_CVOmikujiCommandCooldown);
+            writeConVarConfig(config, m_CVOmikujiCommandExecutionDelayMin);
+            writeConVarConfig(config, m_CVOmikujiCommandExecutionDelayMax);
             config.WriteLine("\n");
 
             /*

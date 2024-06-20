@@ -16,6 +16,7 @@ namespace LupercaliaMGCore {
         private List<(OmikujiType omikujiType, double weight)> omikujiTypes = new List<(OmikujiType omikujiType, double weight)>();
 
         private Dictionary<CCSPlayerController, double> lastCommandUseTime = new Dictionary<CCSPlayerController, double>();
+        private Dictionary<CCSPlayerController, bool> isWaitingForEventExecution = new Dictionary<CCSPlayerController, bool>();
 
         public Omikuji(LupercaliaMGCore plugin) {
             m_CSSPlugin = plugin;
@@ -44,13 +45,18 @@ namespace LupercaliaMGCore {
                 return HookResult.Continue;
 
             lastCommandUseTime[client] = 0.0D;
+            isWaitingForEventExecution[client] = false;
             return HookResult.Continue;
         }
 
-        // TODO Implement cooldown.
         private void CommandOmikuji(CCSPlayerController? client, CommandInfo info) {
             if(client == null)
                 return;
+            
+            if(isWaitingForEventExecution[client]) {
+                client.PrintToChat($"{CHAT_PREFIX} Your omikuji is not yet to be executed! Please wait!");
+                return;
+            }
 
             if(Server.EngineTime - lastCommandUseTime[client] < PluginSettings.getInstance.m_CVOmikujiCommandCooldown.Value) {
                 client.PrintToChat($"{CHAT_PREFIX} Your omikuji is in cooldown! Please wait for {(Server.EngineTime - lastCommandUseTime[client]).ToString("#.#")} seconds.");
@@ -80,9 +86,13 @@ namespace LupercaliaMGCore {
                 }
             }
 
-            SimpleLogging.LogTrace($"[Omikuji] [Player {client.PlayerName}] Executing omikuji...");
-            lastCommandUseTime[client] = Server.EngineTime;
-            omikuji.execute(client);
+            isWaitingForEventExecution[client] = true;
+            m_CSSPlugin.AddTimer(random.Next(PluginSettings.getInstance.m_CVOmikujiCommandExecutionDelayMin.Value, PluginSettings.getInstance.m_CVOmikujiCommandExecutionDelayMax.Value), () => {
+                SimpleLogging.LogTrace($"[Omikuji] [Player {client.PlayerName}] Executing omikuji...");
+                lastCommandUseTime[client] = Server.EngineTime;
+                isWaitingForEventExecution[client] = false;
+                omikuji.execute(client);
+            });
         }
 
         private OmikujiType getRandomOmikujiType() {
