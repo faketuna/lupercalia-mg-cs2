@@ -56,7 +56,8 @@ namespace LupercaliaMGCore {
             if(client == null)
                 return;
             
-            if(isWaitingForEventExecution[client]) {
+            bool isWaiting = false;
+            if(isWaitingForEventExecution.TryGetValue(client, out isWaiting) && isWaiting) {
                 client.PrintToChat($"{CHAT_PREFIX} Your omikuji is not yet to be executed! Please wait!");
                 return;
             }
