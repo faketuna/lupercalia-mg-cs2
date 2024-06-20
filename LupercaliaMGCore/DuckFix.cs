@@ -1,5 +1,7 @@
 using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
+using CounterStrikeSharp.API.Modules.Timers;
+using Timer = CounterStrikeSharp.API.Modules.Timers.Timer;
 
 namespace LupercaliaMGCore {
     
@@ -31,9 +33,12 @@ namespace LupercaliaMGCore {
         }
 
         private void hookPlayerMovement(CCSPlayerController player) {
-            CCSPlayer_MovementServices movementServices = new CCSPlayer_MovementServices(player.PlayerPawn.Value!.MovementServices!.Handle);
             m_CSSPlugin.RegisterListener<Listeners.OnTick>(() => 
             {
+                if((player.Buttons & PlayerButtons.Duck) == 0) 
+                    return;
+
+                CCSPlayer_MovementServices movementServices = new CCSPlayer_MovementServices(player.PlayerPawn.Value!.MovementServices!.Handle);
                 if(movementServices != null) {
                     movementServices.LastDuckTime = 0.0f;
                     movementServices.DuckSpeed = 8.0f;
