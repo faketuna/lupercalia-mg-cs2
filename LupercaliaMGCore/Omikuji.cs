@@ -91,6 +91,7 @@ namespace LupercaliaMGCore {
             }
 
             isWaitingForEventExecution[client] = true;
+            Server.PrintToChatAll($"{CHAT_PREFIX} {client.PlayerName} is drawing the omikuji!");
             m_CSSPlugin.AddTimer(random.Next(PluginSettings.getInstance.m_CVOmikujiCommandExecutionDelayMin.Value, PluginSettings.getInstance.m_CVOmikujiCommandExecutionDelayMax.Value), () => {
                 SimpleLogging.LogTrace($"[Omikuji] [Player {client.PlayerName}] Executing omikuji...");
                 lastCommandUseTime[client] = Server.EngineTime;
