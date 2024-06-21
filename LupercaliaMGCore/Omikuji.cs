@@ -22,7 +22,7 @@ namespace LupercaliaMGCore {
             m_CSSPlugin = plugin;
 
             m_CSSPlugin.AddCommand("css_omikuji", "draw a fortune.", CommandOmikuji);
-            m_CSSPlugin.RegisterEventHandler<EventPlayerConnect>(OnPlayerConnected);
+            m_CSSPlugin.RegisterEventHandler<EventPlayerConnectFull>(OnPlayerConnectFull);
 
             omikujiTypes.Add((OmikujiType.EVENT_BAD, PluginSettings.getInstance.m_CVOmikujiEventWeightBad.Value));
             omikujiTypes.Add((OmikujiType.EVENT_LUCKY, PluginSettings.getInstance.m_CVOmikujiEventWeightLucky.Value));
@@ -42,15 +42,20 @@ namespace LupercaliaMGCore {
             OmikujiEvents.initializeOmikujiEvents();
         }
 
-        private HookResult OnPlayerConnected(EventPlayerConnect @event, GameEventInfo info) {
+        private HookResult OnPlayerConnectFull(EventPlayerConnectFull @event, GameEventInfo info) {
             CCSPlayerController? client = @event.Userid;
 
             if(client == null)
                 return HookResult.Continue;
 
+            resetPlayerInformation(client);
+            return HookResult.Continue;
+        }
+
+        private void resetPlayerInformation(CCSPlayerController client) {
+            SimpleLogging.LogDebug("Omikuji: Resetting player information");
             lastCommandUseTime[client] = 0.0D;
             isWaitingForEventExecution[client] = false;
-            return HookResult.Continue;
         }
 
         private void CommandOmikuji(CCSPlayerController? client, CommandInfo info) {
