@@ -58,6 +58,9 @@ namespace LupercaliaMGCore {
 
                 if(!isClientInformationAccessible(client))
                     continue;
+                
+                if(!client.PawnIsAlive)
+                    continue;
 
                 Vector? clientOrigin = client.PlayerPawn.Value!.AbsOrigin;
                 
