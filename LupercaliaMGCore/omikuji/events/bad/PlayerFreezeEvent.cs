@@ -39,7 +39,7 @@ namespace LupercaliaMGCore {
                 playerPawn.MoveType = MoveType_t.MOVETYPE_WALK;
                 playerPawn.ActualMoveType = MoveType_t.MOVETYPE_WALK;
                 SimpleLogging.LogDebug("Player freeze event: Move type changed to MOVETYPE_WALK");
-                Server.PrintToChatAll($"{Omikuji.CHAT_PREFIX} You are now unfrozen!");
+                client.PrintToConsole($"{Omikuji.CHAT_PREFIX} You are now unfrozen!");
             });
         }
 
