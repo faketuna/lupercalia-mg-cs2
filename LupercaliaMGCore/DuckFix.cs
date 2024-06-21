@@ -15,6 +15,9 @@ namespace LupercaliaMGCore {
             m_CSSPlugin.RegisterListener<Listeners.OnTick>(() => 
             {
                 foreach(CCSPlayerController client in Utilities.GetPlayers()) {
+                    if(!client.IsValid || client.IsBot || client.IsHLTV)
+                        continue;
+
                     if((client.Buttons & PlayerButtons.Duck) == 0) 
                         return;
 
