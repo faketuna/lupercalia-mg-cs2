@@ -49,7 +49,7 @@ namespace LupercaliaMGCore {
         }
 
         private void checkPlayerIsCamping() {
-            if(!isRoundStarted)
+            if(!isRoundStarted || !PluginSettings.getInstance.m_CVAntiCampEnabled.Value)
                 return;
 
             foreach(var client in Utilities.GetPlayers()) {
