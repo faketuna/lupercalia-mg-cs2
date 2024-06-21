@@ -18,6 +18,7 @@ namespace LupercaliaMGCore {
             m_CSSPlugin = plugin;
             m_CSSPlugin.RegisterEventHandler<EventPlayerDeath>(OnPlayerDeath);
             m_CSSPlugin.RegisterEventHandler<EventPlayerSpawn>(OnPlayerSpawn);
+            m_CSSPlugin.RegisterEventHandler<EventRoundPrestart>(OnRoundPreStart);
             m_CSSPlugin.AddCommand("css_reset_respawn", "Reset the current repeat kill detection status", CommandRemoveRepeatKill);
             m_CSSPlugin.AddCommand("css_rrs", "Reset the current repeat kill detection status", CommandRemoveRepeatKill);
         }
@@ -30,7 +31,7 @@ namespace LupercaliaMGCore {
             SimpleLogging.LogDebug($"Admin {client.PlayerName} is enabled auto respawn.");
 
             foreach(CCSPlayerController cl in Utilities.GetPlayers()) {
-                if(!cl.IsValid || cl.IsBot || cl.IsHLTV)
+                if(!cl.IsValid || cl.IsBot || cl.IsHLTV || cl.PawnIsAlive)
                     continue;
                 
                 respawnPlayer(cl);
@@ -39,6 +40,12 @@ namespace LupercaliaMGCore {
             SimpleLogging.LogTrace($"Repeat kill status: {repeatKillDetected}");
             Server.PrintToChatAll($"{CHAT_PREFIX} Admin enabled auto respawn again");
         }
+
+        private HookResult OnRoundPreStart(EventRoundPrestart @event, GameEventInfo info) {
+            repeatKillDetected = false;
+            return HookResult.Continue;
+        }
+
         private HookResult OnPlayerDeath(EventPlayerDeath @event, GameEventInfo info) {
             if(!PluginSettings.getInstance.m_CVAutoRespawnEnabled.Value || repeatKillDetected)
                 return HookResult.Continue;
