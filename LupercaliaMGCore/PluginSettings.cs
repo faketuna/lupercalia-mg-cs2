@@ -155,6 +155,11 @@ namespace LupercaliaMGCore {
         */
         public FakeConVar<bool> m_CVDebuggingEnabled = new("lp_mg_debug_enabled", "Enable debugging feature?", false);
 
+        /*
+        *   Misc commands
+        */
+        public FakeConVar<bool> m_CVMiscCMDGiveKnifeEnabled = new("lp_mg_misc_cmd_give_knife", "Is give knife command enabled?", false);
+
         private LupercaliaMGCore m_CSSPlugin;
 
         public PluginSettings(LupercaliaMGCore plugin) {
@@ -370,6 +375,11 @@ namespace LupercaliaMGCore {
             writeConVarConfig(config, m_CVDebuggingEnabled);
             config.WriteLine("\n");
 
+            /*
+            *   Misc commands
+            */
+            writeConVarConfig(config, m_CVMiscCMDGiveKnifeEnabled);
+            config.WriteLine("\n");
 
             config.Close();
         }

@@ -71,6 +71,9 @@ namespace LupercaliaMGCore {
 
             new Debugging(this);
             Logger.LogInformation("Debugging feature is initialized");
+
+            new MiscCommands(this);
+            Logger.LogInformation("misc commands initialized");
         }
     }
 }
