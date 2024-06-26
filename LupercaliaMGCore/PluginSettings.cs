@@ -150,7 +150,10 @@ namespace LupercaliaMGCore {
         public FakeConVar<double> m_CVOmikujiEventPlayerRespawnSelectionWeight = new("lp_mg_omikuji_event_player_respawn_selection_weight", "Selection weight of this event", 30.0D);
         public FakeConVar<double> m_CVOmikujiEventAllPlayerRespawnSelectionWeight = new("lp_mg_omikuji_event_all_player_respawn_selection_weight", "Selection weight of this event", 30.0D);
 
-
+        /*
+        *   For debugging purpose
+        */
+        public FakeConVar<bool> m_CVDebuggingEnabled = new("lp_mg_debug_enabled", "Enable debugging feature?", false);
 
         private LupercaliaMGCore m_CSSPlugin;
 
@@ -360,6 +363,13 @@ namespace LupercaliaMGCore {
             writeConVarConfig(config, m_CVOmikujiEventPlayerRespawnSelectionWeight);
             writeConVarConfig(config, m_CVOmikujiEventAllPlayerRespawnSelectionWeight);
             config.WriteLine("\n");
+
+            /*
+            *   For debugging purpose
+            */
+            writeConVarConfig(config, m_CVDebuggingEnabled);
+            config.WriteLine("\n");
+
 
             config.Close();
         }

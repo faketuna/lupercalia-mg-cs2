@@ -68,6 +68,9 @@ namespace LupercaliaMGCore {
 
             new Omikuji(this);
             Logger.LogInformation("Omikuji initialized");
+
+            new Debugging(this);
+            Logger.LogInformation("Debugging feature is initialized");
         }
     }
 }
