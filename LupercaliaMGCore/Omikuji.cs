@@ -36,6 +36,7 @@ namespace LupercaliaMGCore {
                         continue;
                     
                     lastCommandUseTime[client] = 0.0D;
+                    resetPlayerInformation(client);
                 }
             });
 
