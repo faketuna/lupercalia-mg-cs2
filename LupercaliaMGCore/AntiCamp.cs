@@ -219,7 +219,12 @@ namespace LupercaliaMGCore {
             modelGlow.DispatchSpawn();
 
             SimpleLogging.LogTrace($"[Anti Camp] [Player {client.PlayerName}] Changing overlay entity's render mode.");
-            modelGlow.Glow.GlowColorOverride = Color.Red;
+            if(client.Team == CsTeam.Terrorist) {
+                modelGlow.Glow.GlowColorOverride = Color.Red;
+            }
+            else {
+                modelGlow.Glow.GlowColorOverride = Color.Blue;
+            }
             modelGlow.Glow.GlowRange = 5000;
             modelGlow.Glow.GlowTeam = -1;
             modelGlow.Glow.GlowType = 3;
