@@ -44,7 +44,7 @@ namespace LupercaliaMGCore {
         /*
         *   Round end enhancement
         */
-        public FakeConVar<bool> m_CVIsRoundEndDamageImmunityEnabled = new("lp_mg_redi_enabled", "Should player grant damage immunity after round end until next round starts.", true);
+        public FakeConVar<bool> m_CVIsRoundEndDamageImmunityEnabled = new("lp_mg_redi_enabled", "Should player grant damage immunity after round end until next round starts.", false);
         public FakeConVar<bool> m_CVIsRoundEndWeaponStripEnabled = new("lp_mg_rews_enabled", "Should player's weapons are removed before new round starts.", true);
         public FakeConVar<bool> m_CVIsRoundEndDeathMatchEnabled = new("lp_mg_redm_enabled", "Should enable round end death match?", true);
 
