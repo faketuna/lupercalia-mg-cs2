@@ -24,7 +24,7 @@ namespace LupercaliaMGCore {
 
             SimpleLogging.LogDebug("[Team Scramble] Called");
 
-            List<CCSPlayerController> players = Utilities.GetPlayers();
+            List<CCSPlayerController> players = Utilities.GetPlayers().Where(p => p.Team != CsTeam.None && p.Team != CsTeam.Spectator).ToList();
 
             int playerCount = players.Count;
             int playerCountHalf = playerCount/2;
