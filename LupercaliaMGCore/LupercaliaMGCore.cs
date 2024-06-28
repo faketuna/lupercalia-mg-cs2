@@ -54,6 +54,9 @@ namespace LupercaliaMGCore {
             new RoundEndWeaponStrip(this);
             Logger.LogInformation("RoundEndWeaponStrip initialized");
 
+            new RoundEndDeathMatch(this);
+            Logger.LogInformation("RoundEndDeathMatch initialized");
+
             new ScheduledShutdown(this);
             Logger.LogInformation("ScheduledShutdown initialized");
 
