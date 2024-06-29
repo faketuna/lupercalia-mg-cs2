@@ -29,7 +29,7 @@ namespace LupercaliaMGCore {
             }
 
             if(!client.PawnIsAlive) {
-                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix("You should be alive to use this command."));
+                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix("You must be alive to use this command."));
                 return;
             }
 
@@ -62,7 +62,7 @@ namespace LupercaliaMGCore {
             }
 
             if(!client.PawnIsAlive) {
-                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix("You should be alive to use this command."));
+                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix("You must be alive to use this command."));
                 return;
             }
 
