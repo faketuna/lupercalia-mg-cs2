@@ -59,6 +59,9 @@ namespace LupercaliaMGCore {
                 if(!isClientInformationAccessible(client))
                     continue;
                 
+                if(client.Team == CsTeam.None || client.Team == CsTeam.Spectator)
+                    continue;
+
                 if(!client.PawnIsAlive)
                     continue;
 
