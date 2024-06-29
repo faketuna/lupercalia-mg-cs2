@@ -23,7 +23,7 @@ namespace LupercaliaMGCore {
                 if(!cl.IsValid || cl.IsBot  || cl.IsHLTV)
                     continue;
 
-                if(!cl.PawnIsAlive)
+                if(cl.PlayerPawn.Value == null || cl.PlayerPawn.Value.LifeState != (byte)LifeState_t.LIFE_ALIVE)
                     continue;
                 
 
@@ -57,7 +57,7 @@ namespace LupercaliaMGCore {
                 if(!cl.IsValid || cl.IsBot  || cl.IsHLTV)
                     continue;
 
-                if(!cl.PawnIsAlive)
+                if(cl.PlayerPawn.Value == null || cl.PlayerPawn.Value.LifeState != (byte)LifeState_t.LIFE_ALIVE)
                     continue;
 
                 Vector? vec = null;

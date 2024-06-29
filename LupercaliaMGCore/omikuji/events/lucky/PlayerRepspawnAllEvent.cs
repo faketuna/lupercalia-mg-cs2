@@ -20,7 +20,7 @@ namespace LupercaliaMGCore {
                 if(!cl.IsValid || cl.IsBot || cl.IsHLTV)
                     continue;
 
-                if(cl.PawnIsAlive) {
+                if(client.PlayerPawn.Value != null && client.PlayerPawn.Value.LifeState == (byte)LifeState_t.LIFE_ALIVE) {
                     alivePlayer = cl;
                     break;
                 }
@@ -43,7 +43,7 @@ namespace LupercaliaMGCore {
 
                 cl.PrintToChat($"{Omikuji.CHAT_PREFIX} {client.PlayerName} have drew the mega luck! re-spawning the all players!!!");
 
-                if(cl.PawnIsAlive)
+                if(client.PlayerPawn.Value != null && client.PlayerPawn.Value.LifeState == (byte)LifeState_t.LIFE_ALIVE)
                     continue;
 
                 cl.Respawn();

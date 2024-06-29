@@ -17,7 +17,7 @@ namespace LupercaliaMGCore {
             if(client == null)
                 return;
             
-            if(!client.PawnIsAlive) {
+            if(client.PlayerPawn.Value == null || client.PlayerPawn.Value.LifeState != (byte)LifeState_t.LIFE_ALIVE) {
                 client.PrintToChat(LupercaliaMGCore.MessageWithPrefix("You should be alive to use this command."));
                 return;
             }

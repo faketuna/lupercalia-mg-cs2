@@ -21,7 +21,7 @@ namespace LupercaliaMGCore {
 
                 cl.PrintToChat($"{Omikuji.CHAT_PREFIX} (・∋・)コケ、コケコッコー");
 
-                if(cl.PawnIsAlive)
+                if(client.PlayerPawn.Value != null && client.PlayerPawn.Value.LifeState == (byte)LifeState_t.LIFE_ALIVE)
                     createGamingChicken(cl);
             }
         }

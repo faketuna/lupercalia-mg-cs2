@@ -16,7 +16,10 @@ namespace LupercaliaMGCore {
             SimpleLogging.LogDebug("Player drew a omikuji and invoked Player respawn event");
 
             string msg;
-            if (!client.PawnIsAlive) {
+
+            bool isPlayerAlive = client.PlayerPawn.Value != null && client.PlayerPawn.Value.LifeState == (byte)LifeState_t.LIFE_ALIVE;
+
+            if (isPlayerAlive) {
                 msg = $"{Omikuji.CHAT_PREFIX} Lucky! {client.PlayerName} have re-spawned!";
             } else {
                 msg = $"{Omikuji.CHAT_PREFIX} Lucky! {client.PlayerName} have draw a fortune! But how unfortunate nothing happened because {client.PlayerName} are still alive.";
@@ -26,7 +29,8 @@ namespace LupercaliaMGCore {
                 if(!cl.IsValid || cl.IsBot || cl.IsHLTV)
                     continue;
                 
-                if(!client.PawnIsAlive && cl.PawnIsAlive) {
+                if((client.PlayerPawn.Value == null || client.PlayerPawn.Value.LifeState != (byte)LifeState_t.LIFE_ALIVE) && 
+                    (cl.PlayerPawn.Value != null && cl.PlayerPawn.Value.LifeState == (byte)LifeState_t.LIFE_ALIVE)) {
                     Server.NextFrame(() => {
                         client.Respawn();
                         client.Teleport(cl.PlayerPawn!.Value!.AbsOrigin);

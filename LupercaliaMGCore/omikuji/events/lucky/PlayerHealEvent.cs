@@ -15,10 +15,13 @@ namespace LupercaliaMGCore {
             SimpleLogging.LogDebug("Player drew a omikuji and invoked Player heal event.");
 
             string msg;
-            if(client.PawnIsAlive) {
+
+            bool isPlayerAlive = client.PlayerPawn.Value != null && client.PlayerPawn.Value.LifeState == (byte)LifeState_t.LIFE_ALIVE;
+
+            if(isPlayerAlive) {
                 msg = $"{Omikuji.CHAT_PREFIX} {client.PlayerName} have drew the fortune! {client.PlayerName}'s HP are healed to {PluginSettings.getInstance.m_CVOmikujiEventPlayerHeal.Value}HP!";
             } else {
-            msg = $"{Omikuji.CHAT_PREFIX} {client.PlayerName} have drew the fortune! But how unfortunate we can't heal the HP because {client.PlayerName} is already dead.";
+                msg = $"{Omikuji.CHAT_PREFIX} {client.PlayerName} have drew the fortune! But how unfortunate we can't heal the HP because {client.PlayerName} is already dead.";
             }
 
 
@@ -29,7 +32,7 @@ namespace LupercaliaMGCore {
                 cl.PrintToChat(msg);
             }
 
-            if(!client.PawnIsAlive)
+            if(!isPlayerAlive)
                 return;
 
             CCSPlayerPawn playerPawn = client.PlayerPawn.Value!;

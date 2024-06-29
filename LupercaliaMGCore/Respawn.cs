@@ -31,7 +31,10 @@ namespace LupercaliaMGCore {
             SimpleLogging.LogDebug($"Admin {client.PlayerName} is enabled auto respawn.");
 
             foreach(CCSPlayerController cl in Utilities.GetPlayers()) {
-                if(!cl.IsValid || cl.IsBot || cl.IsHLTV || cl.PawnIsAlive)
+                if(!cl.IsValid || cl.IsBot || cl.IsHLTV)
+                    continue;
+
+                if(cl.PlayerPawn.Value == null || cl.PlayerPawn.Value.LifeState == (byte)LifeState_t.LIFE_ALIVE)
                     continue;
                 
                 respawnPlayer(cl);

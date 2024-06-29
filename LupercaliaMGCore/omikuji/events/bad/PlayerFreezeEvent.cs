@@ -14,8 +14,8 @@ namespace LupercaliaMGCore {
         {
             SimpleLogging.LogDebug("Player drew a omikuji and invoked Player freeze event");
 
-            if(!client.PawnIsAlive) {
-                SimpleLogging.LogDebug("Player freeze event failed due to player is alive. But this is should not be happened.");
+            if(client.PlayerPawn.Value == null || client.PlayerPawn.Value.LifeState != (byte)LifeState_t.LIFE_ALIVE) {
+                SimpleLogging.LogDebug("Player freeze event failed due to player is died. But this is should not be happened.");
                 return;
             }
 

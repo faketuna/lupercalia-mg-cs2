@@ -59,7 +59,7 @@ namespace LupercaliaMGCore {
                 if(client.Team == CsTeam.None || client.Team == CsTeam.Spectator)
                     continue;
 
-                if(!client.PawnIsAlive)
+                if(client.PlayerPawn.Value == null || client.PlayerPawn.Value.LifeState != (byte)LifeState_t.LIFE_ALIVE)
                     continue;
 
                 if(!isClientInformationAccessible(client))
