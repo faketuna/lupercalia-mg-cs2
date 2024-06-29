@@ -255,10 +255,14 @@ namespace LupercaliaMGCore {
 
         private void stopPlayerGlowing(CCSPlayerController client) {
             SimpleLogging.LogDebug($"[Anti Camp] [Player {client.PlayerName}] Glow removed");
-            if(playerGlowingEntity[client].glowEntity != null && playerGlowingEntity[client].glowEntity!.IsValid) {
+
+            if(!playerGlowingEntity.TryGetValue(client, out var entities))
+                return;
+
+            if(entities.glowEntity != null && entities.glowEntity.IsValid) {
                 playerGlowingEntity[client].glowEntity!.Remove();
             }
-            if(playerGlowingEntity[client].relayEntity != null && playerGlowingEntity[client].relayEntity!.IsValid) {
+            if(entities.relayEntity != null && entities.relayEntity.IsValid) {
                 playerGlowingEntity[client].relayEntity?.Remove();
             }
         }
