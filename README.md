@@ -13,12 +13,15 @@ CounterStrikeSharp plugin for Lupercalia MG Server(Soon™)
   - [x] Vote map restart
   - [x] Vote round restart
   - [x] Scheduled shutdown
+  - [ ] Debugging commands
+  - [ ] Misc commands
 - [x] Multigames
   - [x] Team Based Body Color
   - [x] Team Scramble
-  - [x] Anti camp system (TODO!)
+  - [x] Anti camp system
   - [x] Round end damage immunity 
   - [x] Round end weapon strip
+  - [ ] Round end death match
 - [x] Course
   - [x] Auto Respawn with spawn killing detection
 - [x] Fun
@@ -92,6 +95,22 @@ Shutdown a server in certain time.
 
 Partial feature from [sm-csgo-scheduled-shutdown](https://github.com/faketuna/sm-csgo-scheduled-shutdown)
 
+### Debugging commands
+
+Some course/multigames debugging commands.
+
+Currently provides:
+
+- Save and teleport to location
+
+### Misc commands
+
+Adds some small feature commands
+
+Currently provides:
+
+- Give knife with !knife command
+
 ## Multigames
 
 ### Team Based Body Color
@@ -118,6 +137,10 @@ Player's weapon will be removed when round end / or round prestart.
 
 Same feature as [roundEndWeaponStrip](https://github.com/faketuna/roundEndWeaponStrip).
 
+### Round end death match
+
+Starts a FFA when round end.
+
 ## Course
 
 ### Auto Respawn
@@ -133,4 +156,4 @@ Probability based event system. When player type `!omikuji` in chat something go
 
 # ConVars / Config
 
-See generated configs in `csgo/cfg/lupercalia/`
+See generated configs in `csgo/cfg/lupercalia/` or [PluginSettings.cs](LupercaliaMGCore/PluginSettings.cs)
