@@ -20,7 +20,7 @@ namespace LupercaliaMGCore {
         private HookResult OnRoundPreStart(EventRoundPrestart @event, GameEventInfo info) {
             SimpleLogging.LogDebug("[Round End Death Match] Called RoundPreStart.");
             if(!PluginSettings.getInstance.m_CVIsRoundEndDeathMatchEnabled.Value) {
-                SimpleLogging.LogDebug("[Round End Death Match] REDM is disabled doing nothing.");
+                SimpleLogging.LogDebug("[Round End Death Match] REDM is disabled and does nothing.");
                 return HookResult.Continue;
             }
             trySetValue("0");
@@ -31,7 +31,7 @@ namespace LupercaliaMGCore {
         private HookResult OnRoundEnd(EventRoundEnd @event, GameEventInfo info) {
             SimpleLogging.LogDebug("[Round End Death Match] Called RoundEnd");
             if(!PluginSettings.getInstance.m_CVIsRoundEndDeathMatchEnabled.Value) {
-                SimpleLogging.LogDebug("[Round End Death Match] REDM is disabled doing nothing.");
+                SimpleLogging.LogDebug("[Round End Death Match] REDM is disabled and does nothing.");
                 return HookResult.Continue;
             }
             trySetValue("1");
