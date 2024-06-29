@@ -252,7 +252,7 @@ namespace LupercaliaMGCore {
             double deltaY = vec1.Y - vec2.Y;
             double deltaZ = vec1.Z - vec2.Z;
 
-            double distanceSquared = deltaX * deltaX + deltaY * deltaY + deltaZ + deltaZ;
+            double distanceSquared = Math.Pow(deltaX, 2) + Math.Pow(deltaY, 2) + Math.Pow(deltaZ, 2);
             return Math.Sqrt(distanceSquared);
         }
 
