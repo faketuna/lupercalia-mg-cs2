@@ -56,13 +56,13 @@ namespace LupercaliaMGCore {
                 if(!client.IsValid || client.IsBot || client.IsHLTV)
                     continue;
 
-                if(!isClientInformationAccessible(client))
-                    continue;
-                
                 if(client.Team == CsTeam.None || client.Team == CsTeam.Spectator)
                     continue;
 
                 if(!client.PawnIsAlive)
+                    continue;
+
+                if(!isClientInformationAccessible(client))
                     continue;
 
                 Vector? clientOrigin = client.PlayerPawn.Value!.AbsOrigin;
