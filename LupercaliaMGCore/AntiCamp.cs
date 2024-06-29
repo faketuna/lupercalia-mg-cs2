@@ -113,6 +113,20 @@ namespace LupercaliaMGCore {
             return HookResult.Continue;
         }
 
+        private HookResult onPlayerDeath(EventPlayerDeath @event, GameEventInfo info) {
+            CCSPlayerController? client = @event.Userid;
+
+            if(client == null) 
+                return HookResult.Continue;
+
+            if(!client.IsValid || client.IsBot || client.IsHLTV)
+                return HookResult.Continue;
+
+            stopPlayerGlowing(client);
+            
+            return HookResult.Continue;
+        }
+
         private HookResult onRoundFeezeEnd(EventRoundFreezeEnd @event, GameEventInfo info) {
             isRoundStarted = true;
             foreach(CCSPlayerController client in Utilities.GetPlayers()) {
