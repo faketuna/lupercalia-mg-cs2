@@ -11,7 +11,7 @@ namespace LupercaliaMGCore {
         public RoundEndDeathMatch(LupercaliaMGCore plugin) {
             m_CSSPlugin = plugin;
 
-            trySetValue("0");
+            trySetValue(false);
 
             m_CSSPlugin.RegisterEventHandler<EventRoundPrestart>(OnRoundPreStart);
             m_CSSPlugin.RegisterEventHandler<EventRoundEnd>(OnRoundEnd);
@@ -23,7 +23,7 @@ namespace LupercaliaMGCore {
                 SimpleLogging.LogDebug("[Round End Death Match] REDM is disabled and does nothing.");
                 return HookResult.Continue;
             }
-            trySetValue("0");
+            trySetValue(false);
             SimpleLogging.LogDebug("[Round End Death Match] Ended.");
             return HookResult.Continue;
         }
@@ -34,12 +34,12 @@ namespace LupercaliaMGCore {
                 SimpleLogging.LogDebug("[Round End Death Match] REDM is disabled and does nothing.");
                 return HookResult.Continue;
             }
-            trySetValue("1");
+            trySetValue(true);
             SimpleLogging.LogDebug("[Round End Death Match] Started.");
             return HookResult.Continue;
         }
 
-        private void trySetValue(string value) {
+        private void trySetValue(bool value) {
             if(mp_teammates_are_enemies == null) {
                 mp_teammates_are_enemies = ConVar.Find("mp_teammates_are_enemies");
             }
