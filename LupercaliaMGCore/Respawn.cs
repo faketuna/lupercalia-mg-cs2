@@ -10,7 +10,7 @@ namespace LupercaliaMGCore {
         private LupercaliaMGCore m_CSSPlugin;
         private bool repeatKillDetected = false;
 
-        private static string CHAT_PREFIX = $"{ChatColors.Green}[Respawn]{ChatColors.Default}";
+        private static string CHAT_PREFIX = $" {ChatColors.Green}[Respawn]{ChatColors.Default}";
 
         private Dictionary<int ,double> playerLastRespawnTime = new Dictionary<int, double>();
 
