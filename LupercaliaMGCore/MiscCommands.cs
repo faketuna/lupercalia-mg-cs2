@@ -1,6 +1,9 @@
+using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Modules.Commands;
+using CounterStrikeSharp.API.Modules.Commands.Targeting;
 using CounterStrikeSharp.API.Modules.Entities.Constants;
+using CounterStrikeSharp.API.Modules.Utils;
 
 namespace LupercaliaMGCore {
     public class MiscCommands {
@@ -10,6 +13,7 @@ namespace LupercaliaMGCore {
             m_CSSPlugin = plugin;
 
             m_CSSPlugin.AddCommand("css_knife", "give knife", CommandGiveKnife);
+            m_CSSPlugin.AddCommand("css_spec", "Spectate", CommandSpectate);
         }
 
 
@@ -56,6 +60,36 @@ namespace LupercaliaMGCore {
                 client.PrintToChat(LupercaliaMGCore.MessageWithPrefix("You retrieved the knife!"));
                 client.GiveNamedItem(CsItem.Knife);
             }
+        }
+
+        private void CommandSpectate(CCSPlayerController? client, CommandInfo info) {
+            if(client == null)
+                return;
+
+            if(info.ArgCount <= 1) {
+                if(client.Team == CsTeam.Spectator || client.Team == CsTeam.None)
+                    return;
+
+
+                client.ChangeTeam(CsTeam.Spectator);
+                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix("You've moved to spectator!"));
+                return;
+            }
+
+            if(client.PlayerPawn.Value == null || client.PlayerPawn.Value.LifeState == (byte)LifeState_t.LIFE_ALIVE) {
+                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix("You can only spectate player while dead or spectator."));
+                return;
+            }
+
+            TargetResult targets = info.GetArgTargetResult(1);
+
+            if(targets.Count() > 1) {
+                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix($"Multiple target found! Please target the one person! ({targets.Count()} found)"));
+                return;
+            }
+
+            client.PrintToChat(LupercaliaMGCore.MessageWithPrefix($"You are now spectating {targets.First().PlayerName}."));
+            client.ExecuteClientCommandFromServer($"spec_player {targets.First().PlayerName}");
         }
     }
 }
