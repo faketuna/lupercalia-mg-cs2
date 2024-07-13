@@ -45,6 +45,14 @@ namespace LupercaliaMGCore {
             }
 
             mp_teammates_are_enemies?.SetValue(value);
+
+            try {
+                if(mp_teammates_are_enemies == null || mp_teammates_are_enemies.GetPrimitiveValue<bool>() != value) {
+                    SimpleLogging.LogDebug($"ConVar mp_teammates_are_enemies is failed to set! Current map: {Server.MapName}");
+                }
+            } catch(Exception e) {
+                SimpleLogging.LogDebug($"ConVar mp_teammates_are_enemies is failed to set due to exception. Trace: {e.StackTrace}");
+            }
         }
     }
 }
