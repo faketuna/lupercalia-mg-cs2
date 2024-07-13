@@ -65,21 +65,18 @@ namespace LupercaliaMGCore {
 
             SimpleLogging.LogTrace("[Map Config] Iterating the config file");
             foreach(MapConfigFile conf in configs) {
-                SimpleLogging.LogTrace("[Map Config] Checking the map config type");
+                bool shouldExecute = false;
 
-                if(MathUtil.DecomposePowersOfTwo(mapCfgType).Contains(2) && !mapName.StartsWith(conf.name))
-                    continue;
-                
-                
-                SimpleLogging.LogTrace("[Map Config] Checking the map config type 2");
-                
-                SimpleLogging.LogTrace($"{conf.name} {conf.path}");
+                if(MathUtil.DecomposePowersOfTwo(mapCfgType).Contains(2) && mapName.Contains(conf.name))
+                    shouldExecute = true;
 
-                if(MathUtil.DecomposePowersOfTwo(mapCfgType).Contains(1) && !mapName.Equals(conf.name))
-                    continue;
+                if(MathUtil.DecomposePowersOfTwo(mapCfgType).Contains(1) && mapName.Equals(conf.name))
+                    shouldExecute = true;
 
-                SimpleLogging.LogTrace($"[Map Config] Executing config {conf.name} located at {conf.path}");
-                Server.ExecuteCommand($"exec {conf.path}");
+                if(shouldExecute) {
+                    SimpleLogging.LogTrace($"[Map Config] Executing config {conf.name} located at {conf.path}");
+                    Server.ExecuteCommand($"exec {conf.path}");
+                }
             }
         }
 

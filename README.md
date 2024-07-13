@@ -50,7 +50,7 @@ In default `lp_mg_mapcfg_type` is 0, which means disabled.
 
 If you want to use exact mach i.e. `de_dust2.cfg` set `lp_mg_mapcfg_type` to 1
 
-Or you want to use forward match i.e. `de_.cfg` set `lp_mg_mapcfg_type` to 2
+Or you want to use partial match i.e. `dust.cfg` set `lp_mg_mapcfg_type` to 2
 
 ---
 
