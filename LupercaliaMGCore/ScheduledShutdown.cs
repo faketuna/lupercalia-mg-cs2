@@ -3,6 +3,7 @@ using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Modules.Commands;
 using CounterStrikeSharp.API.Modules.Timers;
 using Microsoft.Extensions.Logging;
+using CounterStrikeSharp.API.Modules.Admin;
 
 namespace LupercaliaMGCore {
     public class ScheduledShutdown {
@@ -73,6 +74,7 @@ namespace LupercaliaMGCore {
             SimpleLogging.LogDebug($"[Scheduled Shutdown] Cancelled shutdown.");
         }
 
+        [RequiresPermissions(@"css/root")]
         private void CommandCancelShutdown(CCSPlayerController? client, CommandInfo info) {
             if(client == null)
                 return;
@@ -80,6 +82,8 @@ namespace LupercaliaMGCore {
             cancelShutdown();
             Server.PrintToChatAll(LupercaliaMGCore.MessageWithPrefix($"Server shutdown has cancelled by {client.PlayerName}"));
         }
+
+        [RequiresPermissions(@"css/root")]
         private void CommandStartShutdown(CCSPlayerController? client, CommandInfo info) {
             if(client == null)
                 return;
