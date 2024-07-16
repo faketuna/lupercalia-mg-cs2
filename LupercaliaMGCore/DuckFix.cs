@@ -19,17 +19,17 @@ namespace LupercaliaMGCore {
                         continue;
 
                     if((client.Buttons & PlayerButtons.Duck) == 0) 
-                        return;
+                        continue;
 
                     CCSPlayerPawn? playerPawn = client.PlayerPawn.Value;
 
                     if(playerPawn == null)
-                        return;
+                        continue;
 
                     CPlayer_MovementServices? pmService = playerPawn.MovementServices;
 
                     if(pmService == null) 
-                        return;
+                        continue;
 
                     CCSPlayer_MovementServices movementServices = new CCSPlayer_MovementServices(pmService.Handle);
                     if(movementServices != null) {
