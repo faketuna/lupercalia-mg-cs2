@@ -20,7 +20,7 @@ namespace LupercaliaMGCore {
 
         public override string ModuleName => "Lupercalia MG Core";
 
-        public override string ModuleVersion => "0.1.0";
+        public override string ModuleVersion => "1.0.0";
 
         public override string ModuleAuthor => "faketuna";
 
