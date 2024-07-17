@@ -12,6 +12,7 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    if: startsWith(github.ref, 'refs/tags/') == false
 
     steps:
     - name: Checkout code
@@ -31,7 +32,6 @@ jobs:
   publish:
     runs-on: windows-latest
     if: startsWith(github.ref, 'refs/tags/')
-    needs: build
 
     steps:
     - name: Checkout code
@@ -51,13 +51,18 @@ jobs:
     - name: Create release artifacts
       run: |
         mkdir artifacts
-        cp -R LupercaliaMGCore/bin/Release/* artifacts/
+        Copy-Item -Path "LupercaliaMGCore\bin\Release\*\LupercaliaMGCore.dll" -Destination "artifacts\LupercaliaMGCore.dll" -Force
+        Copy-Item -Path "lang\" -Destination "artifacts\lang\" -Recurse -Force
+
+    - name: Compress artifacts
+      run:
+        Compress-Archive -Path artifacts/* -Destination LupercaliaMGCore.zip
 
     - name: Upload release assets
       uses: actions/upload-artifact@v3
       with:
         name: release-artifacts
-        path: artifacts/
+        path: LupercaliaMGCore.zip
 
   release:
     runs-on: windows-latest
@@ -94,6 +99,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: artifacts/net8.0/LupercaliaMGCore.dll
-        asset_name: LupercaliaMGCore.dll
-        asset_content_type: application/octet-stream
+        asset_path: artifacts/LupercaliaMGCore.zip
+        asset_name: LupercaliaMGCore.zip
+        asset_content_type: application/zip
