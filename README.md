@@ -9,19 +9,19 @@ CounterStrikeSharp plugin for Lupercalia MG Server(Soon™)
   - [x] DuckFix
   - [x] Map config
   - [ ] Rocket
-  - [ ] Easy spectate (TODO!) 
+  - [ ] Easy spectate (May not be implemented) 
   - [x] Vote map restart
   - [x] Vote round restart
   - [x] Scheduled shutdown
-  - [ ] Debugging commands
-  - [ ] Misc commands
+  - [x] Debugging commands
+  - [x] Misc commands
 - [x] Multigames
   - [x] Team Based Body Color
   - [x] Team Scramble
   - [x] Anti camp system
   - [x] Round end damage immunity 
   - [x] Round end weapon strip
-  - [ ] Round end death match
+  - [x] Round end death match
 - [x] Course
   - [x] Auto Respawn with spawn killing detection
 - [x] Fun
