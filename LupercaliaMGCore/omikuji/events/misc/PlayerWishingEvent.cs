@@ -17,7 +17,7 @@ namespace LupercaliaMGCore {
                 if(!cl.IsValid || cl.IsBot || cl.IsHLTV)
                     continue;
 
-                cl.PrintToChat($"{Omikuji.CHAT_PREFIX} {client.PlayerName} is wishing your good luck!");
+                cl.PrintToChat($"{Omikuji.CHAT_PREFIX} {LupercaliaMGCore.getInstance().Localizer["Omikuji.MiscEvent.PlayerWishingEvent.Notification.Wishing", client.PlayerName]}");
             }
         }
 

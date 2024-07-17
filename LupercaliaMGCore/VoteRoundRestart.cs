@@ -34,13 +34,13 @@ namespace LupercaliaMGCore {
             SimpleLogging.LogDebug($"[Vote Round Restart] [Player {client.PlayerName}] trying to vote for restart round.");
             if(isRoundRestarting) {
                 SimpleLogging.LogDebug($"[Vote Round Restart] [Player {client.PlayerName}] Round is already restarting in progress.");
-                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix("Round is already restarting in progress!"));
+                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix(m_CSSPlugin.Localizer["VoteRoundRestart.Command.Notification.AlreadyRestarting"]));
                 return;
             }
 
             if(votedPlayers.Contains(client)) {
                 SimpleLogging.LogDebug($"[Vote Round Restart] [Player {client.PlayerName}] trying to vote for restart round.");
-                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix("You have already voted!"));
+                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix(m_CSSPlugin.Localizer["VoteRoundRestart.Command.Notification.AlreadyVoted"]));
                 return;
             }
 
@@ -49,7 +49,7 @@ namespace LupercaliaMGCore {
             playersRequiredToRestart = (int)Math.Ceiling(Utilities.GetPlayers().Count(player => !player.IsBot && !player.IsHLTV) * PluginSettings.getInstance.m_CVVoteRoundRestartThreshold.Value);
 
             SimpleLogging.LogDebug($"[Vote Round Restart] [Player {client.PlayerName}] players count: {votedPlayers.Count}, Requires to restart: {playersRequiredToRestart}");
-            Server.PrintToChatAll(LupercaliaMGCore.MessageWithPrefix($"{client.PlayerName} wants to restart the round! Type !vrr in chat to vote. ({votedPlayers.Count} votes, {playersRequiredToRestart} required)"));
+            Server.PrintToChatAll(LupercaliaMGCore.MessageWithPrefix(m_CSSPlugin.Localizer["VoteRoundRestart.Notification.PlayerVote", client.PlayerName, votedPlayers.Count(), playersRequiredToRestart]));
 
             if(votedPlayers.Count < playersRequiredToRestart)
                 return;
@@ -61,7 +61,7 @@ namespace LupercaliaMGCore {
             SimpleLogging.LogDebug("[Vote Round Restart] Initiating round restart...");
             isRoundRestarting = true;
 
-            Server.PrintToChatAll(LupercaliaMGCore.MessageWithPrefix($"Vote successful! Round will be reload in {PluginSettings.getInstance.m_CVVoteRoundRestartRestartTime.Value} seconds."));
+            Server.PrintToChatAll(LupercaliaMGCore.MessageWithPrefix(m_CSSPlugin.Localizer["VoteRoundRestart.Notification.RoundRestart", PluginSettings.getInstance.m_CVVoteRoundRestartRestartTime.Value]));
             m_CSSPlugin.AddTimer(PluginSettings.getInstance.m_CVVoteRoundRestartRestartTime.Value, () => {
                 SimpleLogging.LogDebug("[Vote Round Restart] Restarting round.");
                 Utilities.FindAllEntitiesByDesignerName<CCSGameRulesProxy>("cs_gamerules").First().GameRules?.TerminateRound(0.0F, RoundEndReason.RoundDraw);

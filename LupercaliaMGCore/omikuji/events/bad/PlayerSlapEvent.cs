@@ -36,7 +36,7 @@ namespace LupercaliaMGCore {
             velo.Z += random.NextInt64(slapPowerMin, slapPowerMax) % 200 + 100;
             SimpleLogging.LogTrace($"Player Slap Event: Player velocity - {velo.X} {velo.Y} {velo.Z}");
             
-            Server.PrintToChatAll($"{Omikuji.CHAT_PREFIX} {client.PlayerName} have drew the fortune! Unlucky! {client.PlayerName} is slapped!");
+            Server.PrintToChatAll($"{Omikuji.CHAT_PREFIX} {Omikuji.GetOmikujiLuckMessage(omikujiType, client)} {LupercaliaMGCore.getInstance().Localizer["Omikuji.BadEvent.PlayerSlapEvent.Notification.Slapped", client.PlayerName]}");
         }
 
         public void initialize() {}

@@ -32,7 +32,7 @@ namespace LupercaliaMGCore {
                     if(!cl.IsValid || cl.IsBot || cl.IsHLTV)
                         continue;
 
-                    cl.PrintToChat($"{Omikuji.CHAT_PREFIX} Lucky! {client.PlayerName} have draw a fortune! But how unfortunate nothing happened because no one is alive.");
+                    cl.PrintToChat($"{Omikuji.CHAT_PREFIX} {Omikuji.GetOmikujiLuckMessage(omikujiType, client)} {LupercaliaMGCore.getInstance().Localizer["Omikuji.LuckyEvent.PlayerRespawnAllEvent.Notification.NoOneAlive"]}");
                 }
                 return;
             }
@@ -41,7 +41,7 @@ namespace LupercaliaMGCore {
                 if(!cl.IsValid || cl.IsBot || cl.IsHLTV)
                     continue;
 
-                cl.PrintToChat($"{Omikuji.CHAT_PREFIX} {client.PlayerName} have drew the mega luck! re-spawning the all players!!!");
+                cl.PrintToChat($"{Omikuji.CHAT_PREFIX} {Omikuji.GetOmikujiLuckMessage(omikujiType, client)} {LupercaliaMGCore.getInstance().Localizer["Omikuji.LuckyEvent.PlayerRespawnAllEvent.Notification.Respawn"]}");
 
                 if(client.PlayerPawn.Value != null && client.PlayerPawn.Value.LifeState == (byte)LifeState_t.LIFE_ALIVE)
                     continue;

@@ -64,12 +64,12 @@ namespace LupercaliaMGCore {
                 return;
             
             if(isWaitingForEventExecution[client]) {
-                client.PrintToChat($"{CHAT_PREFIX} Your omikuji is not yet to be executed! Please wait!");
+                client.PrintToChat($"{CHAT_PREFIX} {LupercaliaMGCore.getInstance().Localizer["Omikuji.Command.Notification.NotReady"]}");
                 return;
             }
 
             if(Server.EngineTime - lastCommandUseTime[client] < PluginSettings.getInstance.m_CVOmikujiCommandCooldown.Value) {
-                client.PrintToChat($"{CHAT_PREFIX} Your omikuji is in cooldown! Please wait for {(PluginSettings.getInstance.m_CVOmikujiCommandCooldown.Value - (Server.EngineTime - lastCommandUseTime[client])).ToString("#.#")} seconds.");
+                client.PrintToChat($"{CHAT_PREFIX} {LupercaliaMGCore.getInstance().Localizer["Omikuji.Command.Notification.Cooldown", (PluginSettings.getInstance.m_CVOmikujiCommandCooldown.Value - (Server.EngineTime - lastCommandUseTime[client])).ToString("#.#")]}");
                 return;
             }
 
@@ -97,7 +97,7 @@ namespace LupercaliaMGCore {
             }
 
             isWaitingForEventExecution[client] = true;
-            Server.PrintToChatAll($"{CHAT_PREFIX} {client.PlayerName} is drawing the omikuji!");
+            Server.PrintToChatAll($"{CHAT_PREFIX} {LupercaliaMGCore.getInstance().Localizer["Omikuji.Command.Notification.Drawing", client.PlayerName]}");
             m_CSSPlugin.AddTimer(random.Next(PluginSettings.getInstance.m_CVOmikujiCommandExecutionDelayMin.Value, PluginSettings.getInstance.m_CVOmikujiCommandExecutionDelayMax.Value), () => {
                 SimpleLogging.LogTrace($"[Omikuji] [Player {client.PlayerName}] Executing omikuji...");
                 lastCommandUseTime[client] = Server.EngineTime;
@@ -147,6 +147,26 @@ namespace LupercaliaMGCore {
             }
 
             return weightedItems[0];
+        }
+
+        public static string GetOmikujiLuckMessage(OmikujiType type, CCSPlayerController client) {
+            string text = "";
+            
+            switch(type) {
+                case OmikujiType.EVENT_BAD: {
+                    text = $"{LupercaliaMGCore.getInstance().Localizer["Omikuji.Events.Notification.BadLuck"]}";
+                    break;
+                }
+                case OmikujiType.EVENT_LUCKY: {
+                    text = $"{LupercaliaMGCore.getInstance().Localizer["Omikuji.Events.Notification.Luck"]}";
+                    break;
+                }
+                case OmikujiType.EVENT_MISC: {
+                    text = $"{LupercaliaMGCore.getInstance().Localizer["Omikuji.Events.Notification.Misc"]}";
+                    break;
+                }
+            }
+            return text;
         }
     }
 }

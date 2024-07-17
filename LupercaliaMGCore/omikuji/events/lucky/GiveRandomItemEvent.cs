@@ -36,7 +36,7 @@ namespace LupercaliaMGCore {
 
                 SimpleLogging.LogDebug("Enqueue a picked up item to recently picked up items list");
                 recentlyPickedUpItems[cl].Enqueue(randomItem);
-                cl.PrintToChat($"{Omikuji.CHAT_PREFIX} {client.PlayerName} have drew the fortune! And you have received the {randomItem}!");
+                cl.PrintToChat($"{Omikuji.CHAT_PREFIX} {Omikuji.GetOmikujiLuckMessage(omikujiType, client)} {LupercaliaMGCore.getInstance().Localizer["Omikuji.LuckyEvent.GiveRandomItemEvent.Notification.ItemReceived", randomItem]}");
             }
 
             SimpleLogging.LogDebug("Give random item event finished");

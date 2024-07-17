@@ -19,9 +19,9 @@ namespace LupercaliaMGCore {
             bool isPlayerAlive = client.PlayerPawn.Value != null && client.PlayerPawn.Value.LifeState == (byte)LifeState_t.LIFE_ALIVE;
 
             if(isPlayerAlive) {
-                msg = $"{Omikuji.CHAT_PREFIX} {client.PlayerName} have drew the fortune! {client.PlayerName}'s HP are healed to {PluginSettings.getInstance.m_CVOmikujiEventPlayerHeal.Value}HP!";
+                msg = $"{Omikuji.CHAT_PREFIX} {Omikuji.GetOmikujiLuckMessage(omikujiType, client)} {LupercaliaMGCore.getInstance().Localizer["Omikuji.LuckyEvent.PlayerHealEvent.Notification.Healed", client.PlayerName, PluginSettings.getInstance.m_CVOmikujiEventPlayerHeal.Value]}";
             } else {
-                msg = $"{Omikuji.CHAT_PREFIX} {client.PlayerName} have drew the fortune! But how unfortunate we can't heal the HP because {client.PlayerName} is already dead.";
+                msg = $"{Omikuji.CHAT_PREFIX} {Omikuji.GetOmikujiLuckMessage(omikujiType, client)} {LupercaliaMGCore.getInstance().Localizer["Omikuji.LuckyEvent.PlayerHealEvent.Notification.PlayerIsDead", client.PlayerName]}";
             }
 
 

@@ -33,19 +33,19 @@ namespace LupercaliaMGCore {
             SimpleLogging.LogDebug($"[Vote Map Restart] [Player {client.PlayerName}] trying to vote for restart map.");
             if(isMapRestarting) {
                 SimpleLogging.LogDebug($"[Vote Map Restart] [Player {client.PlayerName}] map is already restarting in progress.");
-                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix("Map is already restarting in progress!"));
+                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix(m_CSSPlugin.Localizer["VoteMapRestart.Command.Notification.AlreadyRestarting"]));
                 return;
             }
 
             if(Server.EngineTime - mapStartTime  > PluginSettings.getInstance.m_CVVoteMapRestartAllowedTime.Value) {
                 SimpleLogging.LogDebug($"[Vote Map Restart] [Player {client.PlayerName}] restart time is ended");
-                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix("Map restart time is ended! You cannot restart map until new map loaded."));
+                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix(m_CSSPlugin.Localizer["VoteMapRestart.Command.Notification.AllowedTimeIsEnded"]));
                 return;
             }
 
             if(votedPlayers.Contains(client)) {
                 SimpleLogging.LogDebug($"[Vote Map Restart] [Player {client.PlayerName}] already voted.");
-                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix("You have already voted!"));
+                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix(m_CSSPlugin.Localizer["VoteMapRestart.Command.Notification.AlreadyVoted"]));
                 return;
             }
 
@@ -55,7 +55,7 @@ namespace LupercaliaMGCore {
             playersRequiredToRestart = (int)Math.Ceiling(Utilities.GetPlayers().Count(player => !player.IsBot && !player.IsHLTV) * PluginSettings.getInstance.m_CVVoteMapRestartThreshold.Value);
 
             SimpleLogging.LogTrace($"[Vote Map Restart] [Player {client.PlayerName}] players count: {votedPlayers.Count}, Requires to restart: {playersRequiredToRestart}");
-            Server.PrintToChatAll(LupercaliaMGCore.MessageWithPrefix($"{client.PlayerName} wants to restart the map! Type !vmr in chat to vote. ({votedPlayers.Count} votes, {playersRequiredToRestart} required)"));
+            Server.PrintToChatAll(LupercaliaMGCore.MessageWithPrefix(m_CSSPlugin.Localizer["VoteMapRestart.Notification.PlayerVote", client.PlayerName, votedPlayers.Count(), playersRequiredToRestart]));
 
             if(votedPlayers.Count < playersRequiredToRestart)
                 return;
@@ -66,7 +66,7 @@ namespace LupercaliaMGCore {
         private void InitiateMapRestart() {
             SimpleLogging.LogDebug("[Vote Map Restart] Initiating map restart...");
             isMapRestarting = true;
-            Server.PrintToChatAll(LupercaliaMGCore.MessageWithPrefix($"Vote successful! Map will be reload in {PluginSettings.getInstance.m_CVVoteMapRestartRestartTime.Value} seconds."));
+            Server.PrintToChatAll(LupercaliaMGCore.MessageWithPrefix(m_CSSPlugin.Localizer["VoteMapRestart.Notification.MapRestart", PluginSettings.getInstance.m_CVVoteMapRestartRestartTime.Value]));
             m_CSSPlugin.AddTimer(PluginSettings.getInstance.m_CVVoteMapRestartRestartTime.Value, () => {
                 SimpleLogging.LogDebug("[Vote Map Restart] Changing map.");
                 Server.ExecuteCommand($"changelevel {Server.MapName}");

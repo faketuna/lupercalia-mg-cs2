@@ -26,10 +26,11 @@ namespace LupercaliaMGCore {
             );
 
             string msg;
+
             if(isInGravityChangeEvent) {
-                msg = $"{Omikuji.CHAT_PREFIX} {client.PlayerName} have drew a bad luck! But luckily, Another event ongoing! so nothing happened!";
+                msg = $"{Omikuji.CHAT_PREFIX} {Omikuji.GetOmikujiLuckMessage(omikujiType, client)} {LupercaliaMGCore.getInstance().Localizer["Omikuji.BadEvent.GravityChangeEvent.Notification.AnotherEventOnGoing"]}";
             } else {
-                msg= $"{Omikuji.CHAT_PREFIX} {client.PlayerName} have drew a bad luck! sv_gravity changed to {randomGravity}";
+                msg = $"{Omikuji.CHAT_PREFIX} {Omikuji.GetOmikujiLuckMessage(omikujiType, client)} {LupercaliaMGCore.getInstance().Localizer["Omikuji.BadEvent.GravityChangeEvent.Notification.GravityChanged", randomGravity]}";
             }
 
             foreach(CCSPlayerController cl in Utilities.GetPlayers()) {
@@ -57,7 +58,7 @@ namespace LupercaliaMGCore {
                     if(!cl.IsValid || cl.IsBot || cl.IsHLTV)
                         continue;
 
-                    cl.PrintToChat($"{Omikuji.CHAT_PREFIX} Gravity restored to {oldGravity}!");
+                    cl.PrintToChat($"{Omikuji.CHAT_PREFIX} {Omikuji.GetOmikujiLuckMessage(omikujiType, client)} {LupercaliaMGCore.getInstance().Localizer["Omikuji.BadEvent.GravityChangeEvent.Notification.GravityRestored", oldGravity]}");
                     isInGravityChangeEvent = false;
                 }
             });

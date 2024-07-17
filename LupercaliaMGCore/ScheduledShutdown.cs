@@ -32,7 +32,7 @@ namespace LupercaliaMGCore {
 
             if(PluginSettings.getInstance.m_CVScheduledShutdownRoundEnd.Value) {
                 shutdownAfterRoundEnd = true;
-                Server.PrintToChatAll(LupercaliaMGCore.MessageWithPrefix("Server will be shutting down in after round end"));
+                Server.PrintToChatAll(LupercaliaMGCore.MessageWithPrefix(m_CSSPlugin.Localizer["ScheduledShutdown.Notification.AfterRoundEnd"]));
             }
             else {
                 int time = PluginSettings.getInstance.m_CVScheduledShutdownWarningTime.Value;
@@ -43,7 +43,7 @@ namespace LupercaliaMGCore {
                         return;
                     }
 
-                    Server.PrintToChatAll(LupercaliaMGCore.MessageWithPrefix($"Server is shutting down in {time} seconds."));
+                    Server.PrintToChatAll(LupercaliaMGCore.MessageWithPrefix(m_CSSPlugin.Localizer["ScheduledShutdown.Notification.Countdown", time]));
                     time--;
                 }, TimerFlags.REPEAT);
             }
@@ -80,7 +80,7 @@ namespace LupercaliaMGCore {
                 return;
 
             cancelShutdown();
-            Server.PrintToChatAll(LupercaliaMGCore.MessageWithPrefix($"Server shutdown has cancelled by {client.PlayerName}"));
+            Server.PrintToChatAll(LupercaliaMGCore.MessageWithPrefix(m_CSSPlugin.Localizer["ScheduledShutdown.Notification.CancelShutdown", client.PlayerName]));
         }
 
         [RequiresPermissions(@"css/root")]
@@ -89,7 +89,7 @@ namespace LupercaliaMGCore {
                 return;
             
             initiateShutdown();
-            Server.PrintToChatAll(LupercaliaMGCore.MessageWithPrefix($"Server shutdown has initiated by {client.PlayerName}"));
+            Server.PrintToChatAll(LupercaliaMGCore.MessageWithPrefix(m_CSSPlugin.Localizer["ScheduledShutdown.Notification.InitiateShutdown", client.PlayerName]));
         }
     }
 }

@@ -33,7 +33,7 @@ namespace LupercaliaMGCore {
                 if(!cl.IsValid || cl.IsBot || cl.IsHLTV)
                     continue;
 
-                cl.PrintToChat($"{Omikuji.CHAT_PREFIX} {client.PlayerName} erupted the volcano! Be prepared for impact!!!");
+                cl.PrintToChat($"{Omikuji.CHAT_PREFIX} {LupercaliaMGCore.getInstance().Localizer["Omikuji.MiscEvent.ScreenShakeEvent.Notification.PrepareForImpact", client.PlayerName]}");
             }
 
             shakeEnt.Remove();

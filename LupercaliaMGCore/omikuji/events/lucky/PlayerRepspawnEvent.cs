@@ -20,9 +20,9 @@ namespace LupercaliaMGCore {
             bool isPlayerAlive = client.PlayerPawn.Value != null && client.PlayerPawn.Value.LifeState == (byte)LifeState_t.LIFE_ALIVE;
 
             if (isPlayerAlive) {
-                msg = $"{Omikuji.CHAT_PREFIX} Lucky! {client.PlayerName} have re-spawned!";
+                msg = $"{Omikuji.CHAT_PREFIX} {Omikuji.GetOmikujiLuckMessage(omikujiType, client)} {LupercaliaMGCore.getInstance().Localizer["Omikuji.LuckyEvent.PlayerRespawnEvent.Notification.Respawn", client.PlayerName]}";
             } else {
-                msg = $"{Omikuji.CHAT_PREFIX} Lucky! {client.PlayerName} have draw a fortune! But how unfortunate nothing happened because {client.PlayerName} are still alive.";
+                msg = $"{Omikuji.CHAT_PREFIX} {Omikuji.GetOmikujiLuckMessage(omikujiType, client)} {LupercaliaMGCore.getInstance().Localizer["Omikuji.LuckyEvent.PlayerRespawnEvent.Notification.StillAlive", client.PlayerName]}";
             }
 
             foreach(CCSPlayerController cl in Utilities.GetPlayers()) {

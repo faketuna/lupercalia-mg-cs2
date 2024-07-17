@@ -31,7 +31,7 @@ namespace LupercaliaMGCore {
             playerPawn.ActualMoveType = MoveType_t.MOVETYPE_OBSOLETE;
             SimpleLogging.LogDebug("Player freeze event: Move type changed to MOVETYPE_OBSOLETE");
             
-            Server.PrintToChatAll($"{Omikuji.CHAT_PREFIX} {client.PlayerName} have drew the fortune! Unlucky! {client.PlayerName} is now froze!");
+            Server.PrintToChatAll($"{Omikuji.CHAT_PREFIX} {Omikuji.GetOmikujiLuckMessage(omikujiType, client)} {LupercaliaMGCore.getInstance().Localizer["Omikuji.BadEvent.PlayerFreezeEvent.Notification.Froze", client.PlayerName]}");
 
 
 
@@ -39,7 +39,7 @@ namespace LupercaliaMGCore {
                 playerPawn.MoveType = MoveType_t.MOVETYPE_WALK;
                 playerPawn.ActualMoveType = MoveType_t.MOVETYPE_WALK;
                 SimpleLogging.LogDebug("Player freeze event: Move type changed to MOVETYPE_WALK");
-                client.PrintToConsole($"{Omikuji.CHAT_PREFIX} You are now unfrozen!");
+                client.PrintToChat($"{Omikuji.CHAT_PREFIX} {LupercaliaMGCore.getInstance().Localizer["Omikuji.BadEvent.PlayerFreezeEvent.Notification.UnFroze"]}");
             });
         }
 

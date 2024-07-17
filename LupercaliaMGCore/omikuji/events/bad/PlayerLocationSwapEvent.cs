@@ -38,7 +38,7 @@ namespace LupercaliaMGCore {
 
             if(alive.Count <= 1) {
                 SimpleLogging.LogTrace("Player Location Swap Event: Not enough players to swap location! cancelling event!");
-                Server.PrintToChatAll($"{Omikuji.CHAT_PREFIX} {client.PlayerName} have drew the fortune! Lucky! {client.PlayerName} was avoided the unlucky event!");
+                Server.PrintToChatAll($"{Omikuji.CHAT_PREFIX} {Omikuji.GetOmikujiLuckMessage(omikujiType, client)} {LupercaliaMGCore.getInstance().Localizer["Omikuji.BadEvent.PlayerLocationSwapEvent.Notification.Avoided", client.PlayerName]}");
                 return;
             }
 
@@ -82,7 +82,7 @@ namespace LupercaliaMGCore {
 
 
             
-            Server.PrintToChatAll($"{Omikuji.CHAT_PREFIX} {client.PlayerName} have drew the fortune! Unlucky! all players location is swapping!");
+            Server.PrintToChatAll($"{Omikuji.CHAT_PREFIX} {Omikuji.GetOmikujiLuckMessage(omikujiType, client)} {LupercaliaMGCore.getInstance().Localizer["Omikuji.BadEvent.PlayerLocationSwapEvent.Notification.LocationSwapping"]}");
         }
 
         public void initialize() {}

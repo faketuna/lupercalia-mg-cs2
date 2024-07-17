@@ -41,7 +41,7 @@ namespace LupercaliaMGCore {
             }
             repeatKillDetected = false;
             SimpleLogging.LogTrace($"Repeat kill status: {repeatKillDetected}");
-            Server.PrintToChatAll($"{CHAT_PREFIX} Admin enabled auto respawn again");
+            Server.PrintToChatAll($"{CHAT_PREFIX} {m_CSSPlugin.Localizer["Respawn.Notification.AdminEnabledRespawn", client.PlayerName]}");
         }
 
         private HookResult OnRoundPreStart(EventRoundPrestart @event, GameEventInfo info) {
@@ -72,7 +72,7 @@ namespace LupercaliaMGCore {
             if(Server.EngineTime - playerLastRespawnTime[index] <= PluginSettings.getInstance.m_CVAutoRespawnSpawnKillingDetectionTime.Value) {
                 repeatKillDetected = true;
                 SimpleLogging.LogDebug($"{CHAT_PREFIX} [Player {player.PlayerName}] Repeat kill is detected.");
-                Server.PrintToChatAll(LupercaliaMGCore.MessageWithPrefix($"{ChatColors.Green}Repeat kill detected! {ChatColors.Default}Respawn is {ChatColors.DarkRed}disabled{ChatColors.Default} in this round."));
+                Server.PrintToChatAll($"{CHAT_PREFIX} {ChatUtil.ReplaceColorStrings(m_CSSPlugin.Localizer["Respawn.Notification.RepeatKillDetected"])}");
                 return HookResult.Continue;
             }
 
@@ -114,7 +114,7 @@ namespace LupercaliaMGCore {
                 return;
 
             client.Respawn();
-            client.PrintToChat($"{CHAT_PREFIX} You have been Auto-Respawned!");
+            client.PrintToChat($"{CHAT_PREFIX} {m_CSSPlugin.Localizer["Respawn.Notification.Respawned"]}");
         }
     }
 }

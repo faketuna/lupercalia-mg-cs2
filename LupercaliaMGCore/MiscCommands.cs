@@ -22,12 +22,12 @@ namespace LupercaliaMGCore {
                 return;
             
             if(client.PlayerPawn.Value == null || client.PlayerPawn.Value.LifeState != (byte)LifeState_t.LIFE_ALIVE) {
-                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix("You should be alive to use this command."));
+                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix(m_CSSPlugin.Localizer["General.Command.Notification.ShouldBeAlive"]));
                 return;
             }
 
             if(!PluginSettings.getInstance.m_CVMiscCMDGiveKnifeEnabled.Value) {
-                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix("This feature is disabled."));
+                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix(m_CSSPlugin.Localizer["General.Command.Notification.FeatureDisabled"]));
                 return;
             }
 
@@ -35,13 +35,14 @@ namespace LupercaliaMGCore {
 
             if(playerPawn == null) {
                 client.PrintToChat(LupercaliaMGCore.MessageWithPrefix("This command is not usable currently."));
+                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix(m_CSSPlugin.Localizer["General.Command.Notification.NotUsableCurrently"]));
                 return;
             }
 
             CPlayer_WeaponServices? weaponServices = playerPawn.WeaponServices;
 
             if(weaponServices == null) {
-                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix("This command is not usable currently."));
+                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix(m_CSSPlugin.Localizer["General.Command.Notification.NotUsableCurrently"]));
                 return;
             }
 
@@ -54,10 +55,10 @@ namespace LupercaliaMGCore {
             }
 
             if(found) {
-                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix("You already have knife!"));
+                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix(m_CSSPlugin.Localizer["Misc.Knife.Command.Notification.AlreadyHave"]));
             }
             else {
-                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix("You retrieved the knife!"));
+                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix(m_CSSPlugin.Localizer["Misc.Knife.Command.Notification.Retrieved"]));
                 client.GiveNamedItem(CsItem.Knife);
             }
         }
@@ -72,23 +73,23 @@ namespace LupercaliaMGCore {
 
 
                 client.ChangeTeam(CsTeam.Spectator);
-                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix("You've moved to spectator!"));
+                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix(m_CSSPlugin.Localizer["Misc.Spectate.Command.Notification.MovedToSpectator"]));
                 return;
             }
 
             if(client.PlayerPawn.Value == null || client.PlayerPawn.Value.LifeState == (byte)LifeState_t.LIFE_ALIVE) {
-                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix("You can only spectate player while dead or spectator."));
+                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix(m_CSSPlugin.Localizer["Misc.Spectate.Command.Notification.OnlyDeadOrSpectator"]));
                 return;
             }
 
             TargetResult targets = info.GetArgTargetResult(1);
 
             if(targets.Count() > 1) {
-                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix($"Multiple target found! Please target the one person! ({targets.Count()} found)"));
+                client.PrintToChat(LupercaliaMGCore.MessageWithPrefix(m_CSSPlugin.Localizer["Misc.Spectate.Command.Notification.MultipleTargetsFound", targets.Count()]));
                 return;
             }
 
-            client.PrintToChat(LupercaliaMGCore.MessageWithPrefix($"You are now spectating {targets.First().PlayerName}."));
+            client.PrintToChat(LupercaliaMGCore.MessageWithPrefix(m_CSSPlugin.Localizer["Misc.Spectate.Command.Notification.NowSpectating", targets.First().PlayerName]));
             client.ExecuteClientCommandFromServer($"spec_player {targets.First().PlayerName}");
         }
     }

@@ -19,7 +19,7 @@ namespace LupercaliaMGCore {
                     continue;
 
 
-                cl.PrintToChat($"{Omikuji.CHAT_PREFIX} (・∋・)コケ、コケコッコー");
+                cl.PrintToChat($"{Omikuji.CHAT_PREFIX} {LupercaliaMGCore.getInstance().Localizer["Omikuji.MiscEvent.ChickenSpawnEvent.Notification.ChickenSpawned"]}");
 
                 if(client.PlayerPawn.Value != null && client.PlayerPawn.Value.LifeState == (byte)LifeState_t.LIFE_ALIVE)
                     createGamingChicken(cl);

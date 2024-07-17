@@ -205,7 +205,7 @@ namespace LupercaliaMGCore {
             float timerInterval = PluginSettings.getInstance.m_CVAntiCampDetectionInterval.Value;
             isPlayerWarned[client] = true;
             SimpleLogging.LogDebug($"[Anti Camp] [Player {client.PlayerName}] Warned as camping.");
-            client.PrintToCenterAlert("You have detected as CAMPING. MOVE!");
+            client.PrintToCenterAlert(m_CSSPlugin.Localizer["AntiCamp.Notification.DetectedAsCamping"]);
             glowingTimer[client] = m_CSSPlugin.AddTimer(timerInterval, () => {
                 if(playerGlowingTime[client] <= 0.0F) {
                     stopPlayerGlowing(client);
