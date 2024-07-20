@@ -77,6 +77,9 @@ namespace LupercaliaMGCore {
 
             new MiscCommands(this);
             Logger.LogInformation("misc commands initialized");
+
+            new JoinTeamFix(this);
+            Logger.LogInformation("Join team fix initialized");
         }
     }
 }
