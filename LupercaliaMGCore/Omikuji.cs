@@ -154,15 +154,15 @@ namespace LupercaliaMGCore {
             
             switch(type) {
                 case OmikujiType.EVENT_BAD: {
-                    text = $"{LupercaliaMGCore.getInstance().Localizer["Omikuji.Events.Notification.BadLuck"]}";
+                    text = $"{LupercaliaMGCore.getInstance().Localizer["Omikuji.Events.Notification.BadLuck", client.PlayerName]}";
                     break;
                 }
                 case OmikujiType.EVENT_LUCKY: {
-                    text = $"{LupercaliaMGCore.getInstance().Localizer["Omikuji.Events.Notification.Luck"]}";
+                    text = $"{LupercaliaMGCore.getInstance().Localizer["Omikuji.Events.Notification.Luck", client.PlayerName]}";
                     break;
                 }
                 case OmikujiType.EVENT_MISC: {
-                    text = $"{LupercaliaMGCore.getInstance().Localizer["Omikuji.Events.Notification.Misc"]}";
+                    text = $"{LupercaliaMGCore.getInstance().Localizer["Omikuji.Events.Notification.Misc", client.PlayerName]}";
                     break;
                 }
             }
