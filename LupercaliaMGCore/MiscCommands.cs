@@ -90,7 +90,7 @@ namespace LupercaliaMGCore {
             }
 
             client.PrintToChat(LupercaliaMGCore.MessageWithPrefix(m_CSSPlugin.Localizer["Misc.Spectate.Command.Notification.NowSpectating", targets.First().PlayerName]));
-            client.ExecuteClientCommandFromServer($"spec_player {targets.First().PlayerName}");
+            client.ExecuteClientCommand($"spec_player {targets.First().PlayerName}");
         }
     }
 }
