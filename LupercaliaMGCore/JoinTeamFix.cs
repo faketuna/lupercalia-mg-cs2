@@ -23,8 +23,8 @@ namespace LupercaliaMGCore {
             m_CSSPlugin.AddCommandListener("jointeam", JoinTeamListener);
             m_CSSPlugin.RegisterListener<Listeners.OnMapStart>((mapName) => {
                 m_CSSPlugin.AddTimer(0.1F, () => {
-                    var spawnPointsT = Utilities.FindAllEntitiesByDesignerName<SpawnPoint>("info_player_terrorist");
-                    var spawnPointsCT = Utilities.FindAllEntitiesByDesignerName<SpawnPoint>("info_player_counterterrorist");
+                    spawnPointsT = Utilities.FindAllEntitiesByDesignerName<SpawnPoint>("info_player_terrorist").ToList();
+                    spawnPointsCT = Utilities.FindAllEntitiesByDesignerName<SpawnPoint>("info_player_counterterrorist").ToList();
                 });
             });
         }
