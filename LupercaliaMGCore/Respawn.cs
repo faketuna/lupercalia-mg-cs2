@@ -4,6 +4,8 @@ using CounterStrikeSharp.API.Modules.Commands;
 using CounterStrikeSharp.API.Modules.Timers;
 using CounterStrikeSharp.API.Modules.Utils;
 using CounterStrikeSharp.API.Modules.Admin;
+using CounterStrikeSharp.API.Modules.Cvars;
+using Microsoft.Extensions.Logging;
 
 namespace LupercaliaMGCore {
     public class Respawn {
@@ -46,6 +48,12 @@ namespace LupercaliaMGCore {
 
         private HookResult OnRoundPreStart(EventRoundPrestart @event, GameEventInfo info) {
             repeatKillDetected = false;
+            if(PluginSettings.getInstance.m_CVAutoRespawnEnabled.Value) {
+                setIgnoreRoundWinCondition(true);
+            }
+            else {
+                setIgnoreRoundWinCondition(false);
+            }
             return HookResult.Continue;
         }
 
@@ -73,6 +81,7 @@ namespace LupercaliaMGCore {
                 repeatKillDetected = true;
                 SimpleLogging.LogDebug($"{CHAT_PREFIX} [Player {player.PlayerName}] Repeat kill is detected.");
                 Server.PrintToChatAll($"{CHAT_PREFIX} {ChatUtil.ReplaceColorStrings(m_CSSPlugin.Localizer["Respawn.Notification.RepeatKillDetected"])}");
+                setIgnoreRoundWinCondition(false);
                 return HookResult.Continue;
             }
 
@@ -115,6 +124,17 @@ namespace LupercaliaMGCore {
 
             client.Respawn();
             client.PrintToChat($"{CHAT_PREFIX} {m_CSSPlugin.Localizer["Respawn.Notification.Respawned"]}");
+        }
+
+        private void setIgnoreRoundWinCondition(bool isIgnored) {
+            ConVar? mp_ignore_round_win_conditions = ConVar.Find("mp_ignore_round_win_conditions");
+
+            if(mp_ignore_round_win_conditions == null) {
+                m_CSSPlugin.Logger.LogError("Failed to find mp_ignore_round_win_conditions!");
+                return;
+            }
+
+            mp_ignore_round_win_conditions.SetValue(isIgnored);
         }
     }
 }
