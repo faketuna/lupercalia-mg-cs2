@@ -24,142 +24,142 @@ namespace LupercaliaMGCore {
         /*
         *   Team based body color
         */
-        public FakeConVar<string> m_CVTeamColorCT  = new("lp_mg_teamcolor_ct", "Counter Terrorist's Body color. R, G, B", "0, 0, 255");
-        public FakeConVar<string> m_CVTeamColorT = new("lp_mg_teamcolor_t", "Terrorist's Body color. R, G, B", "255, 0, 0");
+        public readonly FakeConVar<string> m_CVTeamColorCT  = new("lp_mg_teamcolor_ct", "Counter Terrorist's Body color. R, G, B", "0, 0, 255");
+        public readonly FakeConVar<string> m_CVTeamColorT = new("lp_mg_teamcolor_t", "Terrorist's Body color. R, G, B", "255, 0, 0");
 
         /*
         *   Team scramble
         */
-        public FakeConVar<bool> m_CVIsScrambleEnabled = new("lp_mg_teamscramble_enabled", "Should team is scrambled after round end", true);
+        public readonly FakeConVar<bool> m_CVIsScrambleEnabled = new("lp_mg_teamscramble_enabled", "Should team is scrambled after round end", true);
 
         /*
         *   Vote round/map restart
         */
-        public FakeConVar<double> m_CVVoteMapRestartAllowedTime = new("lp_mg_vmr_allowed_time", "How long allowed to use vote command after map loaded in seconds.", 60.0D);
-        public FakeConVar<float> m_CVVoteMapRestartThreshold = new("lp_mg_vmr_vote_threshold", "How percent of votes required to initiate the map restart.", 0.7F, ConVarFlags.FCVAR_NONE, new RangeValidator<float>(0.0F, 1.0F));
-        public FakeConVar<float> m_CVVoteMapRestartRestartTime = new("lp_mg_vmr_restart_time", "How long to take restarting map after vote passed.", 10.0F, ConVarFlags.FCVAR_NONE, new RangeValidator<float>(0.0F, float.MaxValue));
-        public FakeConVar<float> m_CVVoteRoundRestartThreshold = new("lp_mg_vrr_vote_threshold", "How percent of votes required to initiate the round restart.", 0.7F, ConVarFlags.FCVAR_NONE, new RangeValidator<float>(0.0F, 1.0F));
-        public FakeConVar<float> m_CVVoteRoundRestartRestartTime = new("lp_mg_vrr_restart_time", "How long to take restarting round after vote passed.", 10.0F, ConVarFlags.FCVAR_NONE, new RangeValidator<float>(0.0F, float.MaxValue));
+        public readonly FakeConVar<double> m_CVVoteMapRestartAllowedTime = new("lp_mg_vmr_allowed_time", "How long allowed to use vote command after map loaded in seconds.", 60.0D);
+        public readonly FakeConVar<float> m_CVVoteMapRestartThreshold = new("lp_mg_vmr_vote_threshold", "How percent of votes required to initiate the map restart.", 0.7F, ConVarFlags.FCVAR_NONE, new RangeValidator<float>(0.0F, 1.0F));
+        public readonly FakeConVar<float> m_CVVoteMapRestartRestartTime = new("lp_mg_vmr_restart_time", "How long to take restarting map after vote passed.", 10.0F, ConVarFlags.FCVAR_NONE, new RangeValidator<float>(0.0F, float.MaxValue));
+        public readonly FakeConVar<float> m_CVVoteRoundRestartThreshold = new("lp_mg_vrr_vote_threshold", "How percent of votes required to initiate the round restart.", 0.7F, ConVarFlags.FCVAR_NONE, new RangeValidator<float>(0.0F, 1.0F));
+        public readonly FakeConVar<float> m_CVVoteRoundRestartRestartTime = new("lp_mg_vrr_restart_time", "How long to take restarting round after vote passed.", 10.0F, ConVarFlags.FCVAR_NONE, new RangeValidator<float>(0.0F, float.MaxValue));
 
         /*
         *   Round end enhancement
         */
-        public FakeConVar<bool> m_CVIsRoundEndDamageImmunityEnabled = new("lp_mg_redi_enabled", "Should player grant damage immunity after round end until next round starts.", false);
-        public FakeConVar<bool> m_CVIsRoundEndWeaponStripEnabled = new("lp_mg_rews_enabled", "Should player's weapons are removed before new round starts.", true);
-        public FakeConVar<bool> m_CVIsRoundEndDeathMatchEnabled = new("lp_mg_redm_enabled", "Should enable round end death match?", true);
+        public readonly FakeConVar<bool> m_CVIsRoundEndDamageImmunityEnabled = new("lp_mg_redi_enabled", "Should player grant damage immunity after round end until next round starts.", false);
+        public readonly FakeConVar<bool> m_CVIsRoundEndWeaponStripEnabled = new("lp_mg_rews_enabled", "Should player's weapons are removed before new round starts.", true);
+        public readonly FakeConVar<bool> m_CVIsRoundEndDeathMatchEnabled = new("lp_mg_redm_enabled", "Should enable round end death match?", true);
 
         /*
         *   Scheduled shutdown
         */
-        public FakeConVar<string> m_CVScheduledShutdownTime = new("lp_mg_scheduled_shutdown_time", "Server will be shutdown in specified time. Format is HHmm", "0500");
-        public FakeConVar<int> m_CVScheduledShutdownWarningTime = new("lp_mg_scheduled_shutdown_warn_time", "Show shutdown warning countdown if lp_mg_scheduled_shutdown_round_end is false.", 10);
-        public FakeConVar<bool> m_CVScheduledShutdownRoundEnd = new("lp_mg_scheduled_shutdown_round_end", "When set to true server will be shutdown after round end.", true);
+        public readonly FakeConVar<string> m_CVScheduledShutdownTime = new("lp_mg_scheduled_shutdown_time", "Server will be shutdown in specified time. Format is HHmm", "0500");
+        public readonly FakeConVar<int> m_CVScheduledShutdownWarningTime = new("lp_mg_scheduled_shutdown_warn_time", "Show shutdown warning countdown if lp_mg_scheduled_shutdown_round_end is false.", 10);
+        public readonly FakeConVar<bool> m_CVScheduledShutdownRoundEnd = new("lp_mg_scheduled_shutdown_round_end", "When set to true server will be shutdown after round end.", true);
 
         /*
         *   Auto respawn
         */
-        public FakeConVar<bool> m_CVAutoRespawnEnabled = new("lp_mg_auto_respawn_enabled", "Auto respawn feature is enabled", false);
-        public FakeConVar<float> m_CVAutoRespawnSpawnKillingDetectionTime = new("lp_mg_auto_respawn_repeat_kill_time", "Seconds to detect as spawn killing.", 1.0F);
-        public FakeConVar<float> m_CVAutoRespawnSpawnTime = new("lp_mg_auto_respawn_time", "How long to respawn after death.", 1.0F);
+        public readonly FakeConVar<bool> m_CVAutoRespawnEnabled = new("lp_mg_auto_respawn_enabled", "Auto respawn feature is enabled", false);
+        public readonly FakeConVar<float> m_CVAutoRespawnSpawnKillingDetectionTime = new("lp_mg_auto_respawn_repeat_kill_time", "Seconds to detect as spawn killing.", 1.0F);
+        public readonly FakeConVar<float> m_CVAutoRespawnSpawnTime = new("lp_mg_auto_respawn_time", "How long to respawn after death.", 1.0F);
 
         /*
         *   Anti camp
         */
-        public FakeConVar<bool> m_CVAntiCampEnabled = new("lp_mg_anti_camp_enabled", "Anti camp enabled", true);
-        public FakeConVar<float> m_CVAntiCampDetectionTime = new("lp_mg_anti_camp_detection_time", "How long to take detected as camping in seconds.", 10.0F);
-        public FakeConVar<double> m_CVAntiCampDetectionRadius = new("lp_mg_anti_camp_detection_radius", "Range of area for player should move for avoiding the detected as camping.", 200.0F);
-        public FakeConVar<float> m_CVAntiCampDetectionInterval = new("lp_mg_anti_camp_detection_interval", "Interval to run camping check in seconds.", 0.1F);
-        public FakeConVar<float> m_CVAntiCampMarkingTime = new("lp_mg_anti_camp_glowing_time", "How long to detected player keep glowing.", 10.0F);
+        public readonly FakeConVar<bool> m_CVAntiCampEnabled = new("lp_mg_anti_camp_enabled", "Anti camp enabled", true);
+        public readonly FakeConVar<float> m_CVAntiCampDetectionTime = new("lp_mg_anti_camp_detection_time", "How long to take detected as camping in seconds.", 10.0F);
+        public readonly FakeConVar<double> m_CVAntiCampDetectionRadius = new("lp_mg_anti_camp_detection_radius", "Range of area for player should move for avoiding the detected as camping.", 200.0F);
+        public readonly FakeConVar<float> m_CVAntiCampDetectionInterval = new("lp_mg_anti_camp_detection_interval", "Interval to run camping check in seconds.", 0.1F);
+        public readonly FakeConVar<float> m_CVAntiCampMarkingTime = new("lp_mg_anti_camp_glowing_time", "How long to detected player keep glowing.", 10.0F);
 
         /*
         *   Map config
         */
-        public FakeConVar<int> m_CVMapConfigExecutionTiming = new("lp_mg_mapcfg_execution_timing", "When configs are executed? 0: Does nothing, 1: Execute on map start, 2: Execute on every round start, 3: Execute on map transition and every round start", 1, ConVarFlags.FCVAR_NONE, new RangeValidator<int>(0, 3));
-        public FakeConVar<int> m_CVMapConfigType = new ("lp_mg_mapcfg_type", "Map configuration type. 0: disabled, 1: Exact match, 2: Partial Match", 1, ConVarFlags.FCVAR_NONE, new RangeValidator<int>(0, 2));
+        public readonly FakeConVar<int> m_CVMapConfigExecutionTiming = new("lp_mg_mapcfg_execution_timing", "When configs are executed? 0: Does nothing, 1: Execute on map start, 2: Execute on every round start, 3: Execute on map transition and every round start", 1, ConVarFlags.FCVAR_NONE, new RangeValidator<int>(0, 3));
+        public readonly FakeConVar<int> m_CVMapConfigType = new ("lp_mg_mapcfg_type", "Map configuration type. 0: disabled, 1: Exact match, 2: Partial Match", 1, ConVarFlags.FCVAR_NONE, new RangeValidator<int>(0, 2));
 
         /*
         *   Plugin debugging
         */
 
-        public FakeConVar<int> m_CVPluginDebugLevel = new("lp_mg_debug_level", "0: Nothing, 1: Print debug message, 2: Print debug, trace message", 0, ConVarFlags.FCVAR_NONE, new RangeValidator<int>(0,2));
-        public FakeConVar<bool> m_CVPluginDebugShowClientConsole = new("lp_mg_debug_show_console", "Debug message shown in client console?", false);
+        public readonly FakeConVar<int> m_CVPluginDebugLevel = new("lp_mg_debug_level", "0: Nothing, 1: Print debug message, 2: Print debug, trace message", 0, ConVarFlags.FCVAR_NONE, new RangeValidator<int>(0,2));
+        public readonly FakeConVar<bool> m_CVPluginDebugShowClientConsole = new("lp_mg_debug_show_console", "Debug message shown in client console?", false);
 
         /*
         *   Omikuji
         */
-        public FakeConVar<int> m_CVOmikujiEventWeightMisc = new("lp_mg_omikuji_event_weight_misc", "Weight of misc event. You can set to any value.", 90);
-        public FakeConVar<int> m_CVOmikujiEventWeightBad = new("lp_mg_omikuji_event_weight_bad", "Weight of bad event. You can set to any value.", 5);
-        public FakeConVar<int> m_CVOmikujiEventWeightLucky = new("lp_mg_omikuji_event_weight_lucky", "Weight of lucky event. You can set to any value.", 5);
-        public FakeConVar<double> m_CVOmikujiCommandCooldown = new("lp_mg_omikuji_command_cooldown", "Cooldown of omikuji command.", 60.0D);
-        public FakeConVar<int> m_CVOmikujiCommandExecutionDelayMin = new("lp_mg_omikuji_command_execution_delay_min", "Minimum time of omikuji event executed after execution of command.", 5);
-        public FakeConVar<int> m_CVOmikujiCommandExecutionDelayMax = new("lp_mg_omikuji_command_execution_delay_max", "Maximum time of omikuji event executed after execution of command.", 10);
+        public readonly FakeConVar<int> m_CVOmikujiEventWeightMisc = new("lp_mg_omikuji_event_weight_misc", "Weight of misc event. You can set to any value.", 90);
+        public readonly FakeConVar<int> m_CVOmikujiEventWeightBad = new("lp_mg_omikuji_event_weight_bad", "Weight of bad event. You can set to any value.", 5);
+        public readonly FakeConVar<int> m_CVOmikujiEventWeightLucky = new("lp_mg_omikuji_event_weight_lucky", "Weight of lucky event. You can set to any value.", 5);
+        public readonly FakeConVar<double> m_CVOmikujiCommandCooldown = new("lp_mg_omikuji_command_cooldown", "Cooldown of omikuji command.", 60.0D);
+        public readonly FakeConVar<int> m_CVOmikujiCommandExecutionDelayMin = new("lp_mg_omikuji_command_execution_delay_min", "Minimum time of omikuji event executed after execution of command.", 5);
+        public readonly FakeConVar<int> m_CVOmikujiCommandExecutionDelayMax = new("lp_mg_omikuji_command_execution_delay_max", "Maximum time of omikuji event executed after execution of command.", 10);
 
         /*
         *   Omikuji - Chicken
         */
-        public FakeConVar<float> m_CVOmikujiEventChickenTime = new("lp_mg_omikuji_event_chicken_time", "How long that chicken alive?", 5.0F);
-        public FakeConVar<float> m_CVOmikujiEventChickenBodyScale = new("lp_mg_omikuji_event_chicken_body_scale", "Body size of the chicken. Default size is 1.0", 1.0F);
-        public FakeConVar<double> m_CVOmikujiEventChickenSelectionWeight = new("lp_mg_omikuji_event_chicken_selection_weight", "Selection weight of this event", 160.0D);
+        public readonly FakeConVar<float> m_CVOmikujiEventChickenTime = new("lp_mg_omikuji_event_chicken_time", "How long that chicken alive?", 5.0F);
+        public readonly FakeConVar<float> m_CVOmikujiEventChickenBodyScale = new("lp_mg_omikuji_event_chicken_body_scale", "Body size of the chicken. Default size is 1.0", 1.0F);
+        public readonly FakeConVar<double> m_CVOmikujiEventChickenSelectionWeight = new("lp_mg_omikuji_event_chicken_selection_weight", "Selection weight of this event", 160.0D);
 
         /*
         *   Omikuji - Screen shake
         */
-        public FakeConVar<float> m_CVOmikujiEventScreenShakeAmplitude = new("lp_mg_omikuji_event_screen_shake_amplitude", "How far away from the normal position the camera will wobble. Should be a range between 0 and 16.", 1000.0F);
-        public FakeConVar<float> m_CVOmikujiEventScreenShakeDuration = new("lp_mg_omikuji_event_screen_shake_duration", "The length of time in which to shake the player's screens.", 5.0F);
-        public FakeConVar<float> m_CVOmikujiEventScreenShakeFrequency = new("lp_mg_omikuji_event_screen_shake_frequency", "How many times per second to change the direction of the camera wobble. 40 is generally enough; values higher are hardly distinguishable.", 1000.0F);
-        public FakeConVar<double> m_CVOmikujiEventScreenShakeSelectionWeight = new("lp_mg_omikuji_event_screen_shake_selection_weight", "Selection weight of this event", 30.0D);
+        public readonly FakeConVar<float> m_CVOmikujiEventScreenShakeAmplitude = new("lp_mg_omikuji_event_screen_shake_amplitude", "How far away from the normal position the camera will wobble. Should be a range between 0 and 16.", 1000.0F);
+        public readonly FakeConVar<float> m_CVOmikujiEventScreenShakeDuration = new("lp_mg_omikuji_event_screen_shake_duration", "The length of time in which to shake the player's screens.", 5.0F);
+        public readonly FakeConVar<float> m_CVOmikujiEventScreenShakeFrequency = new("lp_mg_omikuji_event_screen_shake_frequency", "How many times per second to change the direction of the camera wobble. 40 is generally enough; values higher are hardly distinguishable.", 1000.0F);
+        public readonly FakeConVar<double> m_CVOmikujiEventScreenShakeSelectionWeight = new("lp_mg_omikuji_event_screen_shake_selection_weight", "Selection weight of this event", 30.0D);
 
         /*
         *   Omikuji - Player Heal
         */
-        public FakeConVar<int> m_CVOmikujiEventPlayerHeal = new("lp_mg_omikuji_event_player_heal_amount", "How many health healed when event occur", 100);
-        public FakeConVar<double> m_CVOmikujiEventPlayerHealSelectionWeight = new("lp_mg_omikuji_event_player_heal_selection_weight", "Selection weight of this event", 30.0D);
+        public readonly FakeConVar<int> m_CVOmikujiEventPlayerHeal = new("lp_mg_omikuji_event_player_heal_amount", "How many health healed when event occur", 100);
+        public readonly FakeConVar<double> m_CVOmikujiEventPlayerHealSelectionWeight = new("lp_mg_omikuji_event_player_heal_selection_weight", "Selection weight of this event", 30.0D);
 
         /*
         *   Omikuji - Gravity
         */
-        public FakeConVar<int> m_CVOmikujiEventGravityMax = new("lp_mg_omikuji_event_gravity_max", "Maximum value of sv_gravity", 800);
-        public FakeConVar<int> m_CVOmikujiEventGravityMin = new("lp_mg_omikuji_event_gravity_min", "Minimal value of sv_gravity", 100);
-        public FakeConVar<float> m_CVOmikujiEventGravityRestoreTime = new("lp_mg_omikuji_event_gravity_restore_time", "How long to take gravity restored in seconds.", 10.0F);
-        public FakeConVar<double> m_CVOmikujiEventGravitySelectionWeight = new("lp_mg_omikuji_event_gravity_selection_weight", "Selection weight of this event", 30.0D);
+        public readonly FakeConVar<int> m_CVOmikujiEventGravityMax = new("lp_mg_omikuji_event_gravity_max", "Maximum value of sv_gravity", 800);
+        public readonly FakeConVar<int> m_CVOmikujiEventGravityMin = new("lp_mg_omikuji_event_gravity_min", "Minimal value of sv_gravity", 100);
+        public readonly FakeConVar<float> m_CVOmikujiEventGravityRestoreTime = new("lp_mg_omikuji_event_gravity_restore_time", "How long to take gravity restored in seconds.", 10.0F);
+        public readonly FakeConVar<double> m_CVOmikujiEventGravitySelectionWeight = new("lp_mg_omikuji_event_gravity_selection_weight", "Selection weight of this event", 30.0D);
 
         /*
         *   Omikuji - Freeze
         */
-        public FakeConVar<float> m_CVOmikujiEventPlayerFreeze = new("lp_mg_omikuji_event_player_freeze_time", "How long to player freeze in seconds.", 3.0F);
-        public FakeConVar<double> m_CVOmikujiEventPlayerFreezeSelectionWeight = new("lp_mg_omikuji_event_player_freeze_selection_weight", "Selection weight of this event", 30.0D);
+        public readonly FakeConVar<float> m_CVOmikujiEventPlayerFreeze = new("lp_mg_omikuji_event_player_freeze_time", "How long to player freeze in seconds.", 3.0F);
+        public readonly FakeConVar<double> m_CVOmikujiEventPlayerFreezeSelectionWeight = new("lp_mg_omikuji_event_player_freeze_selection_weight", "Selection weight of this event", 30.0D);
 
         /*
         *   Omikuji - GiveRandomItem
         */
-        public FakeConVar<int> m_CVOmikujiEventGiveRandomItemAvoidCount = new("lp_mg_omikuji_event_give_random_item_avoid_duplication_history", "How many histories save to avoid give duplicated item.", 10);
-        public FakeConVar<double> m_CVOmikujiEventGiveRandomItemSelectionWeight = new("lp_mg_omikuji_event_give_random_item_selection_weight", "Selection weight of this event", 30.0D);
+        public readonly FakeConVar<int> m_CVOmikujiEventGiveRandomItemAvoidCount = new("lp_mg_omikuji_event_give_random_item_avoid_duplication_history", "How many histories save to avoid give duplicated item.", 10);
+        public readonly FakeConVar<double> m_CVOmikujiEventGiveRandomItemSelectionWeight = new("lp_mg_omikuji_event_give_random_item_selection_weight", "Selection weight of this event", 30.0D);
 
         /*
         *   Omikuji - Player Slap
         */
-        public FakeConVar<int> m_CVOmikujiEventPlayerSlapPowerMin = new("lp_mg_omikuji_event_player_slap_power_min", "Minimal power of slap.", 0);
-        public FakeConVar<int> m_CVOmikujiEventPlayerSlapPowerMax = new("lp_mg_omikuji_event_player_slap_power_max", "Maximum power of slap.", 30000);
-        public FakeConVar<double> m_CVOmikujiEventPlayerSlapSelectionWeight = new("lp_mg_omikuji_event_player_slap_item_selection_weight", "Selection weight of this event", 30.0D);
+        public readonly FakeConVar<int> m_CVOmikujiEventPlayerSlapPowerMin = new("lp_mg_omikuji_event_player_slap_power_min", "Minimal power of slap.", 0);
+        public readonly FakeConVar<int> m_CVOmikujiEventPlayerSlapPowerMax = new("lp_mg_omikuji_event_player_slap_power_max", "Maximum power of slap.", 30000);
+        public readonly FakeConVar<double> m_CVOmikujiEventPlayerSlapSelectionWeight = new("lp_mg_omikuji_event_player_slap_item_selection_weight", "Selection weight of this event", 30.0D);
 
         /*
         *   Omikuji - Selection weights
         */
-        public FakeConVar<double> m_CVOmikujiEventNothingSelectionWeight = new("lp_mg_omikuji_event_nothing_swap_selection_weight", "Selection weight of this event", 30.0D);
-        public FakeConVar<double> m_CVOmikujiEventPlayerWishingSelectionWeight = new("lp_mg_omikuji_event_player_wishing_selection_weight", "Selection weight of this event", 30.0D);
-        public FakeConVar<double> m_CVOmikujiEventPlayerLocationSwapSelectionWeight = new("lp_mg_omikuji_event_player_location_swap_selection_weight", "Selection weight of this event", 30.0D);
-        public FakeConVar<double> m_CVOmikujiEventPlayerRespawnSelectionWeight = new("lp_mg_omikuji_event_player_respawn_selection_weight", "Selection weight of this event", 30.0D);
-        public FakeConVar<double> m_CVOmikujiEventAllPlayerRespawnSelectionWeight = new("lp_mg_omikuji_event_all_player_respawn_selection_weight", "Selection weight of this event", 30.0D);
+        public readonly FakeConVar<double> m_CVOmikujiEventNothingSelectionWeight = new("lp_mg_omikuji_event_nothing_swap_selection_weight", "Selection weight of this event", 30.0D);
+        public readonly FakeConVar<double> m_CVOmikujiEventPlayerWishingSelectionWeight = new("lp_mg_omikuji_event_player_wishing_selection_weight", "Selection weight of this event", 30.0D);
+        public readonly FakeConVar<double> m_CVOmikujiEventPlayerLocationSwapSelectionWeight = new("lp_mg_omikuji_event_player_location_swap_selection_weight", "Selection weight of this event", 30.0D);
+        public readonly FakeConVar<double> m_CVOmikujiEventPlayerRespawnSelectionWeight = new("lp_mg_omikuji_event_player_respawn_selection_weight", "Selection weight of this event", 30.0D);
+        public readonly FakeConVar<double> m_CVOmikujiEventAllPlayerRespawnSelectionWeight = new("lp_mg_omikuji_event_all_player_respawn_selection_weight", "Selection weight of this event", 30.0D);
 
         /*
         *   For debugging purpose
         */
-        public FakeConVar<bool> m_CVDebuggingEnabled = new("lp_mg_debug_enabled", "Enable debugging feature?", false);
+        public readonly FakeConVar<bool> m_CVDebuggingEnabled = new("lp_mg_debug_enabled", "Enable debugging feature?", false);
 
         /*
         *   Misc commands
         */
-        public FakeConVar<bool> m_CVMiscCMDGiveKnifeEnabled = new("lp_mg_misc_cmd_give_knife", "Is give knife command enabled?", false);
+        public readonly FakeConVar<bool> m_CVMiscCMDGiveKnifeEnabled = new("lp_mg_misc_cmd_give_knife", "Is give knife command enabled?", false);
 
         private LupercaliaMGCore m_CSSPlugin;
 
